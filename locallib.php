@@ -599,7 +599,7 @@ function lesson_get_media_html($lesson, $context) {
         $url = new moodle_url($lesson->mediafile);
     } else {
         // the timemodified is used to prevent caching problems, instead of '/' we should better read from files table and use sortorder
-        $url = moodle_url::make_pluginfile_url($context->id, 'mod_lesson', 'mediafile', $lesson->timemodified, '/', ltrim($lesson->mediafile, '/'));
+        $url = moodle_url::make_pluginfile_url($context->id, 'mod_customlesson', 'mediafile', $lesson->timemodified, '/', ltrim($lesson->mediafile, '/'));
     }
     $title = $lesson->mediafile;
 
@@ -1754,7 +1754,7 @@ abstract class lesson_page extends lesson_base {
         $editor = new stdClass;
         $editor->id = $newpage->id;
         $editor->contents_editor = $properties->contents_editor;
-        $editor = file_postupdate_standard_editor($editor, 'contents', array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$maxbytes), $context, 'mod_lesson', 'page_contents', $editor->id);
+        $editor = file_postupdate_standard_editor($editor, 'contents', array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$maxbytes), $context, 'mod_customlesson', 'page_contents', $editor->id);
         $DB->update_record("lesson_pages", $editor);
 
         if ($newpage->prevpageid > 0) {
@@ -2116,7 +2116,7 @@ abstract class lesson_page extends lesson_base {
         if ($maxbytes === null) {
             $maxbytes = get_user_max_upload_file_size($context);
         }
-        $properties = file_postupdate_standard_editor($properties, 'contents', array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$maxbytes), $context, 'mod_lesson', 'page_contents', $properties->id);
+        $properties = file_postupdate_standard_editor($properties, 'contents', array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$maxbytes), $context, 'mod_customlesson', 'page_contents', $properties->id);
         $DB->update_record("lesson_pages", $properties);
 
         for ($i = 0; $i < $this->lesson->maxanswers; $i++) {
@@ -2374,7 +2374,7 @@ abstract class lesson_page extends lesson_base {
                 $this->properties->contentsformat = FORMAT_HTML;
             }
             $context = context_module::instance($PAGE->cm->id);
-            $contents = file_rewrite_pluginfile_urls($this->properties->contents, 'pluginfile.php', $context->id, 'mod_lesson', 'page_contents', $this->properties->id); // must do this BEFORE format_text()!!!!!!
+            $contents = file_rewrite_pluginfile_urls($this->properties->contents, 'pluginfile.php', $context->id, 'mod_customlesson', 'page_contents', $this->properties->id); // must do this BEFORE format_text()!!!!!!
             return format_text($contents, $this->properties->contentsformat, array('context'=>$context, 'noclean'=>true)); // page edit is marked with XSS, we want all content here
         } else {
             return '';

@@ -17,7 +17,7 @@
 /**
  * Redirects the user to either a lesson or to the lesson statistics
  *
- * @package   mod_lesson
+ * @package   mod_customlesson
  * @category  grade
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

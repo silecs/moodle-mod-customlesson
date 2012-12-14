@@ -39,7 +39,7 @@ require_sesskey();
 
 $context = context_module::instance($cm->id);
 $canmanage = has_capability('mod/lesson:manage', $context);
-$lessonoutput = $PAGE->get_renderer('mod_lesson');
+$lessonoutput = $PAGE->get_renderer('mod_customlesson');
 
 $url = new moodle_url('/mod/lesson/continue.php', array('id'=>$cm->id));
 $PAGE->set_url($url);

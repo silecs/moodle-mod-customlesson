@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Lesson conversion handler
  */
-class moodle1_mod_lesson_handler extends moodle1_mod_handler {
+class moodle1_mod_customlesson_handler extends moodle1_mod_handler {
     // @var array of answers, when there are more that 4 answers, we need to fix <jumpto>.
     protected $answers;
 
@@ -110,7 +110,7 @@ class moodle1_mod_lesson_handler extends moodle1_mod_handler {
         $contextid      = $this->converter->get_contextid(CONTEXT_MODULE, $this->moduleid);
 
         // get a fresh new file manager for this instance
-        $this->fileman = $this->converter->get_file_manager($contextid, 'mod_lesson');
+        $this->fileman = $this->converter->get_file_manager($contextid, 'mod_customlesson');
 
         // migrate referenced local media files
         if (!empty($data['mediafile']) and strpos($data['mediafile'], '://') === false) {

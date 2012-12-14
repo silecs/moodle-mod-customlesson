@@ -832,7 +832,7 @@ function lesson_get_import_export_formats($type) {
 /**
  * Serves the lesson attachments. Implements needed access control ;-)
  *
- * @package mod_lesson
+ * @package mod_customlesson
  * @category files
  * @param stdClass $course course object
  * @param stdClass $cm course module object
@@ -866,11 +866,11 @@ function lesson_pluginfile($course, $cm, $context, $filearea, $args, $forcedownl
         if (!$page = $DB->get_record('lesson_pages', array('id'=>$pageid))) {
             return false;
         }
-        $fullpath = "/$context->id/mod_lesson/$filearea/$pageid/".implode('/', $args);
+        $fullpath = "/$context->id/mod_customlesson/$filearea/$pageid/".implode('/', $args);
 
     } else if ($filearea === 'mediafile') {
         array_shift($args); // ignore itemid - caching only
-        $fullpath = "/$context->id/mod_lesson/$filearea/0/".implode('/', $args);
+        $fullpath = "/$context->id/mod_customlesson/$filearea/0/".implode('/', $args);
 
     } else {
         return false;
@@ -888,7 +888,7 @@ function lesson_pluginfile($course, $cm, $context, $filearea, $args, $forcedownl
 /**
  * Returns an array of file areas
  *
- * @package  mod_lesson
+ * @package  mod_customlesson
  * @category files
  * @todo MDL-31048 localize
  * @return array a list of available file areas
@@ -904,7 +904,7 @@ function lesson_get_file_areas() {
 /**
  * Returns a file_info_stored object for the file being requested here
  *
- * @package  mod_lesson
+ * @package  mod_customlesson
  * @category files
  * @global stdClass $CFG
  * @param file_browse $browser file browser instance
@@ -929,7 +929,7 @@ function lesson_get_file_info($browser, $areas, $course, $cm, $context, $fileare
     $filepath = is_null($filepath) ? '/' : $filepath;
     $filename = is_null($filename) ? '.' : $filename;
     $urlbase = $CFG->wwwroot.'/pluginfile.php';
-    if (!$storedfile = $fs->get_file($context->id, 'mod_lesson', $filearea, $itemid, $filepath, $filename)) {
+    if (!$storedfile = $fs->get_file($context->id, 'mod_customlesson', $filearea, $itemid, $filepath, $filename)) {
         return null;
     }
     return new file_info_stored($browser, $context, $storedfile, $urlbase, $filearea, $itemid, true, true, false);
@@ -965,9 +965,9 @@ function lesson_update_media_file($lessonid, $context, $draftitemid) {
     // Set the filestorage object.
     $fs = get_file_storage();
     // Save the file if it exists that is currently in the draft area.
-    file_save_draft_area_files($draftitemid, $context->id, 'mod_lesson', 'mediafile', 0);
+    file_save_draft_area_files($draftitemid, $context->id, 'mod_customlesson', 'mediafile', 0);
     // Get the file if it exists.
-    $files = $fs->get_area_files($context->id, 'mod_lesson', 'mediafile', 0, 'itemid, filepath, filename', false);
+    $files = $fs->get_area_files($context->id, 'mod_customlesson', 'mediafile', 0, 'itemid, filepath, filename', false);
     // Check that there is a file to process.
     if (count($files) == 1) {
         // Get the first (and only) file.

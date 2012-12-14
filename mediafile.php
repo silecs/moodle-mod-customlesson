@@ -50,7 +50,7 @@ $PAGE->set_url($url);
 $PAGE->set_pagelayout('popup');
 $PAGE->set_title($course->shortname);
 
-$lessonoutput = $PAGE->get_renderer('mod_lesson');
+$lessonoutput = $PAGE->get_renderer('mod_customlesson');
 
 // Get the mimetype
 $mimetype = mimeinfo("type", $lesson->mediafile);

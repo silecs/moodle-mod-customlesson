@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class mod_lesson_renderer extends plugin_renderer_base {
+class mod_customlesson_renderer extends plugin_renderer_base {
     /**
      * Returns the header for the lesson module
      *

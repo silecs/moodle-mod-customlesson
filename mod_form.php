@@ -30,11 +30,11 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once($CFG->dirroot.'/mod/lesson/locallib.php');
 
-class mod_lesson_mod_form extends moodleform_mod {
+class mod_customlesson_mod_form extends moodleform_mod {
 
     protected $course = null;
 
-    public function mod_lesson_mod_form($current, $section, $cm, $course) {
+    public function mod_customlesson_mod_form($current, $section, $cm, $course) {
         $this->course = $course;
         parent::moodleform_mod($current, $section, $cm, $course);
     }
@@ -325,7 +325,7 @@ class mod_lesson_mod_form extends moodleform_mod {
         if ($this->current->instance) {
             // editing existing instance - copy existing files into draft area
             $draftitemid = file_get_submitted_draft_itemid('mediafile');
-            file_prepare_draft_area($draftitemid, $this->context->id, 'mod_lesson', 'mediafile', 0, array('subdirs'=>0, 'maxbytes' => $this->course->maxbytes, 'maxfiles' => 1));
+            file_prepare_draft_area($draftitemid, $this->context->id, 'mod_customlesson', 'mediafile', 0, array('subdirs'=>0, 'maxbytes' => $this->course->maxbytes, 'maxfiles' => 1));
             $default_values['mediafile'] = $draftitemid;
         }
     }

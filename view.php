@@ -58,7 +58,7 @@ $PAGE->set_url($url);
 $context = context_module::instance($cm->id);
 $canmanage = has_capability('mod/lesson:manage', $context);
 
-$lessonoutput = $PAGE->get_renderer('mod_lesson');
+$lessonoutput = $PAGE->get_renderer('mod_customlesson');
 
 $reviewmode = false;
 $userhasgrade = $DB->count_records("lesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));

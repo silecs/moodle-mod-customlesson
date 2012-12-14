@@ -81,7 +81,7 @@ if ($action == 'reportoverview') {
     $PAGE->navbar->add(get_string('overview', 'lesson'));
 }
 
-$lessonoutput = $PAGE->get_renderer('mod_lesson');
+$lessonoutput = $PAGE->get_renderer('mod_customlesson');
 
 if (! $attempts = $DB->get_records('lesson_attempts', array('lessonid' => $lesson->id), 'timeseen')) {
     $nothingtodisplay = true;

@@ -85,7 +85,7 @@ if ($edit) {
     $data->pageid = $editpage->id;
     $data->id = $cm->id;
     $editoroptions['context'] = $context;
-    $data = file_prepare_standard_editor($data, 'contents', $editoroptions, $context, 'mod_lesson', 'page_contents',  $editpage->id);
+    $data = file_prepare_standard_editor($data, 'contents', $editoroptions, $context, 'mod_customlesson', 'page_contents',  $editpage->id);
     $mform->set_data($data);
     $PAGE->navbar->add(get_string('edit'), new moodle_url('/mod/lesson/edit.php', array('id'=>$id)));
     $PAGE->navbar->add(get_string('editingquestionpage', 'lesson', get_string($mform->qtypestring, 'lesson')));
@@ -124,7 +124,7 @@ if ($data = $mform->get_data()) {
     redirect(new moodle_url('/mod/lesson/edit.php', array('id'=>$cm->id)));
 }
 
-$lessonoutput = $PAGE->get_renderer('mod_lesson');
+$lessonoutput = $PAGE->get_renderer('mod_customlesson');
 echo $lessonoutput->header($lesson, $cm, '', false, null, get_string('edit', 'lesson'));
 $mform->display();
 echo $lessonoutput->footer();

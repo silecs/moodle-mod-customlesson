@@ -236,7 +236,7 @@ switch ($mode) {
                 $eventdata->smallmessage     = '';
 
                 // Required for messaging framework
-                $eventdata->component = 'mod_lesson';
+                $eventdata->component = 'mod_customlesson';
                 $eventdata->name = 'graded_essay';
 
                 message_send($eventdata);
@@ -302,7 +302,7 @@ switch ($mode) {
 // Log it
 add_to_log($course->id, 'lesson', 'view grade', "essay.php?id=$cm->id", get_string('manualgrading', 'lesson'), $cm->id);
 
-$lessonoutput = $PAGE->get_renderer('mod_lesson');
+$lessonoutput = $PAGE->get_renderer('mod_customlesson');
 echo $lessonoutput->header($lesson, $cm, 'essay', false, null, get_string('manualgrading', 'lesson'));
 
 switch ($mode) {
