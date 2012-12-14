@@ -99,7 +99,7 @@ switch ($mode) {
             redirect("$CFG->wwwroot/mod/customlesson/essay.php?id=$cm->id");
         }
         if ($form = $mform->get_data()) {
-            if (!$grades = $DB->get_records('lesson_grades', array("lessonid"=>$lesson->id, "userid"=>$attempt->userid), 'completed', '*', $attempt->retry, 1)) {
+            if (!$grades = $DB->get_records('customlesson_grades', array("lessonid"=>$lesson->id, "userid"=>$attempt->userid), 'completed', '*', $attempt->retry, 1)) {
                 print_error('cannotfindgrade', 'lesson');
             }
 
@@ -199,7 +199,7 @@ switch ($mode) {
                 $a = new stdClass;
 
                 // Set the grade
-                $grades = $DB->get_records('lesson_grades', array("lessonid"=>$lesson->id, "userid"=>$attempt->userid), 'completed', '*', $attempt->retry, 1);
+                $grades = $DB->get_records('customlesson_grades', array("lessonid"=>$lesson->id, "userid"=>$attempt->userid), 'completed', '*', $attempt->retry, 1);
                 $grade  = current($grades);
                 $a->newgrade = $grade->grade;
 

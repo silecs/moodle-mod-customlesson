@@ -92,7 +92,7 @@ if (isset($USER->modattempts[$lesson->id])) {
     } else {
         $nretakes = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));
         $nretakes--; // make sure we are looking at the right try.
-        $attempts = $DB->get_records("lesson_attempts", array("lessonid"=>$lesson->id, "userid"=>$USER->id, "retry"=>$nretakes), "timeseen", "id, pageid");
+        $attempts = $DB->get_records("customlesson_attempts", array("lessonid"=>$lesson->id, "userid"=>$USER->id, "retry"=>$nretakes), "timeseen", "id, pageid");
         $found = false;
         $temppageid = 0;
         foreach($attempts as $attempt) {

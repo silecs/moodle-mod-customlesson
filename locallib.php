@@ -113,7 +113,7 @@ function lesson_unseen_question_jump($lesson, $user, $pageid) {
     }
 
     // get all the lesson_attempts aka what the user has seen
-    if ($viewedpages = $DB->get_records("lesson_attempts", array("lessonid"=>$lesson->id, "userid"=>$user, "retry"=>$retakes), "timeseen DESC")) {
+    if ($viewedpages = $DB->get_records("customlesson_attempts", array("lessonid"=>$lesson->id, "userid"=>$user, "retry"=>$retakes), "timeseen DESC")) {
         foreach($viewedpages as $viewed) {
             $seenpages[] = $viewed->pageid;
         }
@@ -1011,7 +1011,7 @@ class lesson extends lesson_base {
         if ($userid === null) {
             $params['userid'] = $USER->id;
         }
-        return $DB->get_records('lesson_attempts', $params, 'timeseen ASC');
+        return $DB->get_records('customlesson_attempts', $params, 'timeseen ASC');
     }
 
     /**
@@ -1212,7 +1212,7 @@ class lesson extends lesson_base {
         global $USER, $DB;
         // clock code
         // get time information for this user
-        if (!$timer = $DB->get_records('lesson_timer', array ("lessonid" => $this->properties->id, "userid" => $USER->id), 'starttime DESC', '*', 0, 1)) {
+        if (!$timer = $DB->get_records('customlesson_timer', array ("lessonid" => $this->properties->id, "userid" => $USER->id), 'starttime DESC', '*', 0, 1)) {
             print_error('cannotfindtimer', 'lesson');
         } else {
             $timer = current($timer); // this will get the latest start time record
@@ -1872,7 +1872,7 @@ abstract class lesson_page extends lesson_base {
         global $DB;
         if ($this->answers === null) {
             $this->answers = array();
-            $answers = $DB->get_records('lesson_answers', array('pageid'=>$this->properties->id, 'lessonid'=>$this->lesson->id), 'id');
+            $answers = $DB->get_records('customlesson_answers', array('pageid'=>$this->properties->id, 'lessonid'=>$this->lesson->id), 'id');
             if (!$answers) {
                 // It is possible that a lesson upgraded from Moodle 1.9 still
                 // contains questions without any answers [MDL-25632].
@@ -2682,7 +2682,7 @@ class lesson_page_type_manager {
      */
     public function load_all_pages(lesson $lesson) {
         global $DB;
-        if (!($pages =$DB->get_records('lesson_pages', array('lessonid'=>$lesson->id)))) {
+        if (!($pages =$DB->get_records('customlesson_pages', array('lessonid'=>$lesson->id)))) {
             print_error('cannotfindpages', 'lesson');
         }
         foreach ($pages as $key=>$page) {

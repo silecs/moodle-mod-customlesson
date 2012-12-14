@@ -160,7 +160,7 @@ class lesson_page_type_branchtable extends lesson_page {
         } else {
             $branchflag = 0;
         }
-        if ($grades = $DB->get_records("lesson_grades", array("lessonid" => $this->lesson->id, "userid" => $USER->id), "grade DESC")) {
+        if ($grades = $DB->get_records("customlesson_grades", array("lessonid" => $this->lesson->id, "userid" => $USER->id), "grade DESC")) {
             $retries = count($grades);
         } else {
             $retries = 0;

@@ -83,15 +83,15 @@ if ($action == 'reportoverview') {
 
 $lessonoutput = $PAGE->get_renderer('mod_customlesson');
 
-if (! $attempts = $DB->get_records('lesson_attempts', array('lessonid' => $lesson->id), 'timeseen')) {
+if (! $attempts = $DB->get_records('customlesson_attempts', array('lessonid' => $lesson->id), 'timeseen')) {
     $nothingtodisplay = true;
 }
 
-if (! $grades = $DB->get_records('lesson_grades', array('lessonid' => $lesson->id), 'completed')) {
+if (! $grades = $DB->get_records('customlesson_grades', array('lessonid' => $lesson->id), 'completed')) {
     $grades = array();
 }
 
-if (! $times = $DB->get_records('lesson_timer', array('lessonid' => $lesson->id), 'starttime')) {
+if (! $times = $DB->get_records('customlesson_timer', array('lessonid' => $lesson->id), 'starttime')) {
     $times = array();
 }
 
@@ -467,7 +467,7 @@ if ($action === 'delete') {
             // there is no userid, so set these vars and display stats.
             $answerpage->grayout = 0;
             $useranswer = NULL;
-        } elseif ($useranswers = $DB->get_records("lesson_attempts",array("lessonid"=>$lesson->id, "userid"=>$userid, "retry"=>$try,"pageid"=>$page->id), "timeseen")) {
+        } elseif ($useranswers = $DB->get_records("customlesson_attempts",array("lessonid"=>$lesson->id, "userid"=>$userid, "retry"=>$try,"pageid"=>$page->id), "timeseen")) {
             // get the user's answer for this page
             // need to find the right one
             $i = 0;

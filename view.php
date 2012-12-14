@@ -106,7 +106,7 @@ if (!$canmanage) {
             // check for the timespent condition
             if ($conditions->timespent) {
                 $timespent = false;
-                if ($attempttimes = $DB->get_records('lesson_timer', array("userid"=>$USER->id, "lessonid"=>$dependentlesson->id))) {
+                if ($attempttimes = $DB->get_records('customlesson_timer', array("userid"=>$USER->id, "lessonid"=>$dependentlesson->id))) {
                     // go through all the times and test to see if any of them satisfy the condition
                     foreach($attempttimes as $attempttime) {
                         $duration = $attempttime->lessontime - $attempttime->starttime;
@@ -123,7 +123,7 @@ if (!$canmanage) {
             // check for the gradebetterthan condition
             if($conditions->gradebetterthan) {
                 $gradebetterthan = false;
-                if ($studentgrades = $DB->get_records('lesson_grades', array("userid"=>$USER->id, "lessonid"=>$dependentlesson->id))) {
+                if ($studentgrades = $DB->get_records('customlesson_grades', array("userid"=>$USER->id, "lessonid"=>$dependentlesson->id))) {
                     // go through all the grades and test to see if any of them satisfy the condition
                     foreach($studentgrades as $studentgrade) {
                         if ($studentgrade->grade >= $conditions->gradebetterthan) {
@@ -209,7 +209,7 @@ if (empty($pageid)) {
         }
     }
 
-    if ($branchtables = $DB->get_records('lesson_branch', array("lessonid"=>$lesson->id, "userid"=>$USER->id, "retry"=>$retries), 'timeseen DESC')) {
+    if ($branchtables = $DB->get_records('customlesson_branch', array("lessonid"=>$lesson->id, "userid"=>$USER->id, "retry"=>$retries), 'timeseen DESC')) {
         // in here, user has viewed a branch table
         $lastbranchtable = current($branchtables);
         if (count($corrrectattempts)>0) {
@@ -459,7 +459,7 @@ if ($pageid != LESSON_EOL) {
             $grade->completed = time();
             if (!$lesson->practice) {
                 if (isset($USER->modattempts[$lesson->id])) { // if reviewing, make sure update old grade record
-                    if (!$grades = $DB->get_records("lesson_grades", array("lessonid" => $lesson->id, "userid" => $USER->id), "completed DESC", '*', 0, 1)) {
+                    if (!$grades = $DB->get_records("customlesson_grades", array("lessonid" => $lesson->id, "userid" => $USER->id), "completed DESC", '*', 0, 1)) {
                         print_error('cannotfindgrade', 'lesson');
                     }
                     $oldgrade = array_shift($grades);
@@ -507,9 +507,9 @@ if ($pageid != LESSON_EOL) {
     // high scores code
     if ($lesson->highscores && !$canmanage && !$lesson->practice) {
         $lessoncontent .= $OUTPUT->box_start('center');
-        if ($grades = $DB->get_records("lesson_grades", array("lessonid" => $lesson->id), "completed")) {
+        if ($grades = $DB->get_records("customlesson_grades", array("lessonid" => $lesson->id), "completed")) {
             $madeit = false;
-            if ($highscores = $DB->get_records("lesson_high_scores", array("lessonid" => $lesson->id))) {
+            if ($highscores = $DB->get_records("customlesson_high_scores", array("lessonid" => $lesson->id))) {
                 // get all the high scores into an array
                 $topscores = array();
                 $uniquescores = array();
