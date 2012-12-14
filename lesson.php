@@ -30,7 +30,7 @@
  **/
 
 require_once("../../config.php");
-require_once($CFG->dirroot.'/mod/lesson/locallib.php');
+require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 
 $id     = required_param('id', PARAM_INT);         // Course Module ID
 $action = required_param('action', PARAM_ALPHA);   // Action
@@ -42,11 +42,11 @@ $lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*'
 
 require_login($course, false, $cm);
 
-$url = new moodle_url('/mod/lesson/lesson.php', array('id'=>$id,'action'=>$action));
+$url = new moodle_url('/mod/customlesson/lesson.php', array('id'=>$id,'action'=>$action));
 $PAGE->set_url($url);
 
 $context = context_module::instance($cm->id);
-require_capability('mod/lesson:edit', $context);
+require_capability('mod/customlesson:edit', $context);
 require_sesskey();
 
 $lessonoutput = $PAGE->get_renderer('mod_customlesson');
@@ -115,7 +115,7 @@ switch ($action) {
     case 'delete':
         $thispage = $lesson->load_page($pageid);
         $thispage->delete();
-        redirect("$CFG->wwwroot/mod/lesson/edit.php?id=$cm->id");
+        redirect("$CFG->wwwroot/mod/customlesson/edit.php?id=$cm->id");
         break;
     case 'moveit':
         $after = (int)required_param('after', PARAM_INT); // target page
@@ -123,7 +123,7 @@ switch ($action) {
         $pages = $lesson->load_all_pages();
 
         if (!array_key_exists($pageid, $pages) || ($after!=0 && !array_key_exists($after, $pages))) {
-            print_error('cannotfindpages', 'lesson', "$CFG->wwwroot/mod/lesson/edit.php?id=$cm->id");
+            print_error('cannotfindpages', 'lesson', "$CFG->wwwroot/mod/customlesson/edit.php?id=$cm->id");
         }
         $pagetomove = clone($pages[$pageid]);
         unset($pages[$pageid]);
@@ -159,7 +159,7 @@ switch ($action) {
             }
         }
 
-        redirect("$CFG->wwwroot/mod/lesson/edit.php?id=$cm->id");
+        redirect("$CFG->wwwroot/mod/customlesson/edit.php?id=$cm->id");
         break;
     default:
         print_error('unknowaction');

@@ -50,7 +50,7 @@ class lesson_page_type_numerical extends lesson_page {
     }
     public function display($renderer, $attempt) {
         global $USER, $CFG, $PAGE;
-        $mform = new lesson_display_answer_form_shortanswer($CFG->wwwroot.'/mod/lesson/continue.php', array('contents'=>$this->get_contents(), 'lessonid'=>$this->lesson->id));
+        $mform = new lesson_display_answer_form_shortanswer($CFG->wwwroot.'/mod/customlesson/continue.php', array('contents'=>$this->get_contents(), 'lessonid'=>$this->lesson->id));
         $data = new stdClass;
         $data->id = $PAGE->cm->id;
         $data->pageid = $this->properties->id;
@@ -64,7 +64,7 @@ class lesson_page_type_numerical extends lesson_page {
         global $CFG;
         $result = parent::check_answer();
 
-        $mform = new lesson_display_answer_form_shortanswer($CFG->wwwroot.'/mod/lesson/continue.php', array('contents'=>$this->get_contents()));
+        $mform = new lesson_display_answer_form_shortanswer($CFG->wwwroot.'/mod/customlesson/continue.php', array('contents'=>$this->get_contents()));
         $data = $mform->get_data();
         require_sesskey();
 

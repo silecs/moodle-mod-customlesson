@@ -51,7 +51,7 @@ class lesson_page_type_essay extends lesson_page {
     public function display($renderer, $attempt) {
         global $PAGE, $CFG, $USER;
 
-        $mform = new lesson_display_answer_form_essay($CFG->wwwroot.'/mod/lesson/continue.php', array('contents'=>$this->get_contents(), 'lessonid'=>$this->lesson->id));
+        $mform = new lesson_display_answer_form_essay($CFG->wwwroot.'/mod/customlesson/continue.php', array('contents'=>$this->get_contents(), 'lessonid'=>$this->lesson->id));
 
         $data = new stdClass;
         $data->id = $PAGE->cm->id;
@@ -87,12 +87,12 @@ class lesson_page_type_essay extends lesson_page {
         $result = parent::check_answer();
         $result->isessayquestion = true;
 
-        $mform = new lesson_display_answer_form_essay($CFG->wwwroot.'/mod/lesson/continue.php', array('contents'=>$this->get_contents()));
+        $mform = new lesson_display_answer_form_essay($CFG->wwwroot.'/mod/customlesson/continue.php', array('contents'=>$this->get_contents()));
         $data = $mform->get_data();
         require_sesskey();
 
         if (!$data) {
-            redirect(new moodle_url('/mod/lesson/view.php', array('id'=>$PAGE->cm->id, 'pageid'=>$this->properties->id)));
+            redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$PAGE->cm->id, 'pageid'=>$this->properties->id)));
         }
 
         if (is_array($data->answer)) {

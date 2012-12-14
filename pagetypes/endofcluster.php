@@ -63,7 +63,7 @@ class lesson_page_type_endofcluster extends lesson_page {
         } else {
             $nextpageid = $this->properties->nextpageid;
         }
-        redirect(new moodle_url('/mod/lesson/view.php', array('id'=>$PAGE->cm->id,'pageid'=>$nextpageid)));
+        redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$PAGE->cm->id,'pageid'=>$nextpageid)));
     }
     public function get_grayout() {
         return 1;
@@ -121,7 +121,7 @@ class lesson_page_type_endofcluster extends lesson_page {
     public function add_page_link($previd) {
         global $PAGE, $CFG;
         if ($previd != 0) {
-            $addurl = new moodle_url('/mod/lesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>LESSON_PAGE_ENDOFCLUSTER));
+            $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>LESSON_PAGE_ENDOFCLUSTER));
             return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_ENDOFCLUSTER, 'name'=>get_string('addendofcluster', 'lesson'));
         }
         return false;
@@ -196,6 +196,6 @@ class lesson_add_page_form_endofcluster extends lesson_add_page_form_base {
         $newanswer->jumpto = LESSON_NEXTPAGE;
         $newanswerid = $DB->insert_record("lesson_answers", $newanswer);
         $lesson->add_message(get_string('addedendofcluster', 'lesson'), 'notifysuccess');
-        redirect($CFG->wwwroot.'/mod/lesson/edit.php?id='.$PAGE->cm->id);
+        redirect($CFG->wwwroot.'/mod/customlesson/edit.php?id='.$PAGE->cm->id);
     }
 }

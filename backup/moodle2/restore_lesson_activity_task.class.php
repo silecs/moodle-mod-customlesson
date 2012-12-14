@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/lesson/backup/moodle2/restore_lesson_stepslib.php'); // Because it exists (must)
+require_once($CFG->dirroot . '/mod/customlesson/backup/moodle2/restore_lesson_stepslib.php'); // Because it exists (must)
 
 /**
  * lesson restore task that provides all the settings and steps to perform one
@@ -66,15 +66,15 @@ class restore_lesson_activity_task extends restore_activity_task {
     static public function define_decode_rules() {
         $rules = array();
 
-        $rules[] = new restore_decode_rule('LESSONEDIT', '/mod/lesson/edit.php?id=$1', 'course_module');
-        $rules[] = new restore_decode_rule('LESSONESAY', '/mod/lesson/essay.php?id=$1', 'course_module');
-        $rules[] = new restore_decode_rule('LESSONHIGHSCORES', '/mod/lesson/highscores.php?id=$1', 'course_module');
-        $rules[] = new restore_decode_rule('LESSONREPORT', '/mod/lesson/report.php?id=$1', 'course_module');
-        $rules[] = new restore_decode_rule('LESSONMEDIAFILE', '/mod/lesson/mediafile.php?id=$1', 'course_module');
-        $rules[] = new restore_decode_rule('LESSONVIEWBYID', '/mod/lesson/view.php?id=$1', 'course_module');
-        $rules[] = new restore_decode_rule('LESSONINDEX', '/mod/lesson/index.php?id=$1', 'course');
-        $rules[] = new restore_decode_rule('LESSONVIEWPAGE', '/mod/lesson/view.php?id=$1&pageid=$2', array('course_module', 'lesson_page'));
-        $rules[] = new restore_decode_rule('LESSONEDITPAGE', '/mod/lesson/edit.php?id=$1&pageid=$2', array('course_module', 'lesson_page'));
+        $rules[] = new restore_decode_rule('LESSONEDIT', '/mod/customlesson/edit.php?id=$1', 'course_module');
+        $rules[] = new restore_decode_rule('LESSONESAY', '/mod/customlesson/essay.php?id=$1', 'course_module');
+        $rules[] = new restore_decode_rule('LESSONHIGHSCORES', '/mod/customlesson/highscores.php?id=$1', 'course_module');
+        $rules[] = new restore_decode_rule('LESSONREPORT', '/mod/customlesson/report.php?id=$1', 'course_module');
+        $rules[] = new restore_decode_rule('LESSONMEDIAFILE', '/mod/customlesson/mediafile.php?id=$1', 'course_module');
+        $rules[] = new restore_decode_rule('LESSONVIEWBYID', '/mod/customlesson/view.php?id=$1', 'course_module');
+        $rules[] = new restore_decode_rule('LESSONINDEX', '/mod/customlesson/index.php?id=$1', 'course');
+        $rules[] = new restore_decode_rule('LESSONVIEWPAGE', '/mod/customlesson/view.php?id=$1&pageid=$2', array('course_module', 'lesson_page'));
+        $rules[] = new restore_decode_rule('LESSONEDITPAGE', '/mod/customlesson/edit.php?id=$1&pageid=$2', array('course_module', 'lesson_page'));
 
         return $rules;
 

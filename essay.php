@@ -25,8 +25,8 @@
  **/
 
 require_once('../../config.php');
-require_once($CFG->dirroot.'/mod/lesson/locallib.php');
-require_once($CFG->dirroot.'/mod/lesson/essay_form.php');
+require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
+require_once($CFG->dirroot.'/mod/customlesson/essay_form.php');
 require_once($CFG->libdir.'/eventslib.php');
 
 $id   = required_param('id', PARAM_INT);             // Course Module ID
@@ -38,9 +38,9 @@ $lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*'
 
 require_login($course, false, $cm);
 $context = context_module::instance($cm->id);
-require_capability('mod/lesson:edit', $context);
+require_capability('mod/customlesson:edit', $context);
 
-$url = new moodle_url('/mod/lesson/essay.php', array('id'=>$id));
+$url = new moodle_url('/mod/customlesson/essay.php', array('id'=>$id));
 if ($mode !== 'display') {
     $url->param('mode', $mode);
 }
@@ -96,7 +96,7 @@ switch ($mode) {
 
         $mform = new essay_grading_form(null, array('scoreoptions'=>$scoreoptions, 'user'=>$user));
         if ($mform->is_cancelled()) {
-            redirect("$CFG->wwwroot/mod/lesson/essay.php?id=$cm->id");
+            redirect("$CFG->wwwroot/mod/customlesson/essay.php?id=$cm->id");
         }
         if ($form = $mform->get_data()) {
             if (!$grades = $DB->get_records('lesson_grades', array("lessonid"=>$lesson->id, "userid"=>$attempt->userid), 'completed', '*', $attempt->retry, 1)) {
@@ -137,7 +137,7 @@ switch ($mode) {
             // update central gradebook
             lesson_update_grades($lesson, $grade->userid);
 
-            redirect(new moodle_url('/mod/lesson/essay.php', array('id'=>$cm->id)));
+            redirect(new moodle_url('/mod/customlesson/essay.php', array('id'=>$cm->id)));
         } else {
             print_error('invalidformdata');
         }
@@ -248,7 +248,7 @@ switch ($mode) {
             }
         }
         $lesson->add_message(get_string('emailsuccess', 'lesson'), 'notifysuccess');
-        redirect(new moodle_url('/mod/lesson/essay.php', array('id'=>$cm->id)));
+        redirect(new moodle_url('/mod/customlesson/essay.php', array('id'=>$cm->id)));
         break;
     case 'display':  // Default view - get the necessary data
     default:
@@ -355,7 +355,7 @@ switch ($mode) {
                     $essayinfo = unserialize($essay->useranswer);
 
                     // link for each essay
-                    $url = new moodle_url('/mod/lesson/essay.php', array('id'=>$cm->id,'mode'=>'grade','attemptid'=>$essay->id,'sesskey'=>sesskey()));
+                    $url = new moodle_url('/mod/customlesson/essay.php', array('id'=>$cm->id,'mode'=>'grade','attemptid'=>$essay->id,'sesskey'=>sesskey()));
                     $attributes = array();
                     // Different colors for all the states of an essay (graded, if sent, not graded)
                     if (!$essayinfo->graded) {
@@ -369,14 +369,14 @@ switch ($mode) {
                 }
             }
             // email link for this user
-            $url = new moodle_url('/mod/lesson/essay.php', array('id'=>$cm->id,'mode'=>'email','userid'=>$userid,'sesskey'=>sesskey()));
+            $url = new moodle_url('/mod/customlesson/essay.php', array('id'=>$cm->id,'mode'=>'email','userid'=>$userid,'sesskey'=>sesskey()));
             $emaillink = html_writer::link($url, get_string('emailgradedessays', 'lesson'));
 
             $table->data[] = array($OUTPUT->user_picture($users[$userid], array('courseid'=>$course->id)).$studentname, implode("<br />", $essaylinks), $emaillink);
         }
 
         // email link for all users
-        $url = new moodle_url('/mod/lesson/essay.php', array('id'=>$cm->id,'mode'=>'email','sesskey'=>sesskey()));
+        $url = new moodle_url('/mod/customlesson/essay.php', array('id'=>$cm->id,'mode'=>'email','sesskey'=>sesskey()));
         $emailalllink = html_writer::link($url, get_string('emailallgradedessays', 'lesson'));
 
         $table->data[] = array(' ', ' ', $emailalllink);

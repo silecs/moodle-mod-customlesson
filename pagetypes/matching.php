@@ -91,7 +91,7 @@ class lesson_page_type_matching extends lesson_page {
             $useranswers = array();
         }
 
-        $action = $CFG->wwwroot.'/mod/lesson/continue.php';
+        $action = $CFG->wwwroot.'/mod/customlesson/continue.php';
         $params = array('answers'=>$answers, 'useranswers'=>$useranswers, 'responseoptions'=>$responseoptions, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents());
         $mform = new lesson_display_answer_form_matching($action, $params);
         return $mform;
@@ -156,7 +156,7 @@ class lesson_page_type_matching extends lesson_page {
         require_sesskey();
 
         if (!$data) {
-            redirect(new moodle_url('/mod/lesson/view.php', array('id'=>$PAGE->cm->id, 'pageid'=>$this->properties->id)));
+            redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$PAGE->cm->id, 'pageid'=>$this->properties->id)));
         }
 
         $response = $data->response;

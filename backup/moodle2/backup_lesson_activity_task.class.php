@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/lesson/backup/moodle2/backup_lesson_stepslib.php');
+require_once($CFG->dirroot . '/mod/customlesson/backup/moodle2/backup_lesson_stepslib.php');
 
 /**
  * Provides the steps to perform one complete backup of the Lesson instance
@@ -58,7 +58,7 @@ class backup_lesson_activity_task extends backup_activity_task {
     static public function encode_content_links($content) {
         global $CFG;
 
-        $base = preg_quote($CFG->wwwroot.'/mod/lesson','#');
+        $base = preg_quote($CFG->wwwroot.'/mod/customlesson','#');
 
         // Provides the interface for overall authoring of lessons
         $pattern = '#'.$base.'/edit\.php\?id=([0-9]+)#';

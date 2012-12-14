@@ -181,7 +181,7 @@ class moodle1_mod_customlesson_handler extends moodle1_mod_handler {
         }
 
         // buffer for conversion of <jumpto> in line with
-        // upgrade step 2010121400 from mod/lesson/db/upgrade.php
+        // upgrade step 2010121400 from mod/customlesson/db/upgrade.php
         $this->answers[] = $data;
     }
 

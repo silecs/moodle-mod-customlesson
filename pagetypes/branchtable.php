@@ -130,7 +130,7 @@ class lesson_page_type_branchtable extends lesson_page {
             $params['pageid'] = $this->properties->id;
             $params['sesskey'] = sesskey();
             $params['jumpto'] = $answer->jumpto;
-            $url = new moodle_url('/mod/lesson/continue.php', $params);
+            $url = new moodle_url('/mod/customlesson/continue.php', $params);
             $buttons[] = $renderer->single_button($url, strip_tags(format_text($answer->answer, FORMAT_MOODLE, $options)));
             $i++;
         }
@@ -178,7 +178,7 @@ class lesson_page_type_branchtable extends lesson_page {
         //  this is called when jumping to random from a branch table
         $context = context_module::instance($PAGE->cm->id);
         if($newpageid == LESSON_UNSEENBRANCHPAGE) {
-            if (has_capability('mod/lesson:manage', $context)) {
+            if (has_capability('mod/customlesson:manage', $context)) {
                  $newpageid = LESSON_NEXTPAGE;
             } else {
                  $newpageid = lesson_unseen_question_jump($this->lesson, $USER->id, $this->properties->id);  // this may return 0
@@ -200,7 +200,7 @@ class lesson_page_type_branchtable extends lesson_page {
             $newpageid = lesson_unseen_branch_jump($this->lesson, $USER->id);
         }
         // no need to record anything in lesson_attempts
-        redirect(new moodle_url('/mod/lesson/view.php', array('id'=>$PAGE->cm->id,'pageid'=>$newpageid)));
+        redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$PAGE->cm->id,'pageid'=>$newpageid)));
     }
 
     public function display_answers(html_table $table) {
@@ -258,7 +258,7 @@ class lesson_page_type_branchtable extends lesson_page {
     }
     public function add_page_link($previd) {
         global $PAGE, $CFG;
-        $addurl = new moodle_url('/mod/lesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'qtype'=>LESSON_PAGE_BRANCHTABLE));
+        $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'qtype'=>LESSON_PAGE_BRANCHTABLE));
         return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_BRANCHTABLE, 'name'=>get_string('addabranchtable', 'lesson'));
     }
     protected function get_displayinmenublock() {

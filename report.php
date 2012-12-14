@@ -25,7 +25,7 @@
  **/
 
 require_once('../../config.php');
-require_once($CFG->dirroot.'/mod/lesson/locallib.php');
+require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 
 $id     = required_param('id', PARAM_INT);    // Course Module ID
 $pageid = optional_param('pageid', NULL, PARAM_INT);    // Lesson Page ID
@@ -39,7 +39,7 @@ $lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*'
 require_login($course, false, $cm);
 
 $context = context_module::instance($cm->id);
-require_capability('mod/lesson:manage', $context);
+require_capability('mod/customlesson:manage', $context);
 
 $ufields = user_picture::fields('u'); // These fields are enough
 $params = array("lessonid" => $lesson->id);
@@ -68,7 +68,7 @@ if (! $students = $DB->get_records_sql($sql, $params)) {
     $nothingtodisplay = true;
 }
 
-$url = new moodle_url('/mod/lesson/report.php', array('id'=>$id));
+$url = new moodle_url('/mod/customlesson/report.php', array('id'=>$id));
 if ($action !== 'reportoverview') {
     $url->param('action', $action);
 }
@@ -104,7 +104,7 @@ if ($nothingtodisplay) {
 
 if ($action === 'delete') {
     /// Process any form data before fetching attempts, grades and times
-    if (has_capability('mod/lesson:edit', $context) and $form = data_submitted() and confirm_sesskey()) {
+    if (has_capability('mod/customlesson:edit', $context) and $form = data_submitted() and confirm_sesskey()) {
     /// Cycle through array of userids with nested arrays of tries
         if (!empty($form->attempts)) {
             foreach ($form->attempts as $userid => $tries) {
@@ -254,7 +254,7 @@ if ($action === 'delete') {
             $studentname = "{$student->lastname},&nbsp;$student->firstname";
             foreach ($tries as $try) {
             // start to build up the checkbox and link
-                if (has_capability('mod/lesson:edit', $context)) {
+                if (has_capability('mod/customlesson:edit', $context)) {
                     $temp = '<input type="checkbox" id="attempts" name="attempts['.$try['userid'].']['.$try['try'].']" /> ';
                 } else {
                     $temp = '';
@@ -307,13 +307,13 @@ if ($action === 'delete') {
         }
     }
     // print it all out !
-    if (has_capability('mod/lesson:edit', $context)) {
+    if (has_capability('mod/customlesson:edit', $context)) {
         echo  "<form id=\"theform\" method=\"post\" action=\"report.php\">\n
                <input type=\"hidden\" name=\"sesskey\" value=\"".sesskey()."\" />\n
                <input type=\"hidden\" name=\"id\" value=\"$cm->id\" />\n";
     }
     echo html_writer::table($table);
-    if (has_capability('mod/lesson:edit', $context)) {
+    if (has_capability('mod/customlesson:edit', $context)) {
         $checklinks  = '<a href="javascript: checkall();">'.get_string('selectall').'</a> / ';
         $checklinks .= '<a href="javascript: checknone();">'.get_string('deselectall').'</a>';
         $checklinks .= html_writer::label('action', 'menuaction', false, array('class' => 'accesshide'));

@@ -26,7 +26,7 @@
 
 /** include required files */
 require_once('../../config.php');
-require_once($CFG->dirroot.'/mod/lesson/locallib.php');
+require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 
 $id      = required_param('id', PARAM_INT);             // Course Module ID
 $mode    = optional_param('mode', '', PARAM_ALPHA);
@@ -38,7 +38,7 @@ $lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*'
 
 require_login($course, false, $cm);
 
-$url = new moodle_url('/mod/lesson/highscores.php', array('id'=>$id));
+$url = new moodle_url('/mod/customlesson/highscores.php', array('id'=>$id));
 if ($mode !== '') {
     $url->param('mode', $mode);
 }
@@ -58,7 +58,7 @@ switch ($mode) {
         break;
 
     case 'save':
-        if (confirm_sesskey() and $form = data_submitted($CFG->wwwroot.'/mod/lesson/view.php')) {
+        if (confirm_sesskey() and $form = data_submitted($CFG->wwwroot.'/mod/customlesson/view.php')) {
             $name = trim(optional_param('name', '', PARAM_CLEAN));
 
             // Make sure it is not empty
@@ -149,7 +149,7 @@ switch ($mode) {
             add_to_log($course->id, 'lesson', 'update highscores', "highscores.php?id=$cm->id", $name, $cm->id);
 
             $lesson->add_message(get_string('postsuccess', 'lesson'), 'notifysuccess');
-            redirect("$CFG->wwwroot/mod/lesson/highscores.php?id=$cm->id&amp;link=1");
+            redirect("$CFG->wwwroot/mod/customlesson/highscores.php?id=$cm->id&amp;link=1");
         } else {
             print_error('invalidformdata');
         }
@@ -209,14 +209,14 @@ switch ($mode) {
             echo html_writer::table($table);
         }
 
-        if (!has_capability('mod/lesson:manage', $context)) {  // teachers don't need the links
+        if (!has_capability('mod/customlesson:manage', $context)) {  // teachers don't need the links
             echo $OUTPUT->box_start('mdl-align');
             echo $OUTPUT->box_start('lessonbutton standardbutton');
             if ($link) {
                 echo html_writer::link(new moodle_url('/course/view.php', array('id'=>$course->id)), get_string("returntocourse", "lesson"));
             } else {
                 echo html_writer::link(new moodle_url('/course/view.php', array('id'=>$course->id)), get_string("cancel", "lesson")). ' ';
-                echo html_writer::link(new moodle_url('/mod/lesson/view.php', array('id'=>$cm->id, 'viewed'=>'1')), get_string("startlesson", "lesson"));
+                echo html_writer::link(new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id, 'viewed'=>'1')), get_string("startlesson", "lesson"));
             }
             echo $OUTPUT->box_end();
             echo $OUTPUT->box_end();

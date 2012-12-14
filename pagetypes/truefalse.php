@@ -54,7 +54,7 @@ class lesson_page_type_truefalse extends lesson_page {
         shuffle($answers);
 
         $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents(), 'attempt'=>$attempt);
-        $mform = new lesson_display_answer_form_truefalse($CFG->wwwroot.'/mod/lesson/continue.php', $params);
+        $mform = new lesson_display_answer_form_truefalse($CFG->wwwroot.'/mod/customlesson/continue.php', $params);
         $data = new stdClass;
         $data->id = $PAGE->cm->id;
         $data->pageid = $this->properties->id;
@@ -70,7 +70,7 @@ class lesson_page_type_truefalse extends lesson_page {
         $answers = $this->get_answers();
         shuffle($answers);
         $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents());
-        $mform = new lesson_display_answer_form_truefalse($CFG->wwwroot.'/mod/lesson/continue.php', $params);
+        $mform = new lesson_display_answer_form_truefalse($CFG->wwwroot.'/mod/customlesson/continue.php', $params);
         $data = $mform->get_data();
         require_sesskey();
 

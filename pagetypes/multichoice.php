@@ -87,7 +87,7 @@ class lesson_page_type_multichoice extends lesson_page {
         global $CFG, $PAGE;
         $answers = $this->get_used_answers();
         shuffle($answers);
-        $action = $CFG->wwwroot.'/mod/lesson/continue.php';
+        $action = $CFG->wwwroot.'/mod/customlesson/continue.php';
         $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents(), 'attempt'=>$attempt);
         if ($this->properties->qoption) {
             $mform = new lesson_display_answer_form_multichoice_multianswer($action, $params);
@@ -111,7 +111,7 @@ class lesson_page_type_multichoice extends lesson_page {
 
         $answers = $this->get_used_answers();
         shuffle($answers);
-        $action = $CFG->wwwroot.'/mod/lesson/continue.php';
+        $action = $CFG->wwwroot.'/mod/customlesson/continue.php';
         $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents());
         if ($this->properties->qoption) {
             $mform = new lesson_display_answer_form_multichoice_multianswer($action, $params);
@@ -122,7 +122,7 @@ class lesson_page_type_multichoice extends lesson_page {
         require_sesskey();
 
         if (!$data) {
-            redirect(new moodle_url('/mod/lesson/view.php', array('id'=>$PAGE->cm->id, 'pageid'=>$this->properties->id)));
+            redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$PAGE->cm->id, 'pageid'=>$this->properties->id)));
         }
 
         if ($this->properties->qoption) {

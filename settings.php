@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-    require_once($CFG->dirroot.'/mod/lesson/locallib.php');
+    require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 
     /** Slideshow settings */
     $settings->add(new admin_setting_configtext('lesson_slideshowwidth', get_string('slideshowwidth', 'lesson'),

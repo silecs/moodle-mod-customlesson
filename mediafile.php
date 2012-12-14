@@ -28,7 +28,7 @@
  **/
 
 require_once('../../config.php');
-require_once($CFG->dirroot.'/mod/lesson/locallib.php');
+require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 
 $id = required_param('id', PARAM_INT);    // Course Module ID
 $printclose = optional_param('printclose', 0, PARAM_INT);
@@ -40,9 +40,9 @@ $lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*'
 require_login($course, false, $cm);
 
 $context = context_module::instance($cm->id);
-$canmanage = has_capability('mod/lesson:manage', $context);
+$canmanage = has_capability('mod/customlesson:manage', $context);
 
-$url = new moodle_url('/mod/lesson/mediafile.php', array('id'=>$id));
+$url = new moodle_url('/mod/customlesson/mediafile.php', array('id'=>$id));
 if ($printclose !== '') {
     $url->param('printclose', $printclose);
 }
@@ -89,7 +89,7 @@ if (!$canmanage) {
             $USER->lessonloggedin[$lesson->id] = true;
             if ($lesson->highscores) {
                 // Logged in - redirect so we go through all of these checks before starting the lesson.
-                redirect("$CFG->wwwroot/mod/lesson/view.php?id=$cm->id");
+                redirect("$CFG->wwwroot/mod/customlesson/view.php?id=$cm->id");
             }
         } else {
             echo $lessonoutput->header($lesson, $cm);

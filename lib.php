@@ -110,7 +110,7 @@ function lesson_update_instance($data, $mform) {
  */
 function lesson_delete_instance($id) {
     global $DB, $CFG;
-    require_once($CFG->dirroot . '/mod/lesson/locallib.php');
+    require_once($CFG->dirroot . '/mod/customlesson/locallib.php');
 
     $lesson = $DB->get_record("lesson", array("id"=>$id), '*', MUST_EXIST);
     $lesson = new lesson($lesson);
@@ -278,14 +278,14 @@ function lesson_print_overview($courses, &$htmlarray) {
             } else {
                 $class = '';
             }
-            $str = $OUTPUT->box("$strlesson: <a$class href=\"$CFG->wwwroot/mod/lesson/view.php?id=$lesson->coursemodule\">".
+            $str = $OUTPUT->box("$strlesson: <a$class href=\"$CFG->wwwroot/mod/customlesson/view.php?id=$lesson->coursemodule\">".
                              format_string($lesson->name).'</a>', 'name');
 
             // Deadline
             $str .= $OUTPUT->box(get_string('lessoncloseson', 'lesson', userdate($lesson->deadline)), 'info');
 
             // Attempt information
-            if (has_capability('mod/lesson:manage', context_module::instance($lesson->coursemodule))) {
+            if (has_capability('mod/customlesson:manage', context_module::instance($lesson->coursemodule))) {
                 // Number of user attempts
                 $attempts = $DB->count_records('lesson_attempts', array('lessonid'=>$lesson->id));
                 $str     .= $OUTPUT->box(get_string('xattempts', 'lesson', $attempts), 'info');
@@ -496,7 +496,7 @@ function lesson_grade_item_update($lesson, $grades=NULL) {
         }
     }
 
-    return grade_update('mod/lesson', $lesson->course, 'mod', 'lesson', $lesson->id, 0, $grades, $params);
+    return grade_update('mod/customlesson', $lesson->course, 'mod', 'lesson', $lesson->id, 0, $grades, $params);
 }
 
 /**
@@ -589,7 +589,7 @@ function lesson_process_pre_save(&$lesson) {
 function lesson_process_post_save(&$lesson) {
     global $DB, $CFG;
     require_once($CFG->dirroot.'/calendar/lib.php');
-    require_once($CFG->dirroot . '/mod/lesson/locallib.php');
+    require_once($CFG->dirroot . '/mod/customlesson/locallib.php');
 
     if ($events = $DB->get_records('event', array('modulename'=>'lesson', 'instance'=>$lesson->id))) {
         foreach($events as $event) {
@@ -764,31 +764,31 @@ function lesson_supports($feature) {
 function lesson_extend_settings_navigation($settings, $lessonnode) {
     global $PAGE, $DB;
 
-    $canedit = has_capability('mod/lesson:edit', $PAGE->cm->context);
+    $canedit = has_capability('mod/customlesson:edit', $PAGE->cm->context);
 
-    $url = new moodle_url('/mod/lesson/view.php', array('id'=>$PAGE->cm->id));
+    $url = new moodle_url('/mod/customlesson/view.php', array('id'=>$PAGE->cm->id));
     $lessonnode->add(get_string('preview', 'lesson'), $url);
 
     if ($canedit) {
-        $url = new moodle_url('/mod/lesson/edit.php', array('id'=>$PAGE->cm->id));
+        $url = new moodle_url('/mod/customlesson/edit.php', array('id'=>$PAGE->cm->id));
         $lessonnode->add(get_string('edit', 'lesson'), $url);
     }
 
-    if (has_capability('mod/lesson:manage', $PAGE->cm->context)) {
+    if (has_capability('mod/customlesson:manage', $PAGE->cm->context)) {
         $reportsnode = $lessonnode->add(get_string('reports', 'lesson'));
-        $url = new moodle_url('/mod/lesson/report.php', array('id'=>$PAGE->cm->id, 'action'=>'reportoverview'));
+        $url = new moodle_url('/mod/customlesson/report.php', array('id'=>$PAGE->cm->id, 'action'=>'reportoverview'));
         $reportsnode->add(get_string('overview', 'lesson'), $url);
-        $url = new moodle_url('/mod/lesson/report.php', array('id'=>$PAGE->cm->id, 'action'=>'reportdetail'));
+        $url = new moodle_url('/mod/customlesson/report.php', array('id'=>$PAGE->cm->id, 'action'=>'reportdetail'));
         $reportsnode->add(get_string('detailedstats', 'lesson'), $url);
     }
 
     if ($canedit) {
-        $url = new moodle_url('/mod/lesson/essay.php', array('id'=>$PAGE->cm->id));
+        $url = new moodle_url('/mod/customlesson/essay.php', array('id'=>$PAGE->cm->id));
         $lessonnode->add(get_string('manualgrading', 'lesson'), $url);
     }
 
     if ($PAGE->activityrecord->highscores) {
-        $url = new moodle_url('/mod/lesson/highscores.php', array('id'=>$PAGE->cm->id));
+        $url = new moodle_url('/mod/customlesson/highscores.php', array('id'=>$PAGE->cm->id));
         $lessonnode->add(get_string('highscores', 'lesson'), $url);
     }
 }

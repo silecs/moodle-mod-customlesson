@@ -56,12 +56,12 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         lesson_add_header_buttons($cm, $context, $extraeditbuttons, $lessonpageid);
         $output = $this->output->header();
 
-        if (has_capability('mod/lesson:manage', $context)) {
+        if (has_capability('mod/customlesson:manage', $context)) {
             $output .= $this->output->heading_with_help($activityname, 'overview', 'lesson');
 
             if (!empty($currenttab)) {
                 ob_start();
-                include($CFG->dirroot.'/mod/lesson/tabs.php');
+                include($CFG->dirroot.'/mod/customlesson/tabs.php');
                 $output .= ob_get_contents();
                 ob_end_clean();
             }
@@ -111,7 +111,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         global $CFG;
         $output  = $this->output->box_start('password-form');
         $output .= $this->output->box_start('generalbox boxaligncenter');
-        $output .=  '<form id="password" method="post" action="'.$CFG->wwwroot.'/mod/lesson/view.php" autocomplete="off">';
+        $output .=  '<form id="password" method="post" action="'.$CFG->wwwroot.'/mod/customlesson/view.php" autocomplete="off">';
         $output .=  '<fieldset class="invisiblefieldset center">';
         $output .=  '<input type="hidden" name="id" value="'. $this->page->cm->id .'" />';
         if ($failedattempt) {
@@ -169,11 +169,11 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $output = $this->output->box(get_string('youhaveseen','lesson'), 'generalbox boxaligncenter');
         $output .= $this->output->box_start('center');
 
-        $yeslink = html_writer::link(new moodle_url('/mod/lesson/view.php', array('id'=>$this->page->cm->id, 'pageid'=>$lastpageseenid, 'startlastseen'=>'yes')), get_string('yes'));
+        $yeslink = html_writer::link(new moodle_url('/mod/customlesson/view.php', array('id'=>$this->page->cm->id, 'pageid'=>$lastpageseenid, 'startlastseen'=>'yes')), get_string('yes'));
         $output .= html_writer::tag('span', $yeslink, array('class'=>'lessonbutton standardbutton'));
         $output .= '&nbsp;';
 
-        $nolink = html_writer::link(new moodle_url('/mod/lesson/view.php', array('id'=>$this->page->cm->id, 'pageid'=>$lesson->firstpageid, 'startlastseen'=>'no')), get_string('no'));
+        $nolink = html_writer::link(new moodle_url('/mod/customlesson/view.php', array('id'=>$this->page->cm->id, 'pageid'=>$lesson->firstpageid, 'startlastseen'=>'no')), get_string('no'));
         $output .= html_writer::tag('span', $nolink, array('class'=>'lessonbutton standardbutton'));
 
         $output .= $this->output->box_end();
@@ -220,12 +220,12 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $table->width = '80%';
         $table->data = array();
 
-        $canedit = has_capability('mod/lesson:edit', context_module::instance($this->page->cm->id));
+        $canedit = has_capability('mod/customlesson:edit', context_module::instance($this->page->cm->id));
 
         while ($pageid != 0) {
             $page = $lesson->load_page($pageid);
             $data = array();
-            $data[] = "<a href=\"$CFG->wwwroot/mod/lesson/edit.php?id=".$this->page->cm->id."&amp;mode=single&amp;pageid=".$page->id."\">".format_string($page->title,true).'</a>';
+            $data[] = "<a href=\"$CFG->wwwroot/mod/customlesson/edit.php?id=".$this->page->cm->id."&amp;mode=single&amp;pageid=".$page->id."\">".format_string($page->title,true).'</a>';
             $data[] = $qtypes[$page->qtype];
             $data[] = implode("<br />\n", $page->jumps);
             if ($canedit) {
@@ -255,7 +255,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $manager = lesson_page_type_manager::get($lesson);
         $qtypes = $manager->get_page_type_strings();
         $npages = count($lesson->load_all_pages());
-        $canedit = has_capability('mod/lesson:edit', context_module::instance($this->page->cm->id));
+        $canedit = has_capability('mod/customlesson:edit', context_module::instance($this->page->cm->id));
 
         $content = '';
         if ($canedit) {
@@ -340,7 +340,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
 
         $links = array();
 
-        $importquestionsurl = new moodle_url('/mod/lesson/import.php',array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
+        $importquestionsurl = new moodle_url('/mod/customlesson/import.php',array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
         $links[] = html_writer::link($importquestionsurl, get_string('importquestions', 'lesson'));
 
         $manager = lesson_page_type_manager::get($lesson);
@@ -348,7 +348,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
             $links[] = html_writer::link($link['addurl'], $link['name']);
         }
 
-        $addquestionurl = new moodle_url('/mod/lesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
+        $addquestionurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
         $links[] = html_writer::link($addquestionurl, get_string('addaquestionpagehere', 'lesson'));
 
         return $this->output->box(implode(" | \n", $links), 'addlinks');
@@ -366,7 +366,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $output = $this->output->heading(get_string("whatdofirst", "lesson"), 3);
         $links = array();
 
-        $importquestionsurl = new moodle_url('/mod/lesson/import.php',array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
+        $importquestionsurl = new moodle_url('/mod/customlesson/import.php',array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
         $links[] = html_writer::link($importquestionsurl, get_string('importquestions', 'lesson'));
 
         $manager = lesson_page_type_manager::get($lesson);
@@ -375,7 +375,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
             $links[] = html_writer::link($link['addurl'], $link['name']);
         }
 
-        $addquestionurl = new moodle_url('/mod/lesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid, 'firstpage'=>1));
+        $addquestionurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid, 'firstpage'=>1));
         $links[] = html_writer::link($addquestionurl, get_string('addaquestionpage', 'lesson'));
 
         return $this->output->box($output.'<p>'.implode('</p><p>', $links).'</p>', 'generalbox firstpageoptions');
@@ -395,16 +395,16 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $actions = array();
 
         if ($printmove) {
-            $printmovehtml = new moodle_url('/mod/lesson/lesson.php', array('id'=>$this->page->cm->id, 'action'=>'move', 'pageid'=>$page->id, 'sesskey'=>sesskey()));
+            $printmovehtml = new moodle_url('/mod/customlesson/lesson.php', array('id'=>$this->page->cm->id, 'action'=>'move', 'pageid'=>$page->id, 'sesskey'=>sesskey()));
             $actions[] = html_writer::link($printmovehtml, '<img src="'.$this->output->pix_url('t/move').'" class="iconsmall" alt="'.get_string('move').'" />');
         }
-        $url = new moodle_url('/mod/lesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$page->id, 'edit'=>1));
+        $url = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$page->id, 'edit'=>1));
         $actions[] = html_writer::link($url, '<img src="'.$this->output->pix_url('t/edit').'" class="iconsmall" alt="'.get_string('update').'" />');
 
-        $url = new moodle_url('/mod/lesson/view.php', array('id'=>$this->page->cm->id, 'pageid'=>$page->id));
+        $url = new moodle_url('/mod/customlesson/view.php', array('id'=>$this->page->cm->id, 'pageid'=>$page->id));
         $actions[] = html_writer::link($url, '<img src="'.$this->output->pix_url('t/preview').'" class="iconsmall" alt="'.get_string('preview').'" />');
 
-        $url = new moodle_url('/mod/lesson/lesson.php', array('id'=>$this->page->cm->id, 'action'=>'confirmdelete', 'pageid'=>$page->id, 'sesskey'=>sesskey()));
+        $url = new moodle_url('/mod/customlesson/lesson.php', array('id'=>$this->page->cm->id, 'action'=>'confirmdelete', 'pageid'=>$page->id, 'sesskey'=>sesskey()));
         $actions[] = html_writer::link($url, '<img src="'.$this->output->pix_url('t/delete').'" class="iconsmall" alt="'.get_string('delete').'" />');
 
         if ($printaddpage) {
@@ -416,7 +416,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
             }
             $options[0] = get_string('question', 'lesson');
 
-            $addpageurl = new moodle_url('/mod/lesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$page->id, 'sesskey'=>sesskey()));
+            $addpageurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$page->id, 'sesskey'=>sesskey()));
             $addpageselect = new single_select($addpageurl, 'qtype', $options, null, array(''=>get_string('addanewpage', 'lesson').'...'), 'addpageafter'.$page->id);
             $addpageselector = $this->output->render($addpageselect);
         }
@@ -455,7 +455,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         global $USER, $DB;
 
         $context = context_module::instance($this->page->cm->id);
-        if (has_capability('mod/lesson:manage', $context)) {
+        if (has_capability('mod/customlesson:manage', $context)) {
             return $this->output->box(get_string('teacherongoingwarning', 'lesson'), "ongoing center");
         } else {
             $ntries = $DB->count_records("lesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));
@@ -493,7 +493,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         }
 
         // catch teachers
-        if (has_capability('mod/lesson:manage', $context)) {
+        if (has_capability('mod/customlesson:manage', $context)) {
             return $this->output->notification(get_string('progressbarteacherwarning2', 'lesson'));
         }
 
@@ -589,7 +589,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         global $CFG;
         $output  = $this->output->box_start('generalbox boxaligncenter');
         $output .= $this->output->box_start('mdl-align');
-        $output .= '<form id="nickname" method ="post" action="'.$CFG->wwwroot.'/mod/lesson/highscores.php" autocomplete="off">
+        $output .= '<form id="nickname" method ="post" action="'.$CFG->wwwroot.'/mod/customlesson/highscores.php" autocomplete="off">
              <input type="hidden" name="id" value="'.$this->page->cm->id.'" />
              <input type="hidden" name="mode" value="save" />
              <input type="hidden" name="sesskey" value="'.sesskey().'" />';

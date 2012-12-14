@@ -25,7 +25,7 @@
  **/
 
 require_once("../../config.php");
-require_once($CFG->dirroot.'/mod/lesson/locallib.php');
+require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 require_once('editpage_form.php');
 
 // first get the preceeding page
@@ -41,9 +41,9 @@ $lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*'
 require_login($course, false, $cm);
 
 $context = context_module::instance($cm->id);
-require_capability('mod/lesson:edit', $context);
+require_capability('mod/customlesson:edit', $context);
 
-$PAGE->set_url('/mod/lesson/editpage.php', array('pageid'=>$pageid, 'id'=>$id, 'qtype'=>$qtype));
+$PAGE->set_url('/mod/customlesson/editpage.php', array('pageid'=>$pageid, 'id'=>$id, 'qtype'=>$qtype));
 
 if ($edit) {
     $editpage = lesson_page::load($pageid, $lesson);
@@ -68,7 +68,7 @@ $editoroptions = array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'max
 if ($qtype) {
     $mformdummy = $manager->get_page_form(0, array('editoroptions'=>$editoroptions, 'jumpto'=>$jumpto, 'lesson'=>$lesson, 'edit'=>$edit, 'maxbytes'=>$PAGE->course->maxbytes));
     if ($mformdummy->is_cancelled()) {
-        redirect("$CFG->wwwroot/mod/lesson/edit.php?id=$id");
+        redirect("$CFG->wwwroot/mod/customlesson/edit.php?id=$id");
         exit;
     }
 }
@@ -76,7 +76,7 @@ if ($qtype) {
 $mform = $manager->get_page_form($qtype, array('editoroptions'=>$editoroptions, 'jumpto'=>$jumpto, 'lesson'=>$lesson, 'edit'=>$edit, 'maxbytes'=>$PAGE->course->maxbytes));
 
 if ($mform->is_cancelled()) {
-    redirect("$CFG->wwwroot/mod/lesson/edit.php?id=$id");
+    redirect("$CFG->wwwroot/mod/customlesson/edit.php?id=$id");
     exit;
 }
 
@@ -87,7 +87,7 @@ if ($edit) {
     $editoroptions['context'] = $context;
     $data = file_prepare_standard_editor($data, 'contents', $editoroptions, $context, 'mod_customlesson', 'page_contents',  $editpage->id);
     $mform->set_data($data);
-    $PAGE->navbar->add(get_string('edit'), new moodle_url('/mod/lesson/edit.php', array('id'=>$id)));
+    $PAGE->navbar->add(get_string('edit'), new moodle_url('/mod/customlesson/edit.php', array('id'=>$id)));
     $PAGE->navbar->add(get_string('editingquestionpage', 'lesson', get_string($mform->qtypestring, 'lesson')));
 } else {
     // Give the page type being created a chance to override the creation process
@@ -121,7 +121,7 @@ if ($data = $mform->get_data()) {
     } else {
         $editpage = lesson_page::create($data, $lesson, $context, $PAGE->course->maxbytes);
     }
-    redirect(new moodle_url('/mod/lesson/edit.php', array('id'=>$cm->id)));
+    redirect(new moodle_url('/mod/customlesson/edit.php', array('id'=>$cm->id)));
 }
 
 $lessonoutput = $PAGE->get_renderer('mod_customlesson');

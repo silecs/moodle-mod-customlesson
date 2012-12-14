@@ -25,7 +25,7 @@
  **/
 
 require_once('../../config.php');
-require_once($CFG->dirroot.'/mod/lesson/locallib.php');
+require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 
 $id = required_param('id', PARAM_INT);
 
@@ -36,10 +36,10 @@ $lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*'
 require_login($course, false, $cm);
 
 $context = context_module::instance($cm->id);
-require_capability('mod/lesson:manage', $context);
+require_capability('mod/customlesson:manage', $context);
 
 $mode    = optional_param('mode', get_user_preferences('lesson_view', 'collapsed'), PARAM_ALPHA);
-$PAGE->set_url('/mod/lesson/edit.php', array('id'=>$cm->id,'mode'=>$mode));
+$PAGE->set_url('/mod/customlesson/edit.php', array('id'=>$cm->id,'mode'=>$mode));
 
 if ($mode != get_user_preferences('lesson_view', 'collapsed') && $mode !== 'single') {
     set_user_preference('lesson_view', $mode);
@@ -51,7 +51,7 @@ echo $lessonoutput->header($lesson, $cm, $mode, false, null, get_string('edit', 
 
 if (!$lesson->has_pages()) {
     // There are no pages; give teacher some options
-    require_capability('mod/lesson:edit', $context);
+    require_capability('mod/customlesson:edit', $context);
     echo $lessonoutput->add_first_page_links($lesson);
 } else {
     switch ($mode) {

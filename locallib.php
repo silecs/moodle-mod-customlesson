@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /** Include the files that are required by this module */
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
-require_once($CFG->dirroot . '/mod/lesson/lib.php');
+require_once($CFG->dirroot . '/mod/customlesson/lib.php');
 require_once($CFG->libdir . '/filelib.php');
 
 /** This page */
@@ -461,7 +461,7 @@ function lesson_mediafile_block_contents($cmid, $lesson) {
     $options['width'] = $lesson->mediawidth;
     $options['height'] = $lesson->mediaheight;
 
-    $link = new moodle_url('/mod/lesson/mediafile.php?id='.$cmid);
+    $link = new moodle_url('/mod/customlesson/mediafile.php?id='.$cmid);
     $action = new popup_action('click', $link, 'lessonmediafile', $options);
     $content = $OUTPUT->action_link($link, get_string('mediafilepopup', 'lesson'), $action, array('title'=>get_string('mediafilepopup', 'lesson')));
 
@@ -485,7 +485,7 @@ function lesson_mediafile_block_contents($cmid, $lesson) {
 function lesson_clock_block_contents($cmid, $lesson, $timer, $page) {
     // Display for timed lessons and for students only
     $context = context_module::instance($cmid);
-    if(!$lesson->timed || has_capability('mod/lesson:manage', $context)) {
+    if(!$lesson->timed || has_capability('mod/customlesson:manage', $context)) {
         return null;
     }
 
@@ -495,7 +495,7 @@ function lesson_clock_block_contents($cmid, $lesson, $timer, $page) {
 
     $clocksettings = array('starttime'=>$timer->starttime, 'servertime'=>time(),'testlength'=>($lesson->maxtime * 60));
     $page->requires->data_for_js('clocksettings', $clocksettings);
-    $page->requires->js('/mod/lesson/timer.js');
+    $page->requires->js('/mod/customlesson/timer.js');
     $page->requires->js_function_call('show_clock');
 
     $bc = new block_contents();
@@ -544,7 +544,7 @@ function lesson_menu_block_contents($cmid, $lesson) {
             if ($page->id == $currentpageid) {
                 $content .= '<li class="selected">'.format_string($page->title,true)."</li>\n";
             } else {
-                $content .= "<li class=\"notselected\"><a href=\"$CFG->wwwroot/mod/lesson/view.php?id=$cmid&amp;pageid=$page->id\">".format_string($page->title,true)."</a></li>\n";
+                $content .= "<li class=\"notselected\"><a href=\"$CFG->wwwroot/mod/customlesson/view.php?id=$cmid&amp;pageid=$page->id\">".format_string($page->title,true)."</a></li>\n";
             }
 
         }
@@ -570,12 +570,12 @@ function lesson_menu_block_contents($cmid, $lesson) {
  */
 function lesson_add_header_buttons($cm, $context, $extraeditbuttons=false, $lessonpageid=null) {
     global $CFG, $PAGE, $OUTPUT;
-    if (has_capability('mod/lesson:edit', $context) && $extraeditbuttons) {
+    if (has_capability('mod/customlesson:edit', $context) && $extraeditbuttons) {
         if ($lessonpageid === null) {
             print_error('invalidpageid', 'lesson');
         }
         if (!empty($lessonpageid) && $lessonpageid != LESSON_EOL) {
-            $url = new moodle_url('/mod/lesson/editpage.php', array('id'=>$cm->id, 'pageid'=>$lessonpageid, 'edit'=>1));
+            $url = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$cm->id, 'pageid'=>$lessonpageid, 'edit'=>1));
             $PAGE->set_button($OUTPUT->single_button($url, get_string('editpagecontent', 'lesson')));
         }
     }
@@ -963,7 +963,7 @@ class lesson extends lesson_base {
             }
         }
 
-        grade_update('mod/lesson', $this->properties->course, 'mod', 'lesson', $this->properties->id, 0, NULL, array('deleted'=>1));
+        grade_update('mod/customlesson', $this->properties->course, 'mod', 'lesson', $this->properties->id, 0, NULL, array('deleted'=>1));
         return true;
     }
 
@@ -1629,7 +1629,7 @@ abstract class lesson_base {
  * Abstract class representation of a page associated with a lesson.
  *
  * This class should MUST be extended by all specialised page types defined in
- * mod/lesson/pagetypes/.
+ * mod/customlesson/pagetypes/.
  * There are a handful of abstract methods that need to be defined as well as
  * severl methods that can optionally be defined in order to make the page type
  * operate in the desired way
@@ -1928,7 +1928,7 @@ abstract class lesson_page extends lesson_base {
             $result->newpageid = $this->properties->id; // display same page again
             $result->feedback  = get_string('noanswer', 'lesson');
         } else {
-            if (!has_capability('mod/lesson:manage', $context)) {
+            if (!has_capability('mod/customlesson:manage', $context)) {
                 $nretakes = $DB->count_records("lesson_grades", array("lessonid"=>$this->lesson->id, "userid"=>$USER->id));
                 // record student's attempt
                 $attempt = new stdClass;
@@ -2565,7 +2565,7 @@ class lesson_page_answer extends lesson_base {
  * $manager  = lesson_page_type_manager::get($lesson);
  * </code>
  * The first time the page type manager is retrieved the it includes all of the
- * different page types located in mod/lesson/pagetypes.
+ * different page types located in mod/customlesson/pagetypes.
  *
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -2597,13 +2597,13 @@ class lesson_page_type_manager {
     }
 
     /**
-     * Finds and loads all lesson page types in mod/lesson/pagetypes
+     * Finds and loads all lesson page types in mod/customlesson/pagetypes
      *
      * @param lesson $lesson
      */
     public function load_lesson_types(lesson $lesson) {
         global $CFG;
-        $basedir = $CFG->dirroot.'/mod/lesson/pagetypes/';
+        $basedir = $CFG->dirroot.'/mod/customlesson/pagetypes/';
         $dir = dir($basedir);
         while (false !== ($entry = $dir->read())) {
             if (strpos($entry, '.')===0 || !preg_match('#^[a-zA-Z]+\.php#i', $entry)) {

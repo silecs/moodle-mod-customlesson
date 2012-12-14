@@ -26,14 +26,14 @@
 
 require_once("../../config.php");
 require_once($CFG->libdir.'/questionlib.php');
-require_once($CFG->dirroot.'/mod/lesson/locallib.php');
-require_once($CFG->dirroot.'/mod/lesson/import_form.php');
-require_once($CFG->dirroot.'/mod/lesson/format.php');  // Parent class
+require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
+require_once($CFG->dirroot.'/mod/customlesson/import_form.php');
+require_once($CFG->dirroot.'/mod/customlesson/format.php');  // Parent class
 
 $id     = required_param('id', PARAM_INT);         // Course Module ID
 $pageid = optional_param('pageid', '', PARAM_INT); // Page ID
 
-$PAGE->set_url('/mod/lesson/import.php', array('id'=>$id, 'pageid'=>$pageid));
+$PAGE->set_url('/mod/customlesson/import.php', array('id'=>$id, 'pageid'=>$pageid));
 
 $cm = get_coursemodule_from_id('lesson', $id, 0, false, MUST_EXIST);;
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -41,7 +41,7 @@ $lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*'
 
 require_login($course, false, $cm);
 $context = context_module::instance($cm->id);
-require_capability('mod/lesson:edit', $context);
+require_capability('mod/customlesson:edit', $context);
 
 $strimportquestions = get_string("importquestions", "lesson");
 $strlessons = get_string("modulenameplural", "lesson");

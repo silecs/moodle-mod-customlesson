@@ -26,11 +26,11 @@
 
 /** Include required files */
 require_once("../../config.php");
-require_once($CFG->dirroot.'/mod/lesson/locallib.php');
+require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 
 $id = required_param('id', PARAM_INT);   // course
 
-$PAGE->set_url('/mod/lesson/index.php', array('id'=>$id));
+$PAGE->set_url('/mod/customlesson/index.php', array('id'=>$id));
 
 if (!$course = $DB->get_record("course", array("id" => $id))) {
     print_error('invalidcourseid');
@@ -101,7 +101,7 @@ foreach ($lessons as $lesson) {
     }
 
     if ($usesections) {
-        if (has_capability('mod/lesson:manage', $context)) {
+        if (has_capability('mod/customlesson:manage', $context)) {
             $grade_value = $lesson->grade;
         } else {
             // it's a student, show their grade
