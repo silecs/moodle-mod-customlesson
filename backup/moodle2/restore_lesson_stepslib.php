@@ -201,7 +201,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $this->add_related_files('mod_customlesson', 'page_contents', 'lesson_page');
 
         // Remap all the restored prevpageid and nextpageid now that we have all the pages and their mappings
-        $rs = $DB->get_recordset('lesson_pages', array('lessonid' => $this->task->get_activityid()),
+        $rs = $DB->get_recordset('customlesson_pages', array('lessonid' => $this->task->get_activityid()),
                                  '', 'id, prevpageid, nextpageid');
         foreach ($rs as $page) {
             $page->prevpageid = (empty($page->prevpageid)) ? 0 : $this->get_mappingid('lesson_page', $page->prevpageid);
@@ -211,7 +211,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $rs->close();
 
         // Remap all the restored 'jumpto' fields now that we have all the pages and their mappings
-        $rs = $DB->get_recordset('lesson_answers', array('lessonid' => $this->task->get_activityid()),
+        $rs = $DB->get_recordset('customlesson_answers', array('lessonid' => $this->task->get_activityid()),
                                  '', 'id, jumpto');
         foreach ($rs as $answer) {
             if ($answer->jumpto > 0) {
