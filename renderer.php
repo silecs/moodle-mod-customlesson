@@ -19,7 +19,7 @@
  * Moodle renderer used to display special elements of the lesson module
  *
  * @package    mod
- * @subpackage lesson
+ * @subpackage customlesson
  * @copyright  2009 Sam Hemelryk
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/

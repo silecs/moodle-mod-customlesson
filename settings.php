@@ -19,7 +19,7 @@
  * Settings used by the lesson module, were moved from mod_edit
  *
  * @package    mod
- * @subpackage lesson
+ * @subpackage customlesson
  * @copyright  2009 Sam Hemelryk
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
  **/

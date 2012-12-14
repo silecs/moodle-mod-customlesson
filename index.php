@@ -19,7 +19,7 @@
  * This page lists all the instances of lesson in a particular course
  *
  * @package    mod
- * @subpackage lesson
+ * @subpackage customlesson
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/

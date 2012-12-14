@@ -20,7 +20,7 @@
  * It is used from /course/modedit.php.
  *
  * @package    mod
- * @subpackage lesson
+ * @subpackage customlesson
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
  **/
