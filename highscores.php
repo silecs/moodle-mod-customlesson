@@ -130,7 +130,7 @@ switch ($mode) {
                         // Now, delete all high scores with the low score
                         foreach ($highscores as $highscore) {
                             if ($highscore->grade == $lowscore) {
-                                $DB->delete_records('lesson_high_scores', array('id' => $highscore->id));
+                                $DB->delete_records('customlesson_high_scores', array('id' => $highscore->id));
                             }
                         }
                     }

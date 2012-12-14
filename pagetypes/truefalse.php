@@ -194,7 +194,7 @@ class lesson_page_type_truefalse extends lesson_page {
                     $DB->update_record("customlesson_answers", $this->answers[$i]->properties());
                 }
             } else if (isset($this->answers[$i]->id)) {
-                $DB->delete_records('lesson_answers', array('id'=>$this->answers[$i]->id));
+                $DB->delete_records('customlesson_answers', array('id'=>$this->answers[$i]->id));
                 unset($this->answers[$i]);
             }
         }

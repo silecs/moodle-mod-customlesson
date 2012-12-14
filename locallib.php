@@ -948,14 +948,14 @@ class lesson extends lesson_base {
         require_once($CFG->libdir.'/gradelib.php');
         require_once($CFG->dirroot.'/calendar/lib.php');
 
-        $DB->delete_records("lesson", array("id"=>$this->properties->id));;
-        $DB->delete_records("lesson_pages", array("lessonid"=>$this->properties->id));
-        $DB->delete_records("lesson_answers", array("lessonid"=>$this->properties->id));
-        $DB->delete_records("lesson_attempts", array("lessonid"=>$this->properties->id));
-        $DB->delete_records("lesson_grades", array("lessonid"=>$this->properties->id));
-        $DB->delete_records("lesson_timer", array("lessonid"=>$this->properties->id));
-        $DB->delete_records("lesson_branch", array("lessonid"=>$this->properties->id));
-        $DB->delete_records("lesson_high_scores", array("lessonid"=>$this->properties->id));
+        $DB->delete_records("customlesson", array("id"=>$this->properties->id));;
+        $DB->delete_records("customlesson_pages", array("lessonid"=>$this->properties->id));
+        $DB->delete_records("customlesson_answers", array("lessonid"=>$this->properties->id));
+        $DB->delete_records("customlesson_attempts", array("lessonid"=>$this->properties->id));
+        $DB->delete_records("customlesson_grades", array("lessonid"=>$this->properties->id));
+        $DB->delete_records("customlesson_timer", array("lessonid"=>$this->properties->id));
+        $DB->delete_records("customlesson_branch", array("lessonid"=>$this->properties->id));
+        $DB->delete_records("customlesson_high_scores", array("lessonid"=>$this->properties->id));
         if ($events = $DB->get_records('event', array("modulename"=>'lesson', "instance"=>$this->properties->id))) {
             foreach($events as $event) {
                 $event = calendar_event::load($event);
@@ -1811,11 +1811,11 @@ abstract class lesson_page extends lesson_base {
     final public function delete() {
         global $DB;
         // first delete all the associated records...
-        $DB->delete_records("lesson_attempts", array("pageid" => $this->properties->id));
+        $DB->delete_records("customlesson_attempts", array("pageid" => $this->properties->id));
         // ...now delete the answers...
-        $DB->delete_records("lesson_answers", array("pageid" => $this->properties->id));
+        $DB->delete_records("customlesson_answers", array("pageid" => $this->properties->id));
         // ..and the page itself
-        $DB->delete_records("lesson_pages", array("id" => $this->properties->id));
+        $DB->delete_records("customlesson_pages", array("id" => $this->properties->id));
 
         // repair the hole in the linkage
         if (!$this->properties->prevpageid && !$this->properties->nextpageid) {
@@ -2151,7 +2151,7 @@ abstract class lesson_page extends lesson_base {
                 }
 
             } else if (isset($this->answers[$i]->id)) {
-                $DB->delete_records('lesson_answers', array('id'=>$this->answers[$i]->id));
+                $DB->delete_records('customlesson_answers', array('id'=>$this->answers[$i]->id));
                 unset($this->answers[$i]);
             }
         }

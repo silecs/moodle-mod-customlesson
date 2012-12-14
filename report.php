@@ -126,7 +126,7 @@ if ($action === 'delete') {
                                                   ORDER BY starttime", $params, $try, 1);
                     if ($timers) {
                         $timer = reset($timers);
-                        $DB->delete_records('lesson_timer', array('id' => $timer->id));
+                        $DB->delete_records('customlesson_timer', array('id' => $timer->id));
                     }
 
                 /// Remove the grade from the grades and high_scores tables - this is silly, it should be linked to specific attempt (skodak)
@@ -136,16 +136,16 @@ if ($action === 'delete') {
 
                     if ($grades) {
                         $grade = reset($grades);
-                        $DB->delete_records('lesson_grades', array('id' => $grade->id));
-                        $DB->delete_records('lesson_high_scores', array('gradeid' => $grade->id, 'lessonid' => $lesson->id, 'userid' => $userid));
+                        $DB->delete_records('customlesson_grades', array('id' => $grade->id));
+                        $DB->delete_records('customlesson_high_scores', array('gradeid' => $grade->id, 'lessonid' => $lesson->id, 'userid' => $userid));
                     }
 
                 /// Remove attempts and update the retry number
-                    $DB->delete_records('lesson_attempts', array('userid' => $userid, 'lessonid' => $lesson->id, 'retry' => $try));
+                    $DB->delete_records('customlesson_attempts', array('userid' => $userid, 'lessonid' => $lesson->id, 'retry' => $try));
                     $DB->execute("UPDATE {customlesson_attempts} SET retry = retry - 1 WHERE userid = ? AND lessonid = ? AND retry > ?", array($userid, $lesson->id, $try));
 
                 /// Remove seen branches and update the retry number
-                    $DB->delete_records('lesson_branch', array('userid' => $userid, 'lessonid' => $lesson->id, 'retry' => $try));
+                    $DB->delete_records('customlesson_branch', array('userid' => $userid, 'lessonid' => $lesson->id, 'retry' => $try));
                     $DB->execute("UPDATE {customlesson_branch} SET retry = retry - 1 WHERE userid = ? AND lessonid = ? AND retry > ?", array($userid, $lesson->id, $try));
 
                 /// update central gradebook

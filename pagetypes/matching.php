@@ -342,7 +342,7 @@ class lesson_page_type_matching extends lesson_page {
                 }
 
             } else if (isset($this->answers[$i]->id)) {
-                $DB->delete_records('lesson_answers', array('id'=>$this->answers[$i]->id));
+                $DB->delete_records('customlesson_answers', array('id'=>$this->answers[$i]->id));
                 unset($this->answers[$i]);
             }
         }

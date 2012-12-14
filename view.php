@@ -272,8 +272,8 @@ if ($pageid != LESSON_EOL) {
     if ($startlastseen == 'no') {
         // this deletes old records  not totally sure if this is necessary anymore
         $retries = $DB->count_records('customlesson_grades', array('lessonid'=>$lesson->id, 'userid'=>$USER->id));
-        $DB->delete_records('lesson_attempts', array('userid' => $USER->id, 'lessonid' => $lesson->id, 'retry' => $retries));
-        $DB->delete_records('lesson_branch', array('userid' => $USER->id, 'lessonid' => $lesson->id, 'retry' => $retries));
+        $DB->delete_records('customlesson_attempts', array('userid' => $USER->id, 'lessonid' => $lesson->id, 'retry' => $retries));
+        $DB->delete_records('customlesson_branch', array('userid' => $USER->id, 'lessonid' => $lesson->id, 'retry' => $retries));
     }
 
     $page = $lesson->load_page($pageid);
@@ -469,7 +469,7 @@ if ($pageid != LESSON_EOL) {
                     $newgradeid = $DB->insert_record("customlesson_grades", $grade);
                 }
             } else {
-                $DB->delete_records("lesson_attempts", array("lessonid" => $lesson->id, "userid" => $USER->id, "retry" => $ntries));
+                $DB->delete_records("customlesson_attempts", array("lessonid" => $lesson->id, "userid" => $USER->id, "retry" => $ntries));
             }
         } else {
             if ($lesson->timed) {
