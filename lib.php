@@ -195,7 +195,7 @@ function lesson_user_complete($course, $user, $mod, $lesson) {
     }
 
     $params = array ("lessonid" => $lesson->id, "userid" => $user->id);
-    if ($attempts = $DB->get_records_select("lesson_attempts", "lessonid = :lessonid AND userid = :userid", $params,
+    if ($attempts = $DB->get_records_select("customlesson_attempts", "lessonid = :lessonid AND userid = :userid", $params,
                 "retry, timeseen")) {
         echo $OUTPUT->box_start();
         $table = new html_table();

@@ -79,7 +79,7 @@ function lesson_display_teacher_warning($lesson) {
 
     // get all of the lesson answers
     $params = array ("lessonid" => $lesson->id);
-    if (!$lessonanswers = $DB->get_records_select("lesson_answers", "lessonid = :lessonid", $params)) {
+    if (!$lessonanswers = $DB->get_records_select("customlesson_answers", "lessonid = :lessonid", $params)) {
         // no answers, then not using cluster or unseen
         return false;
     }
@@ -179,7 +179,7 @@ function lesson_unseen_branch_jump($lesson, $userid) {
     }
 
     $params = array ("lessonid" => $lesson->id, "userid" => $userid, "retry" => $retakes);
-    if (!$seenbranches = $DB->get_records_select("lesson_branch", "lessonid = :lessonid AND userid = :userid AND retry = :retry", $params,
+    if (!$seenbranches = $DB->get_records_select("customlesson_branch", "lessonid = :lessonid AND userid = :userid AND retry = :retry", $params,
                 "timeseen DESC")) {
         print_error('cannotfindrecords', 'lesson');
     }
@@ -234,7 +234,7 @@ function lesson_random_question_jump($lesson, $pageid) {
 
     // get the lesson pages
     $params = array ("lessonid" => $lesson->id);
-    if (!$lessonpages = $DB->get_records_select("lesson_pages", "lessonid = :lessonid", $params)) {
+    if (!$lessonpages = $DB->get_records_select("customlesson_pages", "lessonid = :lessonid", $params)) {
         print_error('cannotfindpages', 'lesson');
     }
 
@@ -291,7 +291,7 @@ function lesson_grade($lesson, $ntries, $userid = 0) {
     $earned       = 0;
 
     $params = array ("lessonid" => $lesson->id, "userid" => $userid, "retry" => $ntries);
-    if ($useranswers = $DB->get_records_select("lesson_attempts",  "lessonid = :lessonid AND
+    if ($useranswers = $DB->get_records_select("customlesson_attempts",  "lessonid = :lessonid AND
             userid = :userid AND retry = :retry", $params, "timeseen")) {
         // group each try with its page
         $attemptset = array();
@@ -307,8 +307,8 @@ function lesson_grade($lesson, $ntries, $userid = 0) {
         // get only the pages and their answers that the user answered
         list($usql, $parameters) = $DB->get_in_or_equal(array_keys($attemptset));
         array_unshift($parameters, $lesson->id);
-        $pages = $DB->get_records_select("lesson_pages", "lessonid = ? AND id $usql", $parameters);
-        $answers = $DB->get_records_select("lesson_answers", "lessonid = ? AND pageid $usql", $parameters);
+        $pages = $DB->get_records_select("customlesson_pages", "lessonid = ? AND id $usql", $parameters);
+        $answers = $DB->get_records_select("customlesson_answers", "lessonid = ? AND pageid $usql", $parameters);
 
         // Number of pages answered
         $nquestions = count($pages);

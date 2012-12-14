@@ -81,7 +81,7 @@ switch ($mode) {
                 break;
             }
             $params = array ("lessonid" => $lesson->id, "userid" => $USER->id);
-            if (!$grades = $DB->get_records_select('lesson_grades', "lessonid = :lessonid", $params, 'completed')) {
+            if (!$grades = $DB->get_records_select('customlesson_grades', "lessonid = :lessonid", $params, 'completed')) {
                 print_error('cannotfindfirstgrade', 'lesson');
             }
 
@@ -168,13 +168,13 @@ switch ($mode) {
         break;
     default:
         $params = array ("lessonid" => $lesson->id);
-        if (!$grades = $DB->get_records_select("lesson_grades", "lessonid = :lessonid", $params, "completed")) {
+        if (!$grades = $DB->get_records_select("customlesson_grades", "lessonid = :lessonid", $params, "completed")) {
             $grades = array();
         }
 
         echo $OUTPUT->heading(get_string("topscorestitle", "lesson", $lesson->maxhighscores), 4);
 
-        if (!$highscores = $DB->get_records_select("lesson_high_scores", "lessonid = :lessonid", $params)) {
+        if (!$highscores = $DB->get_records_select("customlesson_high_scores", "lessonid = :lessonid", $params)) {
             echo $OUTPUT->heading(get_string("nohighscores", "lesson"), 3);
         } else {
             foreach ($highscores as $highscore) {

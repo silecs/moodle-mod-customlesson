@@ -180,13 +180,13 @@ switch ($mode) {
         if (!empty($queryadd)) {
             $params[] = $userid;
         }
-        if (!$attempts = $DB->get_records_select('lesson_attempts', "pageid $usql".$queryadd, $params)) {
+        if (!$attempts = $DB->get_records_select('customlesson_attempts', "pageid $usql".$queryadd, $params)) {
             print_error('nooneansweredthisquestion', 'lesson');
         }
         // Get the answers
         list($answerUsql, $parameters) = $DB->get_in_or_equal(array_keys($pages));
         array_unshift($parameters, $lesson->id);
-        if (!$answers = $DB->get_records_select('lesson_answers', "lessonid = ? AND pageid $answerUsql", $parameters, '', 'pageid, score')) {
+        if (!$answers = $DB->get_records_select('customlesson_answers', "lessonid = ? AND pageid $answerUsql", $parameters, '', 'pageid, score')) {
             print_error('cannotfindanswer', 'lesson');
         }
         $options = new stdClass;
@@ -263,7 +263,7 @@ switch ($mode) {
             $params = array ("lessonid" => $lesson->id, "qtype" => LESSON_PAGE_ESSAY);
             // Get only the attempts that are in response to essay questions
             list($usql, $parameters) = $DB->get_in_or_equal(array_keys($pages));
-            if ($essayattempts = $DB->get_records_select('lesson_attempts', 'pageid '.$usql, $parameters)) {
+            if ($essayattempts = $DB->get_records_select('customlesson_attempts', 'pageid '.$usql, $parameters)) {
                 // Get all the users who have taken this lesson, order by their last name
                 $ufields = user_picture::fields('u');
                 list($sort, $sortparams) = users_order_by_sql('u');

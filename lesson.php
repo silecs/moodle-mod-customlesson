@@ -62,7 +62,7 @@ switch ($action) {
         echo $OUTPUT->heading(get_string("deletingpage", "lesson", format_string($thispage->title)));
         // print the jumps to this page
         $params = array("lessonid" => $lesson->id, "pageid" => $pageid);
-        if ($answers = $DB->get_records_select("lesson_answers", "lessonid = :lessonid AND jumpto = :pageid + 1", $params)) {
+        if ($answers = $DB->get_records_select("customlesson_answers", "lessonid = :lessonid AND jumpto = :pageid + 1", $params)) {
             echo $OUTPUT->heading(get_string("thefollowingpagesjumptothispage", "lesson"));
             echo "<p align=\"center\">\n";
             foreach ($answers as $answer) {

@@ -410,7 +410,7 @@ if ($action === 'delete') {
     while ($pageid != 0) { // EOL
         $page = $lessonpages[$pageid];
         $params = array ("lessonid" => $lesson->id, "pageid" => $page->id);
-        if ($allanswers = $DB->get_records_select("lesson_attempts", "lessonid = :lessonid AND pageid = :pageid", $params, "timeseen")) {
+        if ($allanswers = $DB->get_records_select("customlesson_attempts", "lessonid = :lessonid AND pageid = :pageid", $params, "timeseen")) {
             // get them ready for processing
             $orderedanswers = array();
             foreach ($allanswers as $singleanswer) {
@@ -508,7 +508,7 @@ if ($action === 'delete') {
         $table->attributes['class'] = 'compacttable generaltable';
 
         $params = array("lessonid"=>$lesson->id, "userid"=>$userid);
-        if (!$grades = $DB->get_records_select("lesson_grades", "lessonid = :lessonid and userid = :userid", $params, "completed", "*", $try, 1)) {
+        if (!$grades = $DB->get_records_select("customlesson_grades", "lessonid = :lessonid and userid = :userid", $params, "completed", "*", $try, 1)) {
             $grade = -1;
             $completed = -1;
         } else {
@@ -516,7 +516,7 @@ if ($action === 'delete') {
             $completed = $grade->completed;
             $grade = round($grade->grade, 2);
         }
-        if (!$times = $DB->get_records_select("lesson_timer", "lessonid = :lessonid and userid = :userid", $params, "starttime", "*", $try, 1)) {
+        if (!$times = $DB->get_records_select("customlesson_timer", "lessonid = :lessonid and userid = :userid", $params, "starttime", "*", $try, 1)) {
             $timetotake = -1;
         } else {
             $timetotake = current($times);
