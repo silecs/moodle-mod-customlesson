@@ -231,7 +231,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         if (!empty($lesson->dependency)) {
             $updaterequired = true;
             $lesson->dependency = $this->get_mappingid('lesson', $lesson->dependency, $lesson->dependency);
-            if (!$DB->record_exists('lesson', array('id' => $lesson->dependency, 'course' => $lesson->course))) {
+            if (!$DB->record_exists('customlesson', array('id' => $lesson->dependency, 'course' => $lesson->course))) {
                 $lesson->dependency = 0;
             }
         }

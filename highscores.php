@@ -94,7 +94,7 @@ switch ($mode) {
             }
 
             // Check for multiple submissions
-            if ($DB->record_exists('lesson_high_scores', array('gradeid' => $newgrade->id))) {
+            if ($DB->record_exists('customlesson_high_scores', array('gradeid' => $newgrade->id))) {
                 print_error('onpostperpage', 'lesson');
             }
 
