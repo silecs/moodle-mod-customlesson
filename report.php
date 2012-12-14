@@ -274,7 +274,7 @@ if ($action === 'delete') {
                     $temp .= ",&nbsp;(".format_time($timetotake).")</a>";
                 } else {
                     // this is what the link does/looks like when the user has not completed the try
-                    $temp .= get_string("notcompleted", "lesson");
+                    $temp .= get_string("notcompleted", "customlesson");
                     $temp .= "&nbsp;".userdate($try["timestart"])."</a>";
                     $timetotake = NULL;
                 }
@@ -328,31 +328,31 @@ if ($action === 'delete') {
 
     // some stat calculations
     if ($numofattempts == 0) {
-        $avescore = get_string("notcompleted", "lesson");
+        $avescore = get_string("notcompleted", "customlesson");
     } else {
         $avescore = format_float($avescore/$numofattempts, 2);
     }
     if ($avetime == NULL) {
-        $avetime = get_string("notcompleted", "lesson");
+        $avetime = get_string("notcompleted", "customlesson");
     } else {
         $avetime = format_float($avetime/$numofattempts, 0);
         $avetime = format_time($avetime);
     }
     if ($hightime == NULL) {
-        $hightime = get_string("notcompleted", "lesson");
+        $hightime = get_string("notcompleted", "customlesson");
     } else {
         $hightime = format_time($hightime);
     }
     if ($lowtime == NULL) {
-        $lowtime = get_string("notcompleted", "lesson");
+        $lowtime = get_string("notcompleted", "customlesson");
     } else {
         $lowtime = format_time($lowtime);
     }
     if ($highscore == NULL) {
-        $highscore = get_string("notcompleted", "lesson");
+        $highscore = get_string("notcompleted", "customlesson");
     }
     if ($lowscore == NULL) {
-        $lowscore = get_string("notcompleted", "lesson");
+        $lowscore = get_string("notcompleted", "customlesson");
     }
 
     // output the stats
@@ -500,7 +500,7 @@ if ($action === 'delete') {
             //$headingobject->lastname = $students[$userid]->lastname;
             //$headingobject->firstname = $students[$userid]->firstname;
             //$headingobject->attempt = $try + 1;
-            //print_heading(get_string("studentattemptlesson", "lesson", $headingobject));
+            //print_heading(get_string("studentattemptlesson", "customlesson", $headingobject));
         echo $OUTPUT->heading(get_string('attempt', 'lesson', $try+1));
 
         $table->head = array();
@@ -526,17 +526,17 @@ if ($action === 'delete') {
         if ($timetotake == -1 || $completed == -1 || $grade == -1) {
             $table->align = array("center");
 
-            $table->data[] = array(get_string("notcompleted", "lesson"));
+            $table->data[] = array(get_string("notcompleted", "customlesson"));
         } else {
             $user = $students[$userid];
 
             $gradeinfo = lesson_grade($lesson, $try, $user->id);
 
             $table->data[] = array(get_string('name').':', $OUTPUT->user_picture($user, array('courseid'=>$course->id)).fullname($user, true));
-            $table->data[] = array(get_string("timetaken", "lesson").":", format_time($timetotake));
-            $table->data[] = array(get_string("completed", "lesson").":", userdate($completed));
+            $table->data[] = array(get_string("timetaken", "customlesson").":", format_time($timetotake));
+            $table->data[] = array(get_string("completed", "customlesson").":", userdate($completed));
             $table->data[] = array(get_string('rawgrade', 'lesson').':', $gradeinfo->earned.'/'.$gradeinfo->total);
-            $table->data[] = array(get_string("grade", "lesson").":", $grade."%");
+            $table->data[] = array(get_string("grade", "customlesson").":", $grade."%");
         }
         echo html_writer::table($table);
 
@@ -563,9 +563,9 @@ if ($action === 'delete') {
             $fontend2 = "";
         }
 
-        $table->head = array($fontstart2.$page->qtype.": ".format_string($page->title).$fontend2, $fontstart2.get_string("classstats", "lesson").$fontend2);
-        $table->data[] = array($fontstart.get_string("question", "lesson").": <br />".$fontend.$fontstart2.$page->contents.$fontend2, " ");
-        $table->data[] = array($fontstart.get_string("answer", "lesson").":".$fontend, ' ');
+        $table->head = array($fontstart2.$page->qtype.": ".format_string($page->title).$fontend2, $fontstart2.get_string("classstats", "customlesson").$fontend2);
+        $table->data[] = array($fontstart.get_string("question", "customlesson").": <br />".$fontend.$fontstart2.$page->contents.$fontend2, " ");
+        $table->data[] = array($fontstart.get_string("answer", "customlesson").":".$fontend, ' ');
         // apply the font to each answer
         if (!empty($page->answerdata)) {
             foreach ($page->answerdata->answers as $answer){
@@ -577,7 +577,7 @@ if ($action === 'delete') {
                 $table->data[] = $modified;
             }
             if (isset($page->answerdata->response)) {
-                $table->data[] = array($fontstart.get_string("response", "lesson").": <br />".$fontend.$fontstart2.format_text($page->answerdata->response,$page->answerdata->responseformat,$formattextdefoptions).$fontend2, " ");
+                $table->data[] = array($fontstart.get_string("response", "customlesson").": <br />".$fontend.$fontstart2.format_text($page->answerdata->response,$page->answerdata->responseformat,$formattextdefoptions).$fontend2, " ");
             }
             $table->data[] = array($page->answerdata->score, " ");
         } else {

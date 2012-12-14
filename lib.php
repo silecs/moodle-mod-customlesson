@@ -152,7 +152,7 @@ function lesson_user_outline($course, $user, $mod, $lesson) {
 
     $return = new stdClass();
     if (empty($grades->items[0]->grades)) {
-        $return->info = get_string("no")." ".get_string("attempts", "lesson");
+        $return->info = get_string("no")." ".get_string("attempts", "customlesson");
     } else {
         $grade = reset($grades->items[0]->grades);
         $return->info = get_string("grade") . ': ' . $grade->str_long_grade;
@@ -199,8 +199,8 @@ function lesson_user_complete($course, $user, $mod, $lesson) {
                 "retry, timeseen")) {
         echo $OUTPUT->box_start();
         $table = new html_table();
-        $table->head = array (get_string("attempt", "lesson"),  get_string("numberofpagesviewed", "lesson"),
-            get_string("numberofcorrectanswers", "lesson"), get_string("time"));
+        $table->head = array (get_string("attempt", "customlesson"),  get_string("numberofpagesviewed", "lesson"),
+            get_string("numberofcorrectanswers", "customlesson"), get_string("time"));
         $table->width = "100%";
         $table->align = array ("center", "center", "center", "center");
         $table->size = array ("*", "*", "*", "*");

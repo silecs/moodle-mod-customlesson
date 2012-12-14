@@ -363,7 +363,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         global $CFG;
         $prevpageid = 0;
 
-        $output = $this->output->heading(get_string("whatdofirst", "lesson"), 3);
+        $output = $this->output->heading(get_string("whatdofirst", "customlesson"), 3);
         $links = array();
 
         $importquestionsurl = new moodle_url('/mod/customlesson/import.php',array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
@@ -467,11 +467,11 @@ class mod_customlesson_renderer extends plugin_renderer_base {
             if ($lesson->custom) {
                 $a->score = $gradeinfo->earned;
                 $a->currenthigh = $gradeinfo->total;
-                return $this->output->box(get_string("ongoingcustom", "lesson", $a), "ongoing center");
+                return $this->output->box(get_string("ongoingcustom", "customlesson", $a), "ongoing center");
             } else {
                 $a->correct = $gradeinfo->earned;
                 $a->viewed = $gradeinfo->attempts;
-                return $this->output->box(get_string("ongoingnormal", "lesson", $a), "ongoing center");
+                return $this->output->box(get_string("ongoingnormal", "customlesson", $a), "ongoing center");
             }
         }
     }
@@ -593,7 +593,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
              <input type="hidden" name="id" value="'.$this->page->cm->id.'" />
              <input type="hidden" name="mode" value="save" />
              <input type="hidden" name="sesskey" value="'.sesskey().'" />';
-        $output .= get_string("entername", "lesson").": <input type=\"text\" name=\"name\" size=\"7\" maxlength=\"5\" />";
+        $output .= get_string("entername", "customlesson").": <input type=\"text\" name=\"name\" size=\"7\" maxlength=\"5\" />";
         $output .= $this->output->box("<input type='submit' value='".get_string('submitname', 'lesson')."' />", 'lessonbutton center');
         $output .= "</form>";
         $output .= $this->output->box_end();

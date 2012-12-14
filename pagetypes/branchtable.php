@@ -75,13 +75,13 @@ class lesson_page_type_branchtable extends lesson_page {
     public static function get_jumptooptions($firstpage, lesson $lesson) {
         global $DB, $PAGE;
         $jump = array();
-        $jump[0] = get_string("thispage", "lesson");
-        $jump[LESSON_NEXTPAGE] = get_string("nextpage", "lesson");
-        $jump[LESSON_PREVIOUSPAGE] = get_string("previouspage", "lesson");
-        $jump[LESSON_EOL] = get_string("endoflesson", "lesson");
-        $jump[LESSON_UNSEENBRANCHPAGE] = get_string("unseenpageinbranch", "lesson");
-        $jump[LESSON_RANDOMPAGE] = get_string("randompageinbranch", "lesson");
-        $jump[LESSON_RANDOMBRANCH] = get_string("randombranch", "lesson");
+        $jump[0] = get_string("thispage", "customlesson");
+        $jump[LESSON_NEXTPAGE] = get_string("nextpage", "customlesson");
+        $jump[LESSON_PREVIOUSPAGE] = get_string("previouspage", "customlesson");
+        $jump[LESSON_EOL] = get_string("endoflesson", "customlesson");
+        $jump[LESSON_UNSEENBRANCHPAGE] = get_string("unseenpageinbranch", "customlesson");
+        $jump[LESSON_RANDOMPAGE] = get_string("randompageinbranch", "customlesson");
+        $jump[LESSON_RANDOMBRANCH] = get_string("randombranch", "customlesson");
 
         if (!$firstpage) {
             if (!$apageid = $DB->get_field("customlesson_pages", "id", array("lessonid" => $lesson->id, "prevpageid" => 0))) {
@@ -215,12 +215,12 @@ class lesson_page_type_branchtable extends lesson_page {
                 continue;
             }
             $cells = array();
-            $cells[] = "<span class=\"label\">".get_string("branch", "lesson")." $i<span>: ";
+            $cells[] = "<span class=\"label\">".get_string("branch", "customlesson")." $i<span>: ";
             $cells[] = format_text($answer->answer, $answer->answerformat, $options);
             $table->data[] = new html_table_row($cells);
 
             $cells = array();
-            $cells[] = "<span class=\"label\">".get_string("jump", "lesson")." $i<span>: ";
+            $cells[] = "<span class=\"label\">".get_string("jump", "customlesson")." $i<span>: ";
             $cells[] = $this->get_jump_name($answer->jumpto);
             $table->data[] = new html_table_row($cells);
 
@@ -310,25 +310,25 @@ class lesson_add_page_form_branchtable extends lesson_add_page_form_base {
         $mform->addElement('hidden', 'qtype');
         $mform->setType('qtype', PARAM_INT);
 
-        $mform->addElement('text', 'title', get_string("pagetitle", "lesson"), array('size'=>70));
+        $mform->addElement('text', 'title', get_string("pagetitle", "customlesson"), array('size'=>70));
         $mform->setType('title', PARAM_TEXT);
         $mform->addRule('title', null, 'required', null, 'server');
 
         $this->editoroptions = array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$PAGE->course->maxbytes);
-        $mform->addElement('editor', 'contents_editor', get_string("pagecontents", "lesson"), null, $this->editoroptions);
+        $mform->addElement('editor', 'contents_editor', get_string("pagecontents", "customlesson"), null, $this->editoroptions);
         $mform->setType('contents_editor', PARAM_RAW);
 
-        $mform->addElement('checkbox', 'layout', null, get_string("arrangebuttonshorizontally", "lesson"));
+        $mform->addElement('checkbox', 'layout', null, get_string("arrangebuttonshorizontally", "customlesson"));
         $mform->setDefault('layout', true);
 
-        $mform->addElement('checkbox', 'display', null, get_string("displayinleftmenu", "lesson"));
+        $mform->addElement('checkbox', 'display', null, get_string("displayinleftmenu", "customlesson"));
         $mform->setDefault('display', true);
 
         for ($i = 0; $i < $lesson->maxanswers; $i++) {
             $mform->addElement('header', 'headeranswer'.$i, get_string('branch', 'lesson').' '.($i+1));
-            $this->add_answer($i, get_string("description", "lesson"), $i == 0);
+            $this->add_answer($i, get_string("description", "customlesson"), $i == 0);
 
-            $mform->addElement('select', 'jumpto['.$i.']', get_string("jump", "lesson"), $jumptooptions);
+            $mform->addElement('select', 'jumpto['.$i.']', get_string("jump", "customlesson"), $jumptooptions);
             if ($i === 0) {
                 $mform->setDefault('jumpto['.$i.']', 0);
             } else {

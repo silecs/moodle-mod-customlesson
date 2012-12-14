@@ -244,9 +244,9 @@ if (empty($pageid)) {
 
     if ($attemptflag) {
         if (!$lesson->retake) {
-            echo $lessonoutput->header($lesson, $cm, 'view', '', null, get_string("noretake", "lesson"));
+            echo $lessonoutput->header($lesson, $cm, 'view', '', null, get_string("noretake", "customlesson"));
             $courselink = new single_button(new moodle_url('/course/view.php', array('id'=>$PAGE->course->id)), get_string('returntocourse', 'lesson'), 'get');
-            echo $lessonoutput->message(get_string("noretake", "lesson"), $courselink);
+            echo $lessonoutput->message(get_string("noretake", "customlesson"), $courselink);
             echo $lessonoutput->footer();
             exit();
         }
@@ -325,7 +325,7 @@ if ($pageid != LESSON_EOL) {
                 $a->grade = number_format($gradeinfo->grade * $lesson->grade / 100, 1);
                 $a->total = $lesson->grade;
                 if (!$reviewmode && !$lesson->retake){
-                    $lesson->add_message(get_string("numberofcorrectanswers", "lesson", $gradeinfo->earned), 'notify');
+                    $lesson->add_message(get_string("numberofcorrectanswers", "customlesson", $gradeinfo->earned), 'notify');
                     $lesson->add_message(get_string('yourcurrentgradeisoutof', 'lesson', $a), 'notify');
                 }
             }
@@ -416,7 +416,7 @@ if ($pageid != LESSON_EOL) {
     add_to_log($course->id, "lesson", "end", "view.php?id=".$PAGE->cm->id, "$lesson->id", $PAGE->cm->id);
 
     // We are using level 3 header because the page title is a sub-heading of lesson title (MDL-30911).
-    $lessoncontent .= $OUTPUT->heading(get_string("congratulations", "lesson"), 3);
+    $lessoncontent .= $OUTPUT->heading(get_string("congratulations", "customlesson"), 3);
     $lessoncontent .= $OUTPUT->box_start('generalbox boxaligncenter');
     $ntries = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));
     if (isset($USER->modattempts[$lesson->id])) {
@@ -428,14 +428,14 @@ if ($pageid != LESSON_EOL) {
 
         if ($gradeinfo->attempts) {
             if (!$lesson->custom) {
-                $lessoncontent .= $lessonoutput->paragraph(get_string("numberofpagesviewed", "lesson", $gradeinfo->nquestions), 'center');
+                $lessoncontent .= $lessonoutput->paragraph(get_string("numberofpagesviewed", "customlesson", $gradeinfo->nquestions), 'center');
                 if ($lesson->minquestions) {
                     if ($gradeinfo->nquestions < $lesson->minquestions) {
                         // print a warning and set nviewed to minquestions
-                        $lessoncontent .= $lessonoutput->paragraph(get_string("youshouldview", "lesson", $lesson->minquestions), 'center');
+                        $lessoncontent .= $lessonoutput->paragraph(get_string("youshouldview", "customlesson", $lesson->minquestions), 'center');
                     }
                 }
-                $lessoncontent .= $lessonoutput->paragraph(get_string("numberofcorrectanswers", "lesson", $gradeinfo->earned), 'center');
+                $lessoncontent .= $lessonoutput->paragraph(get_string("numberofcorrectanswers", "customlesson", $gradeinfo->earned), 'center');
             }
             $a = new stdClass;
             $a->score = $gradeinfo->earned;
@@ -443,14 +443,14 @@ if ($pageid != LESSON_EOL) {
             if ($gradeinfo->nmanual) {
                 $a->tempmaxgrade = $gradeinfo->total - $gradeinfo->manualpoints;
                 $a->essayquestions = $gradeinfo->nmanual;
-                $lessoncontent .= $OUTPUT->box(get_string("displayscorewithessays", "lesson", $a), 'center');
+                $lessoncontent .= $OUTPUT->box(get_string("displayscorewithessays", "customlesson", $a), 'center');
             } else {
-                $lessoncontent .= $OUTPUT->box(get_string("displayscorewithoutessays", "lesson", $a), 'center');
+                $lessoncontent .= $OUTPUT->box(get_string("displayscorewithoutessays", "customlesson", $a), 'center');
             }
             $a = new stdClass;
             $a->grade = number_format($gradeinfo->grade * $lesson->grade / 100, 1);
             $a->total = $lesson->grade;
-            $lessoncontent .= $lessonoutput->paragraph(get_string("yourcurrentgradeisoutof", "lesson", $a), 'center');
+            $lessoncontent .= $lessonoutput->paragraph(get_string("yourcurrentgradeisoutof", "customlesson", $a), 'center');
 
             $grade = new stdClass();
             $grade->lessonid = $lesson->id;
@@ -482,10 +482,10 @@ if ($pageid != LESSON_EOL) {
                     if (!$lesson->practice) {
                         $newgradeid = $DB->insert_record("customlesson_grades", $grade);
                     }
-                    $lessoncontent .= get_string("eolstudentoutoftimenoanswers", "lesson");
+                    $lessoncontent .= get_string("eolstudentoutoftimenoanswers", "customlesson");
                 }
             } else {
-                $lessoncontent .= get_string("welldone", "lesson");
+                $lessoncontent .= get_string("welldone", "customlesson");
             }
         }
 
@@ -494,7 +494,7 @@ if ($pageid != LESSON_EOL) {
 
     } else {
         // display for teacher
-        $lessoncontent .= $lessonoutput->paragraph(get_string("displayofgrade", "lesson"), 'center');
+        $lessoncontent .= $lessonoutput->paragraph(get_string("displayofgrade", "customlesson"), 'center');
     }
     $lessoncontent .= $OUTPUT->box_end(); //End of Lesson button to Continue.
 
@@ -527,11 +527,11 @@ if ($pageid != LESSON_EOL) {
                 }
             }
             if (!$highscores or $madeit) {
-                $lessoncontent .= $lessonoutput->paragraph(get_string("youmadehighscore", "lesson", $lesson->maxhighscores), 'center');
+                $lessoncontent .= $lessonoutput->paragraph(get_string("youmadehighscore", "customlesson", $lesson->maxhighscores), 'center');
                 $aurl = new moodle_url('/mod/customlesson/highscores.php', array('id'=>$PAGE->cm->id, 'sesskey'=>sesskey()));
                 $lessoncontent .= $OUTPUT->single_button($aurl, get_string('clicktopost', 'lesson'));
             } else {
-                $lessoncontent .= get_string("nothighscore", "lesson", $lesson->maxhighscores)."<br />";
+                $lessoncontent .= get_string("nothighscore", "customlesson", $lesson->maxhighscores)."<br />";
             }
         }
         $url = new moodle_url('/mod/customlesson/highscores.php', array('id'=>$PAGE->cm->id, 'link'=>'1'));
@@ -559,7 +559,7 @@ if ($pageid != LESSON_EOL) {
         }
         $lessoncontent .= html_writer::link($url, get_string('reviewlesson', 'lesson'), array('class' => 'centerpadded lessonbutton standardbutton'));
     } elseif ($lesson->modattempts && $canmanage) {
-        $lessoncontent .= $lessonoutput->paragraph(get_string("modattemptsnoteacher", "lesson"), 'centerpadded');
+        $lessoncontent .= $lessonoutput->paragraph(get_string("modattemptsnoteacher", "customlesson"), 'centerpadded');
     }
 
     if ($lesson->activitylink) {
@@ -573,7 +573,7 @@ if ($pageid != LESSON_EOL) {
     $lessoncontent .= html_writer::link($url, get_string('viewgrades', 'lesson'), array('class'=>'centerpadded lessonbutton standardbutton'));
 
     lesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
-    echo $lessonoutput->header($lesson, $cm, $currenttab, $extraeditbuttons, $lessonpageid, get_string("congratulations", "lesson"));
+    echo $lessonoutput->header($lesson, $cm, $currenttab, $extraeditbuttons, $lessonpageid, get_string("congratulations", "customlesson"));
     echo $lessoncontent;
     echo $lessonoutput->footer();
 }

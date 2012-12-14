@@ -109,11 +109,11 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
         $mform->addElement('hidden', 'qtype');
         $mform->setType('qtype', PARAM_TEXT);
 
-        $mform->addElement('text', 'title', get_string("pagetitle", "lesson"), array('size'=>70));
+        $mform->addElement('text', 'title', get_string("pagetitle", "customlesson"), array('size'=>70));
         $mform->setType('title', PARAM_TEXT);
 
         $this->editoroptions = array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$PAGE->course->maxbytes);
-        $mform->addElement('editor', 'contents_editor', get_string("pagecontents", "lesson"), null, $this->editoroptions);
+        $mform->addElement('editor', 'contents_editor', get_string("pagecontents", "customlesson"), null, $this->editoroptions);
         $mform->setType('contents_editor', PARAM_RAW);
 
         $this->add_jumpto(0);
@@ -151,8 +151,8 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
         }
         $newpage->qtype = $this->qtype;
         $newpage->timecreated = $timenow;
-        $newpage->title = get_string("clustertitle", "lesson");
-        $newpage->contents = get_string("clustertitle", "lesson");
+        $newpage->title = get_string("clustertitle", "customlesson");
+        $newpage->contents = get_string("clustertitle", "customlesson");
         $newpageid = $DB->insert_record("customlesson_pages", $newpage);
         // update the linked list...
         if ($pageid != 0) {

@@ -62,9 +62,9 @@ if ($ADMIN->fulltree) {
             get_string('configmaxanswers', 'lesson'), 4, $numbers));
 
     $defaultnextpages = array();
-    $defaultnextpages[0] = get_string("normal", "lesson");
-    $defaultnextpages[LESSON_UNSEENPAGE] = get_string("showanunseenpage", "lesson");
-    $defaultnextpages[LESSON_UNANSWEREDPAGE] = get_string("showanunansweredpage", "lesson");
+    $defaultnextpages[0] = get_string("normal", "customlesson");
+    $defaultnextpages[LESSON_UNSEENPAGE] = get_string("showanunseenpage", "customlesson");
+    $defaultnextpages[LESSON_UNANSWEREDPAGE] = get_string("showanunansweredpage", "customlesson");
     $settings->add(new admin_setting_configselect('lesson_defaultnextpage', get_string('actionaftercorrectanswer','lesson'),
             get_string('configactionaftercorrectanswer', 'lesson'), 0, $defaultnextpages));
 }

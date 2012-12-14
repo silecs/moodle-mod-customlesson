@@ -168,11 +168,11 @@ class lesson_add_page_form_endofbranch extends lesson_add_page_form_base {
         $mform->addElement('hidden', 'qtype');
         $mform->setType('qtype', PARAM_TEXT);
 
-        $mform->addElement('text', 'title', get_string("pagetitle", "lesson"), array('size'=>70));
+        $mform->addElement('text', 'title', get_string("pagetitle", "customlesson"), array('size'=>70));
         $mform->setType('title', PARAM_TEXT);
 
         $this->editoroptions = array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$PAGE->course->maxbytes);
-        $mform->addElement('editor', 'contents_editor', get_string("pagecontents", "lesson"), null, $this->editoroptions);
+        $mform->addElement('editor', 'contents_editor', get_string("pagecontents", "customlesson"), null, $this->editoroptions);
         $mform->setType('contents_editor', PARAM_RAW);
 
         $this->add_jumpto(0);
@@ -207,8 +207,8 @@ class lesson_add_page_form_endofbranch extends lesson_add_page_form_base {
             $newpage->nextpageid = $page->nextpageid;
             $newpage->qtype = $this->qtype;
             $newpage->timecreated = $timenow;
-            $newpage->title = get_string("endofbranch", "lesson");
-            $newpage->contents = get_string("endofbranch", "lesson");
+            $newpage->title = get_string("endofbranch", "customlesson");
+            $newpage->contents = get_string("endofbranch", "customlesson");
             $newpageid = $DB->insert_record("customlesson_pages", $newpage);
             // update the linked list...
             $DB->set_field("customlesson_pages", "nextpageid", $newpageid, array("id" => $pageid));

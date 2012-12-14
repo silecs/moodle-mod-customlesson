@@ -43,8 +43,8 @@ require_login($course, false, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/customlesson:edit', $context);
 
-$strimportquestions = get_string("importquestions", "lesson");
-$strlessons = get_string("modulenameplural", "lesson");
+$strimportquestions = get_string("importquestions", "customlesson");
+$strlessons = get_string("modulenameplural", "customlesson");
 
 $manager = lesson_page_type_manager::get($lesson);
 

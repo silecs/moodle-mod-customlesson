@@ -44,8 +44,8 @@ add_to_log($course->id, "lesson", "view all", "index.php?id=$course->id", "");
 
 /// Get all required strings
 
-$strlessons = get_string("modulenameplural", "lesson");
-$strlesson  = get_string("modulename", "lesson");
+$strlessons = get_string("modulenameplural", "customlesson");
+$strlesson  = get_string("modulename", "customlesson");
 
 
 /// Print the header
@@ -69,8 +69,8 @@ $timenow = time();
 $strsectionname  = get_string('sectionname', 'format_'.$course->format);
 $strname  = get_string("name");
 $strgrade  = get_string("grade");
-$strdeadline  = get_string("deadline", "lesson");
-$strnodeadline = get_string("nodeadline", "lesson");
+$strdeadline  = get_string("deadline", "customlesson");
+$strnodeadline = get_string("nodeadline", "customlesson");
 $table = new html_table();
 
 if ($usesections) {

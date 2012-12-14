@@ -187,41 +187,41 @@ class lesson_page_type_essay extends lesson_page {
             if ($useranswer != NULL) {
                 $essayinfo = unserialize($useranswer->useranswer);
                 if ($essayinfo->response == NULL) {
-                    $answerdata->response = get_string("nocommentyet", "lesson");
+                    $answerdata->response = get_string("nocommentyet", "customlesson");
                 } else {
                     $answerdata->response = s($essayinfo->response);
                 }
                 if (isset($pagestats[$this->properties->id])) {
                     $percent = $pagestats[$this->properties->id]->totalscore / $pagestats[$this->properties->id]->total * 100;
                     $percent = round($percent, 2);
-                    $percent = get_string("averagescore", "lesson").": ". $percent ."%";
+                    $percent = get_string("averagescore", "customlesson").": ". $percent ."%";
                 } else {
                     // dont think this should ever be reached....
-                    $percent = get_string("nooneansweredthisquestion", "lesson");
+                    $percent = get_string("nooneansweredthisquestion", "customlesson");
                 }
                 if ($essayinfo->graded) {
                     if ($this->lesson->custom) {
-                        $answerdata->score = get_string("pointsearned", "lesson").": ".$essayinfo->score;
+                        $answerdata->score = get_string("pointsearned", "customlesson").": ".$essayinfo->score;
                     } elseif ($essayinfo->score) {
-                        $answerdata->score = get_string("receivedcredit", "lesson");
+                        $answerdata->score = get_string("receivedcredit", "customlesson");
                     } else {
-                        $answerdata->score = get_string("didnotreceivecredit", "lesson");
+                        $answerdata->score = get_string("didnotreceivecredit", "customlesson");
                     }
                 } else {
-                    $answerdata->score = get_string("havenotgradedyet", "lesson");
+                    $answerdata->score = get_string("havenotgradedyet", "customlesson");
                 }
             } else {
                 $essayinfo = new stdClass();
-                $essayinfo->answer = get_string("didnotanswerquestion", "lesson");
+                $essayinfo->answer = get_string("didnotanswerquestion", "customlesson");
             }
 
             if (isset($pagestats[$this->properties->id])) {
                 $avescore = $pagestats[$this->properties->id]->totalscore / $pagestats[$this->properties->id]->total;
                 $avescore = round($avescore, 2);
-                $avescore = get_string("averagescore", "lesson").": ". $avescore ;
+                $avescore = get_string("averagescore", "customlesson").": ". $avescore ;
             } else {
                 // dont think this should ever be reached....
-                $avescore = get_string("nooneansweredthisquestion", "lesson");
+                $avescore = get_string("nooneansweredthisquestion", "customlesson");
             }
             $answerdata->answers[] = array(format_text($essayinfo->answer, $essayinfo->answerformat, $formattextdefoptions), $avescore);
             $answerpage->answerdata = $answerdata;
@@ -298,11 +298,11 @@ class lesson_display_answer_form_essay extends moodleform {
             $mform->setType('answer', PARAM_RAW);
             $mform->addElement('html', $OUTPUT->container(get_string('youranswer', 'lesson'), 'youranswer'));
             $mform->addElement('html', $OUTPUT->container($useranswer, 'reviewessay'));
-            $this->add_action_buttons(null, get_string("nextpage", "lesson"));
+            $this->add_action_buttons(null, get_string("nextpage", "customlesson"));
         } else {
             $mform->addElement('editor', 'answer', get_string('youranswer', 'lesson'), null, null);
             $mform->setType('answer', PARAM_RAW);
-            $this->add_action_buttons(null, get_string("submit", "lesson"));
+            $this->add_action_buttons(null, get_string("submit", "customlesson"));
         }
     }
 }

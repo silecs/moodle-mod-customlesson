@@ -59,11 +59,11 @@ switch ($action) {
         $thispage = $lesson->load_page($pageid);
 
         echo $lessonoutput->header($lesson, $cm, '', false, null, get_string('deletingpage', 'lesson', format_string($thispage->title)));
-        echo $OUTPUT->heading(get_string("deletingpage", "lesson", format_string($thispage->title)));
+        echo $OUTPUT->heading(get_string("deletingpage", "customlesson", format_string($thispage->title)));
         // print the jumps to this page
         $params = array("lessonid" => $lesson->id, "pageid" => $pageid);
         if ($answers = $DB->get_records_select("customlesson_answers", "lessonid = :lessonid AND jumpto = :pageid + 1", $params)) {
-            echo $OUTPUT->heading(get_string("thefollowingpagesjumptothispage", "lesson"));
+            echo $OUTPUT->heading(get_string("thefollowingpagesjumptothispage", "customlesson"));
             echo "<p align=\"center\">\n";
             foreach ($answers as $answer) {
                 if (!$title = $DB->get_field("customlesson_pages", "title", array("id" => $answer->pageid))) {
@@ -81,7 +81,7 @@ switch ($action) {
         $title = $DB->get_field("customlesson_pages", "title", array("id" => $pageid));
 
         echo $lessonoutput->header($lesson, $cm, '', false, null, get_string('moving', 'lesson', format_String($title)));
-        echo $OUTPUT->heading(get_string("moving", "lesson", format_string($title)));
+        echo $OUTPUT->heading(get_string("moving", "customlesson", format_string($title)));
 
         $params = array ("lessonid" => $lesson->id, "prevpageid" => 0);
         if (!$page = $DB->get_record_select("customlesson_pages", "lessonid = :lessonid AND prevpageid = :prevpageid", $params)) {
@@ -90,15 +90,15 @@ switch ($action) {
 
         echo "<center><table cellpadding=\"5\" border=\"1\">\n";
         echo "<tr><td><a href=\"lesson.php?id=$cm->id&amp;sesskey=".sesskey()."&amp;action=moveit&amp;pageid=$pageid&amp;after=0\"><small>".
-            get_string("movepagehere", "lesson")."</small></a></td></tr>\n";
+            get_string("movepagehere", "customlesson")."</small></a></td></tr>\n";
         while (true) {
             if ($page->id != $pageid) {
                 if (!$title = trim(format_string($page->title))) {
-                    $title = "<< ".get_string("notitle", "lesson")."  >>";
+                    $title = "<< ".get_string("notitle", "customlesson")."  >>";
                 }
                 echo "<tr><td><b>$title</b></td></tr>\n";
                 echo "<tr><td><a href=\"lesson.php?id=$cm->id&amp;sesskey=".sesskey()."&amp;action=moveit&amp;pageid=$pageid&amp;after={$page->id}\"><small>".
-                    get_string("movepagehere", "lesson")."</small></a></td></tr>\n";
+                    get_string("movepagehere", "customlesson")."</small></a></td></tr>\n";
             }
             if ($page->nextpageid) {
                 if (!$page = $DB->get_record("customlesson_pages", array("id" => $page->nextpageid))) {

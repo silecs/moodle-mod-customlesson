@@ -172,10 +172,10 @@ switch ($mode) {
             $grades = array();
         }
 
-        echo $OUTPUT->heading(get_string("topscorestitle", "lesson", $lesson->maxhighscores), 4);
+        echo $OUTPUT->heading(get_string("topscorestitle", "customlesson", $lesson->maxhighscores), 4);
 
         if (!$highscores = $DB->get_records_select("customlesson_high_scores", "lessonid = :lessonid", $params)) {
-            echo $OUTPUT->heading(get_string("nohighscores", "lesson"), 3);
+            echo $OUTPUT->heading(get_string("nohighscores", "customlesson"), 3);
         } else {
             foreach ($highscores as $highscore) {
                 $grade = $grades[$highscore->gradeid]->grade;
@@ -190,7 +190,7 @@ switch ($mode) {
             $table->cellspacing = '10px';
             $table->size = array('*', '*', '*');
 
-            $table->head = array(get_string("rank", "lesson"), get_string('name'), get_string("scores", "lesson"));
+            $table->head = array(get_string("rank", "customlesson"), get_string('name'), get_string("scores", "lesson"));
 
             $printed = 0;
             while (true) {
@@ -213,10 +213,10 @@ switch ($mode) {
             echo $OUTPUT->box_start('mdl-align');
             echo $OUTPUT->box_start('lessonbutton standardbutton');
             if ($link) {
-                echo html_writer::link(new moodle_url('/course/view.php', array('id'=>$course->id)), get_string("returntocourse", "lesson"));
+                echo html_writer::link(new moodle_url('/course/view.php', array('id'=>$course->id)), get_string("returntocourse", "customlesson"));
             } else {
-                echo html_writer::link(new moodle_url('/course/view.php', array('id'=>$course->id)), get_string("cancel", "lesson")). ' ';
-                echo html_writer::link(new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id, 'viewed'=>'1')), get_string("startlesson", "lesson"));
+                echo html_writer::link(new moodle_url('/course/view.php', array('id'=>$course->id)), get_string("cancel", "customlesson")). ' ';
+                echo html_writer::link(new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id, 'viewed'=>'1')), get_string("startlesson", "customlesson"));
             }
             echo $OUTPUT->box_end();
             echo $OUTPUT->box_end();

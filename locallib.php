@@ -738,7 +738,7 @@ abstract class lesson_add_page_form_base extends moodleform {
      * @param int $selected The page to select by default
      */
     protected final function add_jumpto($name, $label=null, $selected=LESSON_NEXTPAGE) {
-        $title = get_string("jump", "lesson");
+        $title = get_string("jump", "customlesson");
         if ($label === null) {
             $label = $title;
         }
@@ -759,7 +759,7 @@ abstract class lesson_add_page_form_base extends moodleform {
      */
     protected final function add_score($name, $label=null, $value=null) {
         if ($label === null) {
-            $label = get_string("score", "lesson");
+            $label = get_string("score", "customlesson");
         }
         if (is_int($name)) {
             $name = "score[$name]";
@@ -1999,9 +1999,9 @@ abstract class lesson_page extends lesson_base {
                     $nretakes = $DB->count_records("customlesson_grades", array("lessonid"=>$this->lesson->id, "userid"=>$USER->id));
                     $qattempts = $DB->count_records("customlesson_attempts", array("userid"=>$USER->id, "retry"=>$nretakes, "pageid"=>$this->properties->id));
                     if ($qattempts == 1) {
-                        $result->feedback = $OUTPUT->box(get_string("firstwrong", "lesson"), 'feedback');
+                        $result->feedback = $OUTPUT->box(get_string("firstwrong", "customlesson"), 'feedback');
                     } else {
-                        $result->feedback = $OUTPUT->BOX(get_string("secondpluswrong", "lesson"), 'feedback');
+                        $result->feedback = $OUTPUT->BOX(get_string("secondpluswrong", "customlesson"), 'feedback');
                     }
                 } else {
                     $class = 'response';
@@ -2015,7 +2015,7 @@ abstract class lesson_page extends lesson_base {
                     $options->para = true;
                     $options->overflowdiv = true;
                     $result->feedback = $OUTPUT->box(format_text($this->get_contents(), $this->properties->contentsformat, $options), 'generalbox boxaligncenter');
-                    $result->feedback .= '<div class="correctanswer generalbox"><em>'.get_string("youranswer", "lesson").'</em> : '.$result->studentanswer; // already in clean html
+                    $result->feedback .= '<div class="correctanswer generalbox"><em>'.get_string("youranswer", "customlesson").'</em> : '.$result->studentanswer; // already in clean html
                     $result->feedback .= $OUTPUT->box($result->response, $class); // already conerted to HTML
                     $result->feedback .= '</div>';
                 }
@@ -2330,10 +2330,10 @@ abstract class lesson_page extends lesson_base {
     public static function get_jumptooptions($pageid, lesson $lesson) {
         global $DB;
         $jump = array();
-        $jump[0] = get_string("thispage", "lesson");
-        $jump[LESSON_NEXTPAGE] = get_string("nextpage", "lesson");
-        $jump[LESSON_PREVIOUSPAGE] = get_string("previouspage", "lesson");
-        $jump[LESSON_EOL] = get_string("endoflesson", "lesson");
+        $jump[0] = get_string("thispage", "customlesson");
+        $jump[LESSON_NEXTPAGE] = get_string("nextpage", "customlesson");
+        $jump[LESSON_PREVIOUSPAGE] = get_string("previouspage", "customlesson");
+        $jump[LESSON_EOL] = get_string("endoflesson", "customlesson");
 
         if ($pageid == 0) {
             return $jump;
@@ -2341,11 +2341,11 @@ abstract class lesson_page extends lesson_base {
 
         $pages = $lesson->load_all_pages();
         if ($pages[$pageid]->qtype == LESSON_PAGE_BRANCHTABLE || $lesson->is_sub_page_of_type($pageid, array(LESSON_PAGE_BRANCHTABLE), array(LESSON_PAGE_ENDOFBRANCH, LESSON_PAGE_CLUSTER))) {
-            $jump[LESSON_UNSEENBRANCHPAGE] = get_string("unseenpageinbranch", "lesson");
-            $jump[LESSON_RANDOMPAGE] = get_string("randompageinbranch", "lesson");
+            $jump[LESSON_UNSEENBRANCHPAGE] = get_string("unseenpageinbranch", "customlesson");
+            $jump[LESSON_RANDOMPAGE] = get_string("randompageinbranch", "customlesson");
         }
         if($pages[$pageid]->qtype == LESSON_PAGE_CLUSTER || $lesson->is_sub_page_of_type($pageid, array(LESSON_PAGE_CLUSTER), array(LESSON_PAGE_ENDOFCLUSTER))) {
-            $jump[LESSON_CLUSTERJUMP] = get_string("clusterjump", "lesson");
+            $jump[LESSON_CLUSTERJUMP] = get_string("clusterjump", "customlesson");
         }
         if (!optional_param('firstpage', 0, PARAM_INT)) {
             $apageid = $DB->get_field("customlesson_pages", "id", array("lessonid" => $lesson->id, "prevpageid" => 0));
@@ -2407,7 +2407,7 @@ abstract class lesson_page extends lesson_base {
         $i = 1;
         foreach ($answers as $answer) {
             $cells = array();
-            $cells[] = "<span class=\"label\">".get_string("jump", "lesson")." $i<span>: ";
+            $cells[] = "<span class=\"label\">".get_string("jump", "customlesson")." $i<span>: ";
             $cells[] = $this->get_jump_name($answer->jumpto);
             $table->data[] = new html_table_row($cells);
             if ($i === 1){

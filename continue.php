@@ -58,7 +58,7 @@ if (!$canmanage) {
             redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id,'pageid'=>LESSON_EOL, 'outoftime'=>'normal')));
         } else if ($timeleft < 60) {
             // One minute warning
-            $lesson->add_message(get_string("studentoneminwarning", "lesson"));
+            $lesson->add_message(get_string("studentoneminwarning", "customlesson"));
         }
     }
 } else {
@@ -150,13 +150,13 @@ if ($canmanage) {
     // This is the warning msg for teachers to inform them that cluster and unseen does not work while logged in as a teacher
     if(lesson_display_teacher_warning($lesson)) {
         $warningvars = new stdClass();
-        $warningvars->cluster = get_string("clusterjump", "lesson");
-        $warningvars->unseen = get_string("unseenpageinbranch", "lesson");
-        $lesson->add_message(get_string("teacherjumpwarning", "lesson", $warningvars));
+        $warningvars->cluster = get_string("clusterjump", "customlesson");
+        $warningvars->unseen = get_string("unseenpageinbranch", "customlesson");
+        $lesson->add_message(get_string("teacherjumpwarning", "customlesson", $warningvars));
     }
     // Inform teacher that s/he will not see the timer
     if ($lesson->timed) {
-        $lesson->add_message(get_string("teachertimerwarning", "lesson"));
+        $lesson->add_message(get_string("teachertimerwarning", "customlesson"));
     }
 }
 // Report attempts remaining
@@ -165,7 +165,7 @@ if ($result->attemptsremaining != 0 && !$lesson->review && !$reviewmode) {
 }
 // Report if max attempts reached
 if ($result->maxattemptsreached != 0 && !$lesson->review && !$reviewmode) {
-    $lesson->add_message('('.get_string("maximumnumberofattemptsreached", "lesson").')');
+    $lesson->add_message('('.get_string("maximumnumberofattemptsreached", "customlesson").')');
 }
 
 $PAGE->set_url('/mod/customlesson/view.php', array('id' => $cm->id, 'pageid' => $page->id));
@@ -187,9 +187,9 @@ echo $result->feedback;
 // User is modifying attempts - save button and some instructions
 if (isset($USER->modattempts[$lesson->id])) {
     $url = $CFG->wwwroot.'/mod/customlesson/view.php';
-    $content = $OUTPUT->box(get_string("gotoendoflesson", "lesson"), 'center');
-    $content .= $OUTPUT->box(get_string("or", "lesson"), 'center');
-    $content .= $OUTPUT->box(get_string("continuetonextpage", "lesson"), 'center');
+    $content = $OUTPUT->box(get_string("gotoendoflesson", "customlesson"), 'center');
+    $content .= $OUTPUT->box(get_string("or", "customlesson"), 'center');
+    $content .= $OUTPUT->box(get_string("continuetonextpage", "customlesson"), 'center');
     $content .= html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'id', 'value'=>$cm->id));
     $content .= html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'pageid', 'value'=>LESSON_EOL));
     $content .= html_writer::empty_tag('input', array('type'=>'submit', 'name'=>'submit', 'value'=>get_string('finish', 'lesson')));
