@@ -161,7 +161,7 @@ switch ($mode) {
                   FROM {user} u
                   JOIN (
                            SELECT DISTINCT userid
-                             FROM {lesson_attempts}
+                             FROM {customlesson_attempts}
                             WHERE lessonid = :lessonid
                        ) ui ON u.id = ui.id", $params)) {
                 print_error('cannotfinduser', 'lesson');
@@ -271,7 +271,7 @@ switch ($mode) {
                 if (!empty($cm->groupingid)) {
                     $params["groupingid"] = $cm->groupingid;
                     $sql = "SELECT DISTINCT $ufields
-                            FROM {lesson_attempts} a
+                            FROM {customlesson_attempts} a
                                 INNER JOIN {user} u ON u.id = a.userid
                                 INNER JOIN {groups_members} gm ON gm.userid = u.id
                                 INNER JOIN {groupings_groups} gg ON gm.groupid = gg.groupid AND gg.groupingid = :groupingid
@@ -280,7 +280,7 @@ switch ($mode) {
                 } else {
                     $sql = "SELECT DISTINCT $ufields
                             FROM {user} u,
-                                 {lesson_attempts} a
+                                 {customlesson_attempts} a
                             WHERE a.lessonid = :lessonid and
                                   u.id = a.userid
                             ORDER BY $sort";

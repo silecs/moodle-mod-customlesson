@@ -349,13 +349,13 @@ function lesson_get_user_grades($lesson, $userid=0) {
     if ($lesson->retake) {
         if ($lesson->usemaxgrade) {
             $sql = "SELECT u.id, u.id AS userid, MAX(g.grade) AS rawgrade
-                      FROM {user} u, {lesson_grades} g
+                      FROM {user} u, {customlesson_grades} g
                      WHERE u.id = g.userid AND g.lessonid = :lessonid
                            $user
                   GROUP BY u.id";
         } else {
             $sql = "SELECT u.id, u.id AS userid, AVG(g.grade) AS rawgrade
-                      FROM {user} u, {lesson_grades} g
+                      FROM {user} u, {customlesson_grades} g
                      WHERE u.id = g.userid AND g.lessonid = :lessonid
                            $user
                   GROUP BY u.id";
@@ -365,13 +365,13 @@ function lesson_get_user_grades($lesson, $userid=0) {
     } else {
         // use only first attempts (with lowest id in lesson_grades table)
         $firstonly = "SELECT uu.id AS userid, MIN(gg.id) AS firstcompleted
-                        FROM {user} uu, {lesson_grades} gg
+                        FROM {user} uu, {customlesson_grades} gg
                        WHERE uu.id = gg.userid AND gg.lessonid = :lessonid2
                              $fuser
                        GROUP BY uu.id";
 
         $sql = "SELECT u.id, u.id AS userid, g.grade AS rawgrade
-                  FROM {user} u, {lesson_grades} g, ($firstonly) f
+                  FROM {user} u, {customlesson_grades} g, ($firstonly) f
                  WHERE u.id = g.userid AND g.lessonid = :lessonid
                        AND g.id = f.firstcompleted AND g.userid=f.userid
                        $user";
@@ -418,12 +418,12 @@ function lesson_upgrade_grades() {
     global $DB;
 
     $sql = "SELECT COUNT('x')
-              FROM {lesson} l, {course_modules} cm, {modules} m
+              FROM {customlesson} l, {course_modules} cm, {modules} m
              WHERE m.name='lesson' AND m.id=cm.module AND cm.instance=l.id";
     $count = $DB->count_records_sql($sql);
 
     $sql = "SELECT l.*, cm.idnumber AS cmidnumber, l.course AS courseid
-              FROM {lesson} l, {course_modules} cm, {modules} m
+              FROM {customlesson} l, {course_modules} cm, {modules} m
              WHERE m.name='lesson' AND m.id=cm.module AND cm.instance=l.id";
     $rs = $DB->get_recordset_sql($sql);
     if ($rs->valid()) {
@@ -666,7 +666,7 @@ function lesson_reset_gradebook($courseid, $type='') {
     global $CFG, $DB;
 
     $sql = "SELECT l.*, cm.idnumber as cmidnumber, l.course as courseid
-              FROM {lesson} l, {course_modules} cm, {modules} m
+              FROM {customlesson} l, {course_modules} cm, {modules} m
              WHERE m.name='lesson' AND m.id=cm.module AND cm.instance=l.id AND l.course=:course";
     $params = array ("course" => $courseid);
     if ($lessons = $DB->get_records_sql($sql,$params)) {
@@ -693,7 +693,7 @@ function lesson_reset_userdata($data) {
 
     if (!empty($data->reset_lesson)) {
         $lessonssql = "SELECT l.id
-                         FROM {lesson} l
+                         FROM {customlesson} l
                         WHERE l.course=:course";
 
         $params = array ("course" => $data->courseid);

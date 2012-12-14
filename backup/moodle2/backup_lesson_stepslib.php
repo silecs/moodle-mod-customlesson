@@ -167,14 +167,14 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
         //we use SQL here as it must be ordered by prevpageid so that restore gets the pages in the right order.
         $page->set_source_sql("
                 SELECT *
-                  FROM {lesson_pages}
+                  FROM {customlesson_pages}
                  WHERE lessonid = ? ORDER BY prevpageid",
                 array(backup::VAR_PARENTID));
 
         // We use SQL here as answers must be ordered by id so that the restore gets them in the right order
         $answer->set_source_sql('
                 SELECT *
-                FROM {lesson_answers}
+                FROM {customlesson_answers}
                 WHERE pageid = :pageid
                 ORDER BY id',
                 array('pageid' => backup::VAR_PARENTID));

@@ -49,7 +49,7 @@ $params = array_merge($params, $sortparams);
 if (!empty($cm->groupingid)) {
     $params["groupid"] = $cm->groupingid;
     $sql = "SELECT DISTINCT $ufields
-                FROM {lesson_attempts} a
+                FROM {customlesson_attempts} a
                     INNER JOIN {user} u ON u.id = a.userid
                     INNER JOIN {groups_members} gm ON gm.userid = u.id
                     INNER JOIN {groupings_groups} gg ON gm.groupid = :groupid
@@ -58,7 +58,7 @@ if (!empty($cm->groupingid)) {
 } else {
     $sql = "SELECT DISTINCT $ufields
             FROM {user} u,
-                 {lesson_attempts} a
+                 {customlesson_attempts} a
             WHERE a.lessonid = :lessonid and
                   u.id = a.userid
             ORDER BY $sort";
@@ -121,7 +121,7 @@ if ($action === 'delete') {
 
                 /// Clean up the timer table by removing using the order - this is silly, it should be linked to specific attempt (skodak)
                     $params = array ("userid" => $userid, "lessonid" => $lesson->id);
-                    $timers = $DB->get_records_sql("SELECT id FROM {lesson_timer}
+                    $timers = $DB->get_records_sql("SELECT id FROM {customlesson_timer}
                                                      WHERE userid = :userid AND lessonid = :lessonid
                                                   ORDER BY starttime", $params, $try, 1);
                     if ($timers) {
@@ -130,7 +130,7 @@ if ($action === 'delete') {
                     }
 
                 /// Remove the grade from the grades and high_scores tables - this is silly, it should be linked to specific attempt (skodak)
-                    $grades = $DB->get_records_sql("SELECT id FROM {lesson_grades}
+                    $grades = $DB->get_records_sql("SELECT id FROM {customlesson_grades}
                                                      WHERE userid = :userid AND lessonid = :lessonid
                                                   ORDER BY completed", $params, $try, 1);
 
@@ -142,11 +142,11 @@ if ($action === 'delete') {
 
                 /// Remove attempts and update the retry number
                     $DB->delete_records('lesson_attempts', array('userid' => $userid, 'lessonid' => $lesson->id, 'retry' => $try));
-                    $DB->execute("UPDATE {lesson_attempts} SET retry = retry - 1 WHERE userid = ? AND lessonid = ? AND retry > ?", array($userid, $lesson->id, $try));
+                    $DB->execute("UPDATE {customlesson_attempts} SET retry = retry - 1 WHERE userid = ? AND lessonid = ? AND retry > ?", array($userid, $lesson->id, $try));
 
                 /// Remove seen branches and update the retry number
                     $DB->delete_records('lesson_branch', array('userid' => $userid, 'lessonid' => $lesson->id, 'retry' => $try));
-                    $DB->execute("UPDATE {lesson_branch} SET retry = retry - 1 WHERE userid = ? AND lessonid = ? AND retry > ?", array($userid, $lesson->id, $try));
+                    $DB->execute("UPDATE {customlesson_branch} SET retry = retry - 1 WHERE userid = ? AND lessonid = ? AND retry > ?", array($userid, $lesson->id, $try));
 
                 /// update central gradebook
                     lesson_update_grades($lesson, $userid);

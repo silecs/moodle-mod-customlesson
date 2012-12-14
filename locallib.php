@@ -396,7 +396,7 @@ function lesson_displayleftif($lesson) {
     if (!empty($lesson->displayleftif)) {
         // get the current user's max grade for this lesson
         $params = array ("userid" => $USER->id, "lessonid" => $lesson->id);
-        if ($maxgrade = $DB->get_record_sql('SELECT userid, MAX(grade) AS maxgrade FROM {lesson_grades} WHERE userid = :userid AND lessonid = :lessonid GROUP BY userid', $params)) {
+        if ($maxgrade = $DB->get_record_sql('SELECT userid, MAX(grade) AS maxgrade FROM {customlesson_grades} WHERE userid = :userid AND lessonid = :lessonid GROUP BY userid', $params)) {
             if ($maxgrade->maxgrade < $lesson->displayleftif) {
                 return 0;  // turn off the displayleft
             }

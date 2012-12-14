@@ -86,7 +86,7 @@ switch ($mode) {
             }
 
             if (!$newgrade = $DB->get_record_sql("SELECT *
-                                               FROM {lesson_grades}
+                                               FROM {customlesson_grades}
                                               WHERE lessonid = :lessonid
                                                 AND userid = :userid
                                            ORDER BY completed DESC", $params, true)) {
@@ -100,7 +100,7 @@ switch ($mode) {
 
             // Find out if we need to delete any records
             if ($highscores = $DB->get_records_sql("SELECT h.*, g.grade
-                                                 FROM {lesson_grades} g, {lesson_high_scores} h
+                                                 FROM {customlesson_grades} g, {lesson_high_scores} h
                                                 WHERE h.gradeid = g.id
                                                 AND h.lessonid = :lessonid
                                                 ORDER BY g.grade DESC", $params)) {
