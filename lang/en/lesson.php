@@ -255,8 +255,8 @@ $string['missingname'] = 'Please enter a nickname';
 $string['modattempts'] = 'Allow student review';
 $string['modattempts_help'] = 'If enabled, students can navigate through the lesson again from the start.';
 $string['modattemptsnoteacher'] = 'Student review only works for students.';
-$string['modulename'] = 'Lesson';
-$string['modulename_help'] = 'The lesson activity module enables a teacher to deliver content and/or practice activities in  interesting and flexible ways. A teacher can use the lesson to create a linear set of content pages or instructional activities that offer a variety of paths or options for the learner. In either case, teachers can choose to increase engagement and ensure understanding by including a variety of questions, such as multiple choice, matching and short answer. Depending on the student\'s choice of answer and how the teacher develops the lesson, students may progress to the next page, be taken back to a previous page or redirected down a different path entirely.
+$string['modulename'] = 'Custom Lesson';
+$string['modulename_help'] = 'The Custom Lesson activity module is a variant of the traditional Lesson, allowing to customize lessons, questions and answers on a student basis.  The (traditional) lesson activity module enables a teacher to deliver content and/or practice activities in  interesting and flexible ways. A teacher can use the lesson to create a linear set of content pages or instructional activities that offer a variety of paths or options for the learner. In either case, teachers can choose to increase engagement and ensure understanding by including a variety of questions, such as multiple choice, matching and short answer. Depending on the student\'s choice of answer and how the teacher develops the lesson, students may progress to the next page, be taken back to a previous page or redirected down a different path entirely.
 
 A lesson may be graded, with the grade recorded in the gradebook.
 
