@@ -34,7 +34,7 @@ $mode = optional_param('mode', 'display', PARAM_ALPHA);
 
 $cm = get_coursemodule_from_id('lesson', $id, 0, false, MUST_EXIST);;
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-$lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*', MUST_EXIST));
+$lesson = new lesson($DB->get_record('customlesson', array('id' => $cm->instance), '*', MUST_EXIST));
 
 require_login($course, false, $cm);
 $context = context_module::instance($cm->id);
@@ -51,8 +51,8 @@ $user = new stdClass();
 $attemptid = optional_param('attemptid', 0, PARAM_INT);
 
 if ($attemptid > 0) {
-    $attempt = $DB->get_record('lesson_attempts', array('id' => $attemptid));
-    $answer = $DB->get_record('lesson_answers', array('lessonid' => $lesson->id, 'pageid' => $attempt->pageid));
+    $attempt = $DB->get_record('customlesson_attempts', array('id' => $attemptid));
+    $answer = $DB->get_record('customlesson_answers', array('lessonid' => $lesson->id, 'pageid' => $attempt->pageid));
     $user = $DB->get_record('user', array('id' => $attempt->userid));
     $scoreoptions = array();
     if ($lesson->custom) {

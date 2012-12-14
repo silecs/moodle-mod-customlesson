@@ -377,7 +377,7 @@ class qformat_default {
                     // set up page links
                     if ($pageid) {
                         // the new page follows on from this page
-                        if (!$page = $DB->get_record("lesson_pages", array("id" => $pageid))) {
+                        if (!$page = $DB->get_record("customlesson_pages", array("id" => $pageid))) {
                             print_error('invalidpageid', 'lesson');
                         }
                         $newpage->prevpageid = $pageid;

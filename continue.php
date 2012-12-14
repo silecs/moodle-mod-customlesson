@@ -32,7 +32,7 @@ $id = required_param('id', PARAM_INT);
 
 $cm = get_coursemodule_from_id('lesson', $id, 0, false, MUST_EXIST);;
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-$lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*', MUST_EXIST));
+$lesson = new lesson($DB->get_record('customlesson', array('id' => $cm->instance), '*', MUST_EXIST));
 
 require_login($course, false, $cm);
 require_sesskey();

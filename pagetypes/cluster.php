@@ -128,7 +128,7 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
 
         if ($pageid == 0) {
             if ($lesson->has_pages()) {
-                if (!$page = $DB->get_record("lesson_pages", array("prevpageid" => 0, "lessonid" => $lesson->id))) {
+                if (!$page = $DB->get_record("customlesson_pages", array("prevpageid" => 0, "lessonid" => $lesson->id))) {
                     print_error('cannotfindpagerecord', 'lesson');
                 }
             } else {
@@ -137,7 +137,7 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
                 $page->id = 0;
             }
         } else {
-            if (!$page = $DB->get_record("lesson_pages", array("id" => $pageid))) {
+            if (!$page = $DB->get_record("customlesson_pages", array("id" => $pageid))) {
                 print_error('cannotfindpagerecord', 'lesson');
             }
         }

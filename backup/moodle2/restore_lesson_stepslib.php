@@ -226,7 +226,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         // lesson, or a backup/restore of a single lesson. We have no way to determine which and whether this is the
         // same site and/or course. Therefore we try and retrieve a mapping, but fallback to the original value if one
         // was not found. We then test to see whether the value found is valid for the course being restored into.
-        $lesson = $DB->get_record('lesson', array('id' => $this->task->get_activityid()), 'id, course, dependency, activitylink');
+        $lesson = $DB->get_record('customlesson', array('id' => $this->task->get_activityid()), 'id, course, dependency, activitylink');
         $updaterequired = false;
         if (!empty($lesson->dependency)) {
             $updaterequired = true;

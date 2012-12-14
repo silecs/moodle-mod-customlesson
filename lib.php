@@ -52,7 +52,7 @@ function lesson_add_instance($data, $mform) {
     $lessonid = $DB->insert_record("customlesson", $data);
     $data->id = $lessonid;
 
-    $lesson = $DB->get_record('lesson', array('id'=>$lessonid), '*', MUST_EXIST);
+    $lesson = $DB->get_record('customlesson', array('id'=>$lessonid), '*', MUST_EXIST);
 
     lesson_update_media_file($lessonid, $context, $draftitemid);
 
@@ -112,7 +112,7 @@ function lesson_delete_instance($id) {
     global $DB, $CFG;
     require_once($CFG->dirroot . '/mod/customlesson/locallib.php');
 
-    $lesson = $DB->get_record("lesson", array("id"=>$id), '*', MUST_EXIST);
+    $lesson = $DB->get_record("customlesson", array("id"=>$id), '*', MUST_EXIST);
     $lesson = new lesson($lesson);
     return $lesson->delete();
 }
@@ -855,7 +855,7 @@ function lesson_pluginfile($course, $cm, $context, $filearea, $args, $forcedownl
         return false;
     }
 
-    if (!$lesson = $DB->get_record('lesson', array('id'=>$cm->instance))) {
+    if (!$lesson = $DB->get_record('customlesson', array('id'=>$cm->instance))) {
         return false;
     }
 
@@ -863,7 +863,7 @@ function lesson_pluginfile($course, $cm, $context, $filearea, $args, $forcedownl
 
     if ($filearea === 'page_contents') {
         $pageid = (int)array_shift($args);
-        if (!$page = $DB->get_record('lesson_pages', array('id'=>$pageid))) {
+        if (!$page = $DB->get_record('customlesson_pages', array('id'=>$pageid))) {
             return false;
         }
         $fullpath = "/$context->id/mod_customlesson/$filearea/$pageid/".implode('/', $args);

@@ -244,7 +244,7 @@ class lesson_page_type_multichoice extends lesson_page {
                 return $result;
             }
             $result->answerid = $data->answerid;
-            if (!$answer = $DB->get_record("lesson_answers", array("id" => $result->answerid))) {
+            if (!$answer = $DB->get_record("customlesson_answers", array("id" => $result->answerid))) {
                 print_error("Continue: answer record not found");
             }
             if ($this->lesson->jumpto_is_correct($this->properties->id, $answer->jumpto)) {

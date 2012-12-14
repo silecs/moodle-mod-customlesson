@@ -831,7 +831,7 @@ abstract class lesson_add_page_form_base extends moodleform {
  * <code>
  * lesson::load($lessonid);
  * // or
- * $lessonrecord = $DB->get_record('lesson', $lessonid);
+ * $lessonrecord = $DB->get_record('customlesson', $lessonid);
  * $lesson = new lesson($lessonrecord);
  * </code>
  *
@@ -934,7 +934,7 @@ class lesson extends lesson_base {
     public static function load($lessonid) {
         global $DB;
 
-        if (!$lesson = $DB->get_record('lesson', array('id' => $lessonid))) {
+        if (!$lesson = $DB->get_record('customlesson', array('id' => $lessonid))) {
             print_error('invalidcoursemodule');
         }
         return new lesson($lesson);
@@ -1735,14 +1735,14 @@ abstract class lesson_page extends lesson_base {
         $newpage->nextpageid = 0; // this is the only page
 
         if ($properties->pageid) {
-            $prevpage = $DB->get_record("lesson_pages", array("id" => $properties->pageid), 'id, nextpageid');
+            $prevpage = $DB->get_record("customlesson_pages", array("id" => $properties->pageid), 'id, nextpageid');
             if (!$prevpage) {
                 print_error('cannotfindpages', 'lesson');
             }
             $newpage->prevpageid = $prevpage->id;
             $newpage->nextpageid = $prevpage->nextpageid;
         } else {
-            $nextpage = $DB->get_record('lesson_pages', array('lessonid'=>$lesson->id, 'prevpageid'=>0), 'id');
+            $nextpage = $DB->get_record('customlesson_pages', array('lessonid'=>$lesson->id, 'prevpageid'=>0), 'id');
             if ($nextpage) {
                 // This is the first page, there are existing pages put this at the start
                 $newpage->nextpageid = $nextpage->id;
@@ -1788,7 +1788,7 @@ abstract class lesson_page extends lesson_base {
         if (is_object($id) && !empty($id->qtype)) {
             $page = $id;
         } else {
-            $page = $DB->get_record("lesson_pages", array("id" => $id));
+            $page = $DB->get_record("customlesson_pages", array("id" => $id));
             if (!$page) {
                 print_error('cannotfindpages', 'lesson');
             }
@@ -2538,7 +2538,7 @@ class lesson_page_answer extends lesson_base {
      */
     public static function load($id) {
         global $DB;
-        $answer = $DB->get_record("lesson_answers", array("id" => $id));
+        $answer = $DB->get_record("customlesson_answers", array("id" => $id));
         return new lesson_page_answer($answer);
     }
 
@@ -2666,7 +2666,7 @@ class lesson_page_type_manager {
      */
     public function load_page($pageid, lesson $lesson) {
         global $DB;
-        if (!($page =$DB->get_record('lesson_pages', array('id'=>$pageid, 'lessonid'=>$lesson->id)))) {
+        if (!($page =$DB->get_record('customlesson_pages', array('id'=>$pageid, 'lessonid'=>$lesson->id)))) {
             print_error('cannotfindpages', 'lesson');
         }
         $pagetype = get_class($this->types[$page->qtype]);

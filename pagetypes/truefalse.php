@@ -81,7 +81,7 @@ class lesson_page_type_truefalse extends lesson_page {
             return $result;
         }
         $result->answerid = $data->answerid;
-        $answer = $DB->get_record("lesson_answers", array("id" => $result->answerid), '*', MUST_EXIST);
+        $answer = $DB->get_record("customlesson_answers", array("id" => $result->answerid), '*', MUST_EXIST);
         if ($this->lesson->jumpto_is_correct($this->properties->id, $answer->jumpto)) {
             $result->correctanswer = true;
         }

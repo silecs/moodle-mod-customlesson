@@ -37,7 +37,7 @@ $backtocourse = optional_param('backtocourse', false, PARAM_RAW);
 
 $cm = get_coursemodule_from_id('lesson', $id, 0, false, MUST_EXIST);;
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-$lesson = new lesson($DB->get_record('lesson', array('id' => $cm->instance), '*', MUST_EXIST));
+$lesson = new lesson($DB->get_record('customlesson', array('id' => $cm->instance), '*', MUST_EXIST));
 
 require_login($course, false, $cm);
 
@@ -97,7 +97,7 @@ if (!$canmanage) {
             exit();
         }
     } else if ($lesson->dependency) { // check for dependencies
-        if ($dependentlesson = $DB->get_record('lesson', array('id' => $lesson->dependency))) {
+        if ($dependentlesson = $DB->get_record('customlesson', array('id' => $lesson->dependency))) {
             // lesson exists, so we can proceed
             $conditions = unserialize($lesson->conditions);
             // assume false for all

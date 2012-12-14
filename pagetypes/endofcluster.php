@@ -167,7 +167,7 @@ class lesson_add_page_form_endofcluster extends lesson_add_page_form_base {
         $timenow = time();
 
         // the new page is not the first page (end of cluster always comes after an existing page)
-        if (!$page = $DB->get_record("lesson_pages", array("id" => $pageid))) {
+        if (!$page = $DB->get_record("customlesson_pages", array("id" => $pageid))) {
             print_error('cannotfindpages', 'lesson');
         }
 
