@@ -173,7 +173,7 @@ class lesson_page_type_branchtable extends lesson_page {
         $branch->flag = $branchflag;
         $branch->timeseen = time();
 
-        $DB->insert_record("lesson_branch", $branch);
+        $DB->insert_record("customlesson_branch", $branch);
 
         //  this is called when jumping to random from a branch table
         $context = context_module::instance($PAGE->cm->id);

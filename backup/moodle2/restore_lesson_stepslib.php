@@ -73,7 +73,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         }
 
         // insert the lesson record
-        $newitemid = $DB->insert_record('lesson', $data);
+        $newitemid = $DB->insert_record('customlesson', $data);
         // immediately after inserting "activity" record, call this
         $this->apply_activity_instance($newitemid);
     }
@@ -89,7 +89,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $data->timemodified = $this->apply_date_offset($data->timemodified);
         $data->timecreated = $this->apply_date_offset($data->timecreated);
 
-        $newitemid = $DB->insert_record('lesson_pages', $data);
+        $newitemid = $DB->insert_record('customlesson_pages', $data);
         $this->set_mapping('lesson_page', $oldid, $newitemid, true); // Has related fileareas
     }
 
@@ -125,7 +125,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->timeseen = $this->apply_date_offset($data->timeseen);
 
-        $newitemid = $DB->insert_record('lesson_attempts', $data);
+        $newitemid = $DB->insert_record('customlesson_attempts', $data);
     }
 
     protected function process_lesson_grade($data) {
@@ -137,7 +137,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->completed = $this->apply_date_offset($data->completed);
 
-        $newitemid = $DB->insert_record('lesson_grades', $data);
+        $newitemid = $DB->insert_record('customlesson_grades', $data);
         $this->set_mapping('lesson_grade', $oldid, $newitemid);
     }
 
@@ -151,7 +151,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->timeseen = $this->apply_date_offset($data->timeseen);
 
-        $newitemid = $DB->insert_record('lesson_branch', $data);
+        $newitemid = $DB->insert_record('customlesson_branch', $data);
     }
 
     protected function process_lesson_highscore($data) {
@@ -163,7 +163,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->gradeid = $this->get_mappingid('lesson_grade', $data->gradeid);
 
-        $newitemid = $DB->insert_record('lesson_high_scores', $data);
+        $newitemid = $DB->insert_record('customlesson_high_scores', $data);
     }
 
     protected function process_lesson_timer($data) {
@@ -176,7 +176,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $data->starttime = $this->apply_date_offset($data->starttime);
         $data->lessontime = $this->apply_date_offset($data->lessontime);
 
-        $newitemid = $DB->insert_record('lesson_timer', $data);
+        $newitemid = $DB->insert_record('customlesson_timer', $data);
     }
 
     protected function after_execute() {
@@ -185,7 +185,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         // Answers must be sorted by id to ensure that they're shown correctly
         ksort($this->answers);
         foreach ($this->answers as $answer) {
-            $newitemid = $DB->insert_record('lesson_answers', $answer);
+            $newitemid = $DB->insert_record('customlesson_answers', $answer);
             $this->set_mapping('lesson_answer', $answer->id, $newitemid);
 
             // Update the lesson attempts to use the newly created answerid

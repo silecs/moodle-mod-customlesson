@@ -77,7 +77,7 @@ class lesson_page_type_essay extends lesson_page {
         if (isset($properties->score[0])) {
             $newanswer->score = $properties->score[0];
         }
-        $newanswer->id = $DB->insert_record("lesson_answers", $newanswer);
+        $newanswer->id = $DB->insert_record("customlesson_answers", $newanswer);
         $answers = array($newanswer->id => new lesson_page_answer($newanswer));
         $this->answers = $answers;
         return $answers;
@@ -147,7 +147,7 @@ class lesson_page_type_essay extends lesson_page {
             $this->answers[0]->score = $properties->score[0];
         }
         if (!isset($this->answers[0]->id)) {
-            $this->answers[0]->id =  $DB->insert_record("lesson_answers", $this->answers[0]);
+            $this->answers[0]->id =  $DB->insert_record("customlesson_answers", $this->answers[0]);
         } else {
             $DB->update_record("customlesson_answers", $this->answers[0]->properties());
         }

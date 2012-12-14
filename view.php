@@ -466,7 +466,7 @@ if ($pageid != LESSON_EOL) {
                     $grade->id = $oldgrade->id;
                     $DB->update_record("customlesson_grades", $grade);
                 } else {
-                    $newgradeid = $DB->insert_record("lesson_grades", $grade);
+                    $newgradeid = $DB->insert_record("customlesson_grades", $grade);
                 }
             } else {
                 $DB->delete_records("lesson_attempts", array("lessonid" => $lesson->id, "userid" => $USER->id, "retry" => $ntries));
@@ -480,7 +480,7 @@ if ($pageid != LESSON_EOL) {
                     $grade->grade = 0;
                     $grade->completed = time();
                     if (!$lesson->practice) {
-                        $newgradeid = $DB->insert_record("lesson_grades", $grade);
+                        $newgradeid = $DB->insert_record("customlesson_grades", $grade);
                     }
                     $lessoncontent .= get_string("eolstudentoutoftimenoanswers", "lesson");
                 }

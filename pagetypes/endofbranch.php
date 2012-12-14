@@ -132,7 +132,7 @@ class lesson_page_type_endofbranch extends lesson_page {
         if (!empty($answer->id)) {
             $DB->update_record("customlesson_answers", $answer->properties());
         } else {
-            $DB->insert_record("lesson_answers", $answer);
+            $DB->insert_record("customlesson_answers", $answer);
         }
         return true;
     }
@@ -209,7 +209,7 @@ class lesson_add_page_form_endofbranch extends lesson_add_page_form_base {
             $newpage->timecreated = $timenow;
             $newpage->title = get_string("endofbranch", "lesson");
             $newpage->contents = get_string("endofbranch", "lesson");
-            $newpageid = $DB->insert_record("lesson_pages", $newpage);
+            $newpageid = $DB->insert_record("customlesson_pages", $newpage);
             // update the linked list...
             $DB->set_field("customlesson_pages", "nextpageid", $newpageid, array("id" => $pageid));
             if ($page->nextpageid) {
@@ -222,7 +222,7 @@ class lesson_add_page_form_endofbranch extends lesson_add_page_form_base {
             $newanswer->pageid = $newpageid;
             $newanswer->timecreated = $timenow;
             $newanswer->jumpto = $btpageid;
-            $newanswerid = $DB->insert_record("lesson_answers", $newanswer);
+            $newanswerid = $DB->insert_record("customlesson_answers", $newanswer);
             $lesson->add_message(get_string('addedanendofbranch', 'lesson'), 'notifysuccess');
         } else {
             $lesson->add_message(get_string('nobranchtablefound', 'lesson'));

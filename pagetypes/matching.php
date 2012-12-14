@@ -128,10 +128,10 @@ class lesson_page_type_matching extends lesson_page {
             }
 
             if (isset($answer->answer) && $answer->answer != '') {
-                $answer->id = $DB->insert_record("lesson_answers", $answer);
+                $answer->id = $DB->insert_record("customlesson_answers", $answer);
                 $answers[$answer->id] = new lesson_page_answer($answer);
             } else if ($i < 2) {
-                $answer->id = $DB->insert_record("lesson_answers", $answer);
+                $answer->id = $DB->insert_record("customlesson_answers", $answer);
                 $answers[$answer->id] = new lesson_page_answer($answer);
             } else {
                 break;
@@ -330,13 +330,13 @@ class lesson_page_type_matching extends lesson_page {
             // we don't need to check for isset here because properties called it's own isset method.
             if ($this->answers[$i]->answer != '') {
                 if (!isset($this->answers[$i]->id)) {
-                    $this->answers[$i]->id =  $DB->insert_record("lesson_answers", $this->answers[$i]);
+                    $this->answers[$i]->id =  $DB->insert_record("customlesson_answers", $this->answers[$i]);
                 } else {
                     $DB->update_record("customlesson_answers", $this->answers[$i]->properties());
                 }
             } else if ($i < 2) {
                 if (!isset($this->answers[$i]->id)) {
-                    $this->answers[$i]->id =  $DB->insert_record("lesson_answers", $this->answers[$i]);
+                    $this->answers[$i]->id =  $DB->insert_record("customlesson_answers", $this->answers[$i]);
                 } else {
                     $DB->update_record("customlesson_answers", $this->answers[$i]->properties());
                 }

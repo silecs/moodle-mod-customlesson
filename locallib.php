@@ -1194,7 +1194,7 @@ class lesson extends lesson_base {
         $startlesson->userid = $USER->id;
         $startlesson->starttime = time();
         $startlesson->lessontime = time();
-        $DB->insert_record('lesson_timer', $startlesson);
+        $DB->insert_record('customlesson_timer', $startlesson);
         if ($this->properties->timed) {
             $this->add_message(get_string('maxtimewarning', 'lesson', $this->properties->maxtime), 'center');
         }
@@ -1749,7 +1749,7 @@ abstract class lesson_page extends lesson_base {
             }
         }
 
-        $newpage->id = $DB->insert_record("lesson_pages", $newpage);
+        $newpage->id = $DB->insert_record("customlesson_pages", $newpage);
 
         $editor = new stdClass;
         $editor->id = $newpage->id;
@@ -1949,7 +1949,7 @@ abstract class lesson_page extends lesson_base {
                 }
 
                 if ($this->lesson->retake || (!$this->lesson->retake && $nretakes == 0)) {
-                    $DB->insert_record("lesson_attempts", $attempt);
+                    $DB->insert_record("customlesson_attempts", $attempt);
                 }
                 // "number of attempts remaining" message if $this->lesson->maxattempts > 1
                 // displaying of message(s) is at the end of page for more ergonomic display
@@ -2145,7 +2145,7 @@ abstract class lesson_page extends lesson_base {
                     $this->answers[$i]->score = $properties->score[$i];
                 }
                 if (!isset($this->answers[$i]->id)) {
-                    $this->answers[$i]->id =  $DB->insert_record("lesson_answers", $this->answers[$i]);
+                    $this->answers[$i]->id =  $DB->insert_record("customlesson_answers", $this->answers[$i]);
                 } else {
                     $DB->update_record("customlesson_answers", $this->answers[$i]->properties());
                 }
@@ -2237,7 +2237,7 @@ abstract class lesson_page extends lesson_base {
                 if ($this->lesson->custom && isset($properties->score[$i])) {
                     $answer->score = $properties->score[$i];
                 }
-                $answer->id = $DB->insert_record("lesson_answers", $answer);
+                $answer->id = $DB->insert_record("customlesson_answers", $answer);
                 $answers[$answer->id] = new lesson_page_answer($answer);
             } else {
                 break;

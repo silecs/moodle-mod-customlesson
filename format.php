@@ -78,7 +78,7 @@ function lesson_save_question_options($question, $lesson) {
                     $answer->answer   = $dataanswer;
                     $answer->response = $question->feedback[$key]['text'];
                     $answer->responseformat = $question->feedback[$key]['format'];
-                    $answer->id = $DB->insert_record("lesson_answers", $answer);
+                    $answer->id = $DB->insert_record("customlesson_answers", $answer);
                     $answers[] = $answer->id;
                     if ($question->fraction[$key] > $maxfraction) {
                         $maxfraction = $question->fraction[$key];
@@ -116,7 +116,7 @@ function lesson_save_question_options($question, $lesson) {
                     // $answer->answer   = $question->min[$key].":".$question->max[$key]; original line for min/max
                     $answer->response = $question->feedback[$key]['text'];
                     $answer->responseformat = $question->feedback[$key]['format'];
-                    $answer->id = $DB->insert_record("lesson_answers", $answer);
+                    $answer->id = $DB->insert_record("customlesson_answers", $answer);
 
                     $answers[] = $answer->id;
                     if ($question->fraction[$key] > $maxfraction) {
@@ -150,7 +150,7 @@ function lesson_save_question_options($question, $lesson) {
                 $answer->response = $question->feedbacktrue['text'];
                 $answer->responseformat = $question->feedbacktrue['format'];
             }
-            $DB->insert_record("lesson_answers", $answer);
+            $DB->insert_record("customlesson_answers", $answer);
 
             // the lie
             $answer = new stdClass;
@@ -166,7 +166,7 @@ function lesson_save_question_options($question, $lesson) {
                 $answer->response = $question->feedbackfalse['text'];
                 $answer->responseformat = $question->feedbackfalse['format'];
             }
-            $DB->insert_record("lesson_answers", $answer);
+            $DB->insert_record("customlesson_answers", $answer);
 
           break;
 
@@ -200,7 +200,7 @@ function lesson_save_question_options($question, $lesson) {
                     $answer->answerformat   = $dataanswer['format'];
                     $answer->response = $question->feedback[$key]['text'];
                     $answer->responseformat = $question->feedback[$key]['format'];
-                    $answer->id = $DB->insert_record("lesson_answers", $answer);
+                    $answer->id = $DB->insert_record("customlesson_answers", $answer);
                     // for Sanity checks
                     if ($question->fraction[$key] > 0) {
                         $totalfraction += $question->fraction[$key];
@@ -242,12 +242,12 @@ function lesson_save_question_options($question, $lesson) {
             $correctanswer = clone($defaultanswer);
             $correctanswer->answer = get_string('thatsthecorrectanswer', 'lesson');
             $correctanswer->jumpto = LESSON_NEXTPAGE;
-            $DB->insert_record("lesson_answers", $correctanswer);
+            $DB->insert_record("customlesson_answers", $correctanswer);
 
             // The second answer should always be the wrong answer
             $wronganswer = clone($defaultanswer);
             $wronganswer->answer = get_string('thatsthewronganswer', 'lesson');
-            $DB->insert_record("lesson_answers", $wronganswer);
+            $DB->insert_record("customlesson_answers", $wronganswer);
 
             $i = 0;
             // Insert all the new question+answer pairs
@@ -262,7 +262,7 @@ function lesson_save_question_options($question, $lesson) {
                         // first answer contains the correct answer jump
                         $answer->jumpto = LESSON_NEXTPAGE;
                     }
-                    $subquestions[] = $DB->insert_record("lesson_answers", $answer);
+                    $subquestions[] = $DB->insert_record("customlesson_answers", $answer);
                     $i++;
                 }
             }
@@ -383,7 +383,7 @@ class qformat_default {
                         $newpage->prevpageid = $pageid;
                         $newpage->nextpageid = $page->nextpageid;
                         // insert the page and reset $pageid
-                        $newpageid = $DB->insert_record("lesson_pages", $newpage);
+                        $newpageid = $DB->insert_record("customlesson_pages", $newpage);
                         // update the linked list
                         $DB->set_field("customlesson_pages", "nextpageid", $newpageid, array("id" => $pageid));
 
@@ -395,12 +395,12 @@ class qformat_default {
                             // there are no existing pages
                             $newpage->prevpageid = 0; // this is a first page
                             $newpage->nextpageid = 0; // this is the only page
-                            $newpageid = $DB->insert_record("lesson_pages", $newpage);
+                            $newpageid = $DB->insert_record("customlesson_pages", $newpage);
                         } else {
                             // there are existing pages put this at the start
                             $newpage->prevpageid = 0; // this is a first page
                             $newpage->nextpageid = $page->id;
-                            $newpageid = $DB->insert_record("lesson_pages", $newpage);
+                            $newpageid = $DB->insert_record("customlesson_pages", $newpage);
                             // update the linked list
                             $DB->set_field("customlesson_pages", "prevpageid", $newpageid, array("id" => $page->id));
                         }

@@ -49,7 +49,7 @@ function lesson_add_instance($data, $mform) {
     lesson_process_pre_save($data);
 
     unset($data->mediafile);
-    $lessonid = $DB->insert_record("lesson", $data);
+    $lessonid = $DB->insert_record("customlesson", $data);
     $data->id = $lessonid;
 
     $lesson = $DB->get_record('lesson', array('id'=>$lessonid), '*', MUST_EXIST);

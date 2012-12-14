@@ -143,7 +143,7 @@ switch ($mode) {
             $newhighscore->gradeid = $newgrade->id;
             $newhighscore->nickname = $name;
 
-            $DB->insert_record('lesson_high_scores', $newhighscore);
+            $DB->insert_record('customlesson_high_scores', $newhighscore);
 
             // Log it
             add_to_log($course->id, 'lesson', 'update highscores', "highscores.php?id=$cm->id", $name, $cm->id);

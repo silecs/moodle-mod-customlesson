@@ -189,7 +189,7 @@ class lesson_page_type_truefalse extends lesson_page {
                     $this->answers[$i]->score = $properties->score[$i];
                 }
                 if (!isset($this->answers[$i]->id)) {
-                    $this->answers[$i]->id =  $DB->insert_record("lesson_answers", $this->answers[$i]);
+                    $this->answers[$i]->id =  $DB->insert_record("customlesson_answers", $this->answers[$i]);
                 } else {
                     $DB->update_record("customlesson_answers", $this->answers[$i]->properties());
                 }

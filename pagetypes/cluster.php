@@ -153,7 +153,7 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
         $newpage->timecreated = $timenow;
         $newpage->title = get_string("clustertitle", "lesson");
         $newpage->contents = get_string("clustertitle", "lesson");
-        $newpageid = $DB->insert_record("lesson_pages", $newpage);
+        $newpageid = $DB->insert_record("customlesson_pages", $newpage);
         // update the linked list...
         if ($pageid != 0) {
             $DB->set_field("customlesson_pages", "nextpageid", $newpageid, array("id" => $pageid));
@@ -172,7 +172,7 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
         $newanswer->pageid = $newpageid;
         $newanswer->timecreated = $timenow;
         $newanswer->jumpto = LESSON_CLUSTERJUMP;
-        $newanswerid = $DB->insert_record("lesson_answers", $newanswer);
+        $newanswerid = $DB->insert_record("customlesson_answers", $newanswer);
         $lesson->add_message(get_string('addedcluster', 'lesson'), 'notifysuccess');
         redirect($CFG->wwwroot.'/mod/customlesson/edit.php?id='.$PAGE->cm->id);
     }
