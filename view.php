@@ -464,7 +464,7 @@ if ($pageid != LESSON_EOL) {
                     }
                     $oldgrade = array_shift($grades);
                     $grade->id = $oldgrade->id;
-                    $DB->update_record("lesson_grades", $grade);
+                    $DB->update_record("customlesson_grades", $grade);
                 } else {
                     $newgradeid = $DB->insert_record("lesson_grades", $grade);
                 }

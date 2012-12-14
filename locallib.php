@@ -1229,7 +1229,7 @@ class lesson extends lesson_base {
         }
 
         $timer->lessontime = time();
-        $DB->update_record('lesson_timer', $timer);
+        $DB->update_record('customlesson_timer', $timer);
         return $timer;
     }
 
@@ -1755,7 +1755,7 @@ abstract class lesson_page extends lesson_base {
         $editor->id = $newpage->id;
         $editor->contents_editor = $properties->contents_editor;
         $editor = file_postupdate_standard_editor($editor, 'contents', array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$maxbytes), $context, 'mod_customlesson', 'page_contents', $editor->id);
-        $DB->update_record("lesson_pages", $editor);
+        $DB->update_record("customlesson_pages", $editor);
 
         if ($newpage->prevpageid > 0) {
             $DB->set_field("customlesson_pages", "nextpageid", $newpage->id, array("id" => $newpage->prevpageid));
@@ -1859,7 +1859,7 @@ abstract class lesson_page extends lesson_base {
         $obj->id = $this->properties->id;
         $obj->prevpageid = $prevpageid;
         $obj->nextpageid = $nextpageid;
-        $DB->update_record('lesson_pages', $obj);
+        $DB->update_record('customlesson_pages', $obj);
     }
 
     /**
@@ -2117,7 +2117,7 @@ abstract class lesson_page extends lesson_base {
             $maxbytes = get_user_max_upload_file_size($context);
         }
         $properties = file_postupdate_standard_editor($properties, 'contents', array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$maxbytes), $context, 'mod_customlesson', 'page_contents', $properties->id);
-        $DB->update_record("lesson_pages", $properties);
+        $DB->update_record("customlesson_pages", $properties);
 
         for ($i = 0; $i < $this->lesson->maxanswers; $i++) {
             if (!array_key_exists($i, $this->answers)) {
@@ -2147,7 +2147,7 @@ abstract class lesson_page extends lesson_base {
                 if (!isset($this->answers[$i]->id)) {
                     $this->answers[$i]->id =  $DB->insert_record("lesson_answers", $this->answers[$i]);
                 } else {
-                    $DB->update_record("lesson_answers", $this->answers[$i]->properties());
+                    $DB->update_record("customlesson_answers", $this->answers[$i]->properties());
                 }
 
             } else if (isset($this->answers[$i]->id)) {

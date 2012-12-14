@@ -158,7 +158,7 @@ class lesson_page_type_truefalse extends lesson_page {
         $properties->id = $this->properties->id;
         $properties->lessonid = $this->lesson->id;
         $properties = file_postupdate_standard_editor($properties, 'contents', array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$PAGE->course->maxbytes), context_module::instance($PAGE->cm->id), 'mod_customlesson', 'page_contents', $properties->id);
-        $DB->update_record("lesson_pages", $properties);
+        $DB->update_record("customlesson_pages", $properties);
 
         // need to reset offset for correct and wrong responses
         $this->lesson->maxanswers = 2;
@@ -191,7 +191,7 @@ class lesson_page_type_truefalse extends lesson_page {
                 if (!isset($this->answers[$i]->id)) {
                     $this->answers[$i]->id =  $DB->insert_record("lesson_answers", $this->answers[$i]);
                 } else {
-                    $DB->update_record("lesson_answers", $this->answers[$i]->properties());
+                    $DB->update_record("customlesson_answers", $this->answers[$i]->properties());
                 }
             } else if (isset($this->answers[$i]->id)) {
                 $DB->delete_records('lesson_answers', array('id'=>$this->answers[$i]->id));

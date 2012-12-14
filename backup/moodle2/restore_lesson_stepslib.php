@@ -206,7 +206,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         foreach ($rs as $page) {
             $page->prevpageid = (empty($page->prevpageid)) ? 0 : $this->get_mappingid('lesson_page', $page->prevpageid);
             $page->nextpageid = (empty($page->nextpageid)) ? 0 : $this->get_mappingid('lesson_page', $page->nextpageid);
-            $DB->update_record('lesson_pages', $page);
+            $DB->update_record('customlesson_pages', $page);
         }
         $rs->close();
 
@@ -216,7 +216,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         foreach ($rs as $answer) {
             if ($answer->jumpto > 0) {
                 $answer->jumpto = $this->get_mappingid('lesson_page', $answer->jumpto);
-                $DB->update_record('lesson_answers', $answer);
+                $DB->update_record('customlesson_answers', $answer);
             }
         }
         $rs->close();
@@ -245,7 +245,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         }
 
         if ($updaterequired) {
-            $DB->update_record('lesson', $lesson);
+            $DB->update_record('customlesson', $lesson);
         }
     }
 }

@@ -108,7 +108,7 @@ class lesson_page_type_endofbranch extends lesson_page {
             $properties->qoption = '0';
         }
         $properties = file_postupdate_standard_editor($properties, 'contents', array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$PAGE->course->maxbytes), context_module::instance($PAGE->cm->id), 'mod_customlesson', 'page_contents', $properties->id);
-        $DB->update_record("lesson_pages", $properties);
+        $DB->update_record("customlesson_pages", $properties);
 
         $answers  = $this->get_answers();
         if (count($answers)>1) {
@@ -130,7 +130,7 @@ class lesson_page_type_endofbranch extends lesson_page {
             $answer->score = $properties->score[0];
         }
         if (!empty($answer->id)) {
-            $DB->update_record("lesson_answers", $answer->properties());
+            $DB->update_record("customlesson_answers", $answer->properties());
         } else {
             $DB->insert_record("lesson_answers", $answer);
         }

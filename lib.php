@@ -83,7 +83,7 @@ function lesson_update_instance($data, $mform) {
     lesson_process_pre_save($data);
 
     unset($data->mediafile);
-    $DB->update_record("lesson", $data);
+    $DB->update_record("customlesson", $data);
 
     lesson_update_media_file($data->id, $context, $draftitemid);
 

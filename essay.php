@@ -118,7 +118,7 @@ switch ($mode) {
 
             $attempt->useranswer = serialize($essayinfo);
 
-            $DB->update_record('lesson_attempts', $attempt);
+            $DB->update_record('customlesson_attempts', $attempt);
 
             // Get grade information
             $grade = current($grades);
@@ -128,7 +128,7 @@ switch ($mode) {
             $updategrade = new stdClass();
             $updategrade->id = $grade->id;
             $updategrade->grade = $gradeinfo->grade;
-            $DB->update_record('lesson_grades', $updategrade);
+            $DB->update_record('customlesson_grades', $updategrade);
             // Log it
             add_to_log($course->id, 'lesson', 'update grade', "essay.php?id=$cm->id", $lesson->name, $cm->id);
 
@@ -242,7 +242,7 @@ switch ($mode) {
                 message_send($eventdata);
                 $essayinfo->sent = 1;
                 $attempt->useranswer = serialize($essayinfo);
-                $DB->update_record('lesson_attempts', $attempt);
+                $DB->update_record('customlesson_attempts', $attempt);
                 // Log it
                 add_to_log($course->id, 'lesson', 'update email essay grade', "essay.php?id=$cm->id", format_string($pages[$attempt->pageid]->title,true).': '.fullname($users[$attempt->userid]), $cm->id);
             }
