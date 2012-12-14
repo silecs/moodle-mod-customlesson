@@ -84,7 +84,7 @@ switch ($action) {
         echo $OUTPUT->heading(get_string("moving", "lesson", format_string($title)));
 
         $params = array ("lessonid" => $lesson->id, "prevpageid" => 0);
-        if (!$page = $DB->get_record_select("lesson_pages", "lessonid = :lessonid AND prevpageid = :prevpageid", $params)) {
+        if (!$page = $DB->get_record_select("customlesson_pages", "lessonid = :lessonid AND prevpageid = :prevpageid", $params)) {
             print_error('cannotfindfirstpage', 'lesson');
         }
 

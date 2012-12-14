@@ -391,7 +391,7 @@ class qformat_default {
                         // new page is the first page
                         // get the existing (first) page (if any)
                         $params = array ("lessonid" => $lesson->id, "prevpageid" => 0);
-                        if (!$page = $DB->get_record_select("lesson_pages", "lessonid = :lessonid AND prevpageid = :prevpageid", $params)) {
+                        if (!$page = $DB->get_record_select("customlesson_pages", "lessonid = :lessonid AND prevpageid = :prevpageid", $params)) {
                             // there are no existing pages
                             $newpage->prevpageid = 0; // this is a first page
                             $newpage->nextpageid = 0; // this is the only page
