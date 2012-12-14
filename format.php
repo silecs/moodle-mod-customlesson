@@ -240,13 +240,13 @@ function lesson_save_question_options($question, $lesson) {
 
             // The first answer should always be the correct answer
             $correctanswer = clone($defaultanswer);
-            $correctanswer->answer = get_string('thatsthecorrectanswer', 'lesson');
+            $correctanswer->answer = get_string('thatsthecorrectanswer', 'customlesson');
             $correctanswer->jumpto = LESSON_NEXTPAGE;
             $DB->insert_record("customlesson_answers", $correctanswer);
 
             // The second answer should always be the wrong answer
             $wronganswer = clone($defaultanswer);
-            $wronganswer->answer = get_string('thatsthewronganswer', 'lesson');
+            $wronganswer->answer = get_string('thatsthewronganswer', 'customlesson');
             $DB->insert_record("customlesson_answers", $wronganswer);
 
             $i = 0;
@@ -319,7 +319,7 @@ class qformat_default {
         }
 
         //Avoid category as question type
-        echo $OUTPUT->notification(get_string('importcount', 'lesson',
+        echo $OUTPUT->notification(get_string('importcount', 'customlesson',
                 $this->count_questions($questions)), 'notifysuccess');
 
         $count = 0;
@@ -435,7 +435,7 @@ class qformat_default {
 
         }
         if ($unsupportedquestions) {
-            echo $OUTPUT->notification(get_string('unknownqtypesnotimported', 'lesson', $unsupportedquestions));
+            echo $OUTPUT->notification(get_string('unknownqtypesnotimported', 'customlesson', $unsupportedquestions));
         }
         return true;
     }

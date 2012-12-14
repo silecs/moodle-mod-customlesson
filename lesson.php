@@ -54,11 +54,11 @@ $lessonoutput = $PAGE->get_renderer('mod_customlesson');
 /// Process the action
 switch ($action) {
     case 'confirmdelete':
-        $PAGE->navbar->add(get_string($action, 'lesson'));
+        $PAGE->navbar->add(get_string($action, 'customlesson'));
 
         $thispage = $lesson->load_page($pageid);
 
-        echo $lessonoutput->header($lesson, $cm, '', false, null, get_string('deletingpage', 'lesson', format_string($thispage->title)));
+        echo $lessonoutput->header($lesson, $cm, '', false, null, get_string('deletingpage', 'customlesson', format_string($thispage->title)));
         echo $OUTPUT->heading(get_string("deletingpage", "customlesson", format_string($thispage->title)));
         // print the jumps to this page
         $params = array("lessonid" => $lesson->id, "pageid" => $pageid);
@@ -76,11 +76,11 @@ switch ($action) {
 
         break;
     case 'move':
-        $PAGE->navbar->add(get_string($action, 'lesson'));
+        $PAGE->navbar->add(get_string($action, 'customlesson'));
 
         $title = $DB->get_field("customlesson_pages", "title", array("id" => $pageid));
 
-        echo $lessonoutput->header($lesson, $cm, '', false, null, get_string('moving', 'lesson', format_String($title)));
+        echo $lessonoutput->header($lesson, $cm, '', false, null, get_string('moving', 'customlesson', format_String($title)));
         echo $OUTPUT->heading(get_string("moving", "customlesson", format_string($title)));
 
         $params = array ("lessonid" => $lesson->id, "prevpageid" => 0);

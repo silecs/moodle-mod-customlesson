@@ -62,8 +62,8 @@ if ($attemptid > 0) {
             $i--;
         }
     } else {
-        $scoreoptions[0] = get_string('nocredit', 'lesson');
-        $scoreoptions[1] = get_string('credit', 'lesson');
+        $scoreoptions[0] = get_string('nocredit', 'customlesson');
+        $scoreoptions[1] = get_string('credit', 'customlesson');
     }
 }
 
@@ -219,11 +219,11 @@ switch ($mode) {
                 $a->comment  = s($essayinfo->response);
 
                 // Fetch message HTML and plain text formats
-                $message  = get_string('essayemailmessage2', 'lesson', $a);
+                $message  = get_string('essayemailmessage2', 'customlesson', $a);
                 $plaintext = format_text_email($message, FORMAT_HTML);
 
                 // Subject
-                $subject = get_string('essayemailsubject', 'lesson', format_string($pages[$attempt->pageid]->title,true));
+                $subject = get_string('essayemailsubject', 'customlesson', format_string($pages[$attempt->pageid]->title,true));
 
                 $eventdata = new stdClass();
                 $eventdata->modulename       = 'lesson';
@@ -247,7 +247,7 @@ switch ($mode) {
                 add_to_log($course->id, 'lesson', 'update email essay grade', "essay.php?id=$cm->id", format_string($pages[$attempt->pageid]->title,true).': '.fullname($users[$attempt->userid]), $cm->id);
             }
         }
-        $lesson->add_message(get_string('emailsuccess', 'lesson'), 'notifysuccess');
+        $lesson->add_message(get_string('emailsuccess', 'customlesson'), 'notifysuccess');
         redirect(new moodle_url('/mod/customlesson/essay.php', array('id'=>$cm->id)));
         break;
     case 'display':  // Default view - get the necessary data
@@ -287,23 +287,23 @@ switch ($mode) {
                 }
                 if (!$users = $DB->get_records_sql($sql, $params)) {
                     $mode = 'none'; // not displaying anything
-                    $lesson->add_message(get_string('noonehasanswered', 'lesson'));
+                    $lesson->add_message(get_string('noonehasanswered', 'customlesson'));
                 }
             } else {
                 $mode = 'none'; // not displaying anything
-                $lesson->add_message(get_string('noonehasanswered', 'lesson'));
+                $lesson->add_message(get_string('noonehasanswered', 'customlesson'));
             }
         } else {
             $mode = 'none'; // not displaying anything
-            $lesson->add_message(get_string('noessayquestionsfound', 'lesson'));
+            $lesson->add_message(get_string('noessayquestionsfound', 'customlesson'));
         }
         break;
 }
 // Log it
-add_to_log($course->id, 'lesson', 'view grade', "essay.php?id=$cm->id", get_string('manualgrading', 'lesson'), $cm->id);
+add_to_log($course->id, 'lesson', 'view grade', "essay.php?id=$cm->id", get_string('manualgrading', 'customlesson'), $cm->id);
 
 $lessonoutput = $PAGE->get_renderer('mod_customlesson');
-echo $lessonoutput->header($lesson, $cm, 'essay', false, null, get_string('manualgrading', 'lesson'));
+echo $lessonoutput->header($lesson, $cm, 'essay', false, null, get_string('manualgrading', 'customlesson'));
 
 switch ($mode) {
     case 'display':
@@ -320,7 +320,7 @@ switch ($mode) {
 
         // Setup table
         $table = new html_table();
-        $table->head = array(get_string('name'), get_string('essays', 'lesson'), get_string('email', 'lesson'));
+        $table->head = array(get_string('name'), get_string('essays', 'customlesson'), get_string('email', 'lesson'));
         $table->attributes['class'] = 'standardtable generaltable';
         $table->align = array('left', 'left', 'left');
         $table->wrap = array('nowrap', 'nowrap', '');
@@ -370,14 +370,14 @@ switch ($mode) {
             }
             // email link for this user
             $url = new moodle_url('/mod/customlesson/essay.php', array('id'=>$cm->id,'mode'=>'email','userid'=>$userid,'sesskey'=>sesskey()));
-            $emaillink = html_writer::link($url, get_string('emailgradedessays', 'lesson'));
+            $emaillink = html_writer::link($url, get_string('emailgradedessays', 'customlesson'));
 
             $table->data[] = array($OUTPUT->user_picture($users[$userid], array('courseid'=>$course->id)).$studentname, implode("<br />", $essaylinks), $emaillink);
         }
 
         // email link for all users
         $url = new moodle_url('/mod/customlesson/essay.php', array('id'=>$cm->id,'mode'=>'email','sesskey'=>sesskey()));
-        $emailalllink = html_writer::link($url, get_string('emailallgradedessays', 'lesson'));
+        $emailalllink = html_writer::link($url, get_string('emailallgradedessays', 'customlesson'));
 
         $table->data[] = array(' ', ' ', $emailalllink);
 

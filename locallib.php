@@ -463,10 +463,10 @@ function lesson_mediafile_block_contents($cmid, $lesson) {
 
     $link = new moodle_url('/mod/customlesson/mediafile.php?id='.$cmid);
     $action = new popup_action('click', $link, 'lessonmediafile', $options);
-    $content = $OUTPUT->action_link($link, get_string('mediafilepopup', 'lesson'), $action, array('title'=>get_string('mediafilepopup', 'lesson')));
+    $content = $OUTPUT->action_link($link, get_string('mediafilepopup', 'customlesson'), $action, array('title'=>get_string('mediafilepopup', 'lesson')));
 
     $bc = new block_contents();
-    $bc->title = get_string('linkedmedia', 'lesson');
+    $bc->title = get_string('linkedmedia', 'customlesson');
     $bc->attributes['class'] = 'mediafile';
     $bc->content = $content;
 
@@ -499,7 +499,7 @@ function lesson_clock_block_contents($cmid, $lesson, $timer, $page) {
     $page->requires->js_function_call('show_clock');
 
     $bc = new block_contents();
-    $bc->title = get_string('timeremaining', 'lesson');
+    $bc->title = get_string('timeremaining', 'customlesson');
     $bc->attributes['class'] = 'clock block';
     $bc->content = $content;
 
@@ -534,7 +534,7 @@ function lesson_menu_block_contents($cmid, $lesson) {
         return null;
     }
 
-    $content = '<a href="#maincontent" class="skip">'.get_string('skip', 'lesson')."</a>\n<div class=\"menuwrapper\">\n<ul>\n";
+    $content = '<a href="#maincontent" class="skip">'.get_string('skip', 'customlesson')."</a>\n<div class=\"menuwrapper\">\n<ul>\n";
 
     while ($pageid != 0) {
         $page = $pages[$pageid];
@@ -553,7 +553,7 @@ function lesson_menu_block_contents($cmid, $lesson) {
     $content .= "</ul>\n</div>\n";
 
     $bc = new block_contents();
-    $bc->title = get_string('lessonmenu', 'lesson');
+    $bc->title = get_string('lessonmenu', 'customlesson');
     $bc->attributes['class'] = 'menu block';
     $bc->content = $content;
 
@@ -576,7 +576,7 @@ function lesson_add_header_buttons($cm, $context, $extraeditbuttons=false, $less
         }
         if (!empty($lessonpageid) && $lessonpageid != LESSON_EOL) {
             $url = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$cm->id, 'pageid'=>$lessonpageid, 'edit'=>1));
-            $PAGE->set_button($OUTPUT->single_button($url, get_string('editpagecontent', 'lesson')));
+            $PAGE->set_button($OUTPUT->single_button($url, get_string('editpagecontent', 'customlesson')));
         }
     }
 }
@@ -696,7 +696,7 @@ abstract class lesson_add_page_form_base extends moodleform {
         $mform = $this->_form;
         $editoroptions = $this->_customdata['editoroptions'];
 
-        $mform->addElement('header', 'qtypeheading', get_string('addaquestionpage', 'lesson', get_string($this->qtypestring, 'lesson')));
+        $mform->addElement('header', 'qtypeheading', get_string('addaquestionpage', 'customlesson', get_string($this->qtypestring, 'lesson')));
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
@@ -708,12 +708,12 @@ abstract class lesson_add_page_form_base extends moodleform {
             $mform->addElement('hidden', 'qtype');
             $mform->setType('qtype', PARAM_INT);
 
-            $mform->addElement('text', 'title', get_string('pagetitle', 'lesson'), array('size'=>70));
+            $mform->addElement('text', 'title', get_string('pagetitle', 'customlesson'), array('size'=>70));
             $mform->setType('title', PARAM_TEXT);
             $mform->addRule('title', get_string('required'), 'required', null, 'client');
 
             $this->editoroptions = array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$this->_customdata['maxbytes']);
-            $mform->addElement('editor', 'contents_editor', get_string('pagecontents', 'lesson'), null, $this->editoroptions);
+            $mform->addElement('editor', 'contents_editor', get_string('pagecontents', 'customlesson'), null, $this->editoroptions);
             $mform->setType('contents_editor', PARAM_RAW);
             $mform->addRule('contents_editor', get_string('required'), 'required', null, 'client');
         }
@@ -722,11 +722,11 @@ abstract class lesson_add_page_form_base extends moodleform {
 
         if ($this->_customdata['edit'] === true) {
             $mform->addElement('hidden', 'edit', 1);
-            $this->add_action_buttons(get_string('cancel'), get_string('savepage', 'lesson'));
+            $this->add_action_buttons(get_string('cancel'), get_string('savepage', 'customlesson'));
         } else if ($this->qtype === 'questiontype') {
-            $this->add_action_buttons(get_string('cancel'), get_string('addaquestionpage', 'lesson'));
+            $this->add_action_buttons(get_string('cancel'), get_string('addaquestionpage', 'customlesson'));
         } else {
-            $this->add_action_buttons(get_string('cancel'), get_string('savepage', 'lesson'));
+            $this->add_action_buttons(get_string('cancel'), get_string('savepage', 'customlesson'));
         }
     }
 
@@ -780,7 +780,7 @@ abstract class lesson_add_page_form_base extends moodleform {
      */
     protected final function add_answer($count, $label = NULL, $required = false) {
         if ($label === NULL) {
-            $label = get_string('answer', 'lesson');
+            $label = get_string('answer', 'customlesson');
         }
         $this->_form->addElement('editor', 'answer_editor['.$count.']', $label, array('rows'=>'4', 'columns'=>'80'), array('noclean'=>true));
         $this->_form->setDefault('answer_editor['.$count.']', array('text'=>'', 'format'=>FORMAT_MOODLE));
@@ -798,7 +798,7 @@ abstract class lesson_add_page_form_base extends moodleform {
      */
     protected final function add_response($count, $label = NULL, $required = false) {
         if ($label === NULL) {
-            $label = get_string('response', 'lesson');
+            $label = get_string('response', 'customlesson');
         }
         $this->_form->addElement('editor', 'response_editor['.$count.']', $label, array('rows'=>'4', 'columns'=>'80'), array('noclean'=>true));
         $this->_form->setDefault('response_editor['.$count.']', array('text'=>'', 'format'=>FORMAT_MOODLE));
@@ -1196,7 +1196,7 @@ class lesson extends lesson_base {
         $startlesson->lessontime = time();
         $DB->insert_record('customlesson_timer', $startlesson);
         if ($this->properties->timed) {
-            $this->add_message(get_string('maxtimewarning', 'lesson', $this->properties->maxtime), 'center');
+            $this->add_message(get_string('maxtimewarning', 'customlesson', $this->properties->maxtime), 'center');
         }
         return true;
     }
@@ -1265,7 +1265,7 @@ class lesson extends lesson_base {
                 $instancename = $DB->get_field($modname, 'name', array('id' => $module->instance));
                 if ($instancename) {
                     return html_writer::link(new moodle_url('/mod/'.$modname.'/view.php', array('id'=>$this->properties->activitylink)),
-                        get_string('activitylinkname', 'lesson', $instancename),
+                        get_string('activitylinkname', 'customlesson', $instancename),
                         array('class'=>'centerpadded lessonbutton standardbutton'));
                 }
             }
@@ -1767,7 +1767,7 @@ abstract class lesson_page extends lesson_base {
         $page = lesson_page::load($newpage, $lesson);
         $page->create_answers($properties);
 
-        $lesson->add_message(get_string('insertedpage', 'lesson').': '.format_string($newpage->title, true), 'notifysuccess');
+        $lesson->add_message(get_string('insertedpage', 'customlesson').': '.format_string($newpage->title, true), 'notifysuccess');
 
         return $page;
     }
@@ -1876,7 +1876,7 @@ abstract class lesson_page extends lesson_base {
             if (!$answers) {
                 // It is possible that a lesson upgraded from Moodle 1.9 still
                 // contains questions without any answers [MDL-25632].
-                // debugging(get_string('cannotfindanswer', 'lesson'));
+                // debugging(get_string('cannotfindanswer', 'customlesson'));
                 return array();
             }
             foreach ($answers as $answer) {
@@ -1926,7 +1926,7 @@ abstract class lesson_page extends lesson_base {
 
         if ($result->noanswer) {
             $result->newpageid = $this->properties->id; // display same page again
-            $result->feedback  = get_string('noanswer', 'lesson');
+            $result->feedback  = get_string('noanswer', 'customlesson');
         } else {
             if (!has_capability('mod/customlesson:manage', $context)) {
                 $nretakes = $DB->count_records("customlesson_grades", array("lessonid"=>$this->lesson->id, "userid"=>$USER->id));
@@ -1986,11 +1986,11 @@ abstract class lesson_page extends lesson_base {
 
                     $result->nodefaultresponse = true;  // This will cause a redirect below
                 } else if ($result->isessayquestion) {
-                    $result->response = get_string('defaultessayresponse', 'lesson');
+                    $result->response = get_string('defaultessayresponse', 'customlesson');
                 } else if ($result->correctanswer) {
-                    $result->response = get_string('thatsthecorrectanswer', 'lesson');
+                    $result->response = get_string('thatsthecorrectanswer', 'customlesson');
                 } else {
-                    $result->response = get_string('thatsthewronganswer', 'lesson');
+                    $result->response = get_string('thatsthewronganswer', 'customlesson');
                 }
             }
 
@@ -2038,24 +2038,24 @@ abstract class lesson_page extends lesson_base {
 
         if (!array_key_exists($jumpto, $jumpnames)) {
             if ($jumpto == LESSON_THISPAGE) {
-                $jumptitle = get_string('thispage', 'lesson');
+                $jumptitle = get_string('thispage', 'customlesson');
             } elseif ($jumpto == LESSON_NEXTPAGE) {
-                $jumptitle = get_string('nextpage', 'lesson');
+                $jumptitle = get_string('nextpage', 'customlesson');
             } elseif ($jumpto == LESSON_EOL) {
-                $jumptitle = get_string('endoflesson', 'lesson');
+                $jumptitle = get_string('endoflesson', 'customlesson');
             } elseif ($jumpto == LESSON_UNSEENBRANCHPAGE) {
-                $jumptitle = get_string('unseenpageinbranch', 'lesson');
+                $jumptitle = get_string('unseenpageinbranch', 'customlesson');
             } elseif ($jumpto == LESSON_PREVIOUSPAGE) {
-                $jumptitle = get_string('previouspage', 'lesson');
+                $jumptitle = get_string('previouspage', 'customlesson');
             } elseif ($jumpto == LESSON_RANDOMPAGE) {
-                $jumptitle = get_string('randompageinbranch', 'lesson');
+                $jumptitle = get_string('randompageinbranch', 'customlesson');
             } elseif ($jumpto == LESSON_RANDOMBRANCH) {
-                $jumptitle = get_string('randombranch', 'lesson');
+                $jumptitle = get_string('randombranch', 'customlesson');
             } elseif ($jumpto == LESSON_CLUSTERJUMP) {
-                $jumptitle = get_string('clusterjump', 'lesson');
+                $jumptitle = get_string('clusterjump', 'customlesson');
             } else {
                 if (!$jumptitle = $DB->get_field('customlesson_pages', 'title', array('id' => $jumpto))) {
-                    $jumptitle = '<strong>'.get_string('notdefined', 'lesson').'</strong>';
+                    $jumptitle = '<strong>'.get_string('notdefined', 'customlesson').'</strong>';
                 }
             }
             $jumpnames[$jumpto] = format_string($jumptitle,true);
@@ -2453,7 +2453,7 @@ abstract class lesson_page extends lesson_base {
         $formattextdefoptions = new stdClass;
         $formattextdefoptions->para = false;  //I'll use it widely in this page
         foreach ($answers as $answer) {
-            $data = get_string('jumpsto', 'lesson', $this->get_jump_name($answer->jumpto));
+            $data = get_string('jumpsto', 'customlesson', $this->get_jump_name($answer->jumpto));
             $answerdata->answers[] = array($data, "");
             $answerpage->answerdata = $answerdata;
         }

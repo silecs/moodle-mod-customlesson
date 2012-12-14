@@ -41,7 +41,7 @@ class lesson_page_type_numerical extends lesson_page {
     }
     public function get_typestring() {
         if ($this->string===null) {
-            $this->string = get_string($this->typeidstring, 'lesson');
+            $this->string = get_string($this->typeidstring, 'customlesson');
         }
         return $this->string;
     }
@@ -287,7 +287,7 @@ class lesson_display_answer_form_numerical extends moodleform {
         $mform->addElement('hidden', 'pageid');
         $mform->setType('pageid', PARAM_INT);
 
-        $mform->addElement('text', 'answer', get_string('youranswer', 'lesson'), $attrs);
+        $mform->addElement('text', 'answer', get_string('youranswer', 'customlesson'), $attrs);
         $mform->setType('answer', PARAM_FLOAT);
 
         if ($hasattempt) {

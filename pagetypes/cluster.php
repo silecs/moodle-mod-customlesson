@@ -46,7 +46,7 @@ class lesson_page_type_cluster extends lesson_page {
     }
     public function get_typestring() {
         if ($this->string===null) {
-            $this->string = get_string($this->typeidstring, 'lesson');
+            $this->string = get_string($this->typeidstring, 'customlesson');
         }
         return $this->string;
     }
@@ -73,7 +73,7 @@ class lesson_page_type_cluster extends lesson_page {
     public function add_page_link($previd) {
         global $PAGE, $CFG;
         $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>LESSON_PAGE_CLUSTER));
-        return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_CLUSTER, 'name'=>get_string('addcluster', 'lesson'));
+        return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_CLUSTER, 'name'=>get_string('addcluster', 'customlesson'));
     }
     public function valid_page_and_view(&$validpages, &$pageviews) {
         $validpages[$this->properties->id] = 1;  // add the cluster page as a valid page
@@ -173,7 +173,7 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
         $newanswer->timecreated = $timenow;
         $newanswer->jumpto = LESSON_CLUSTERJUMP;
         $newanswerid = $DB->insert_record("customlesson_answers", $newanswer);
-        $lesson->add_message(get_string('addedcluster', 'lesson'), 'notifysuccess');
+        $lesson->add_message(get_string('addedcluster', 'customlesson'), 'notifysuccess');
         redirect($CFG->wwwroot.'/mod/customlesson/edit.php?id='.$PAGE->cm->id);
     }
 }

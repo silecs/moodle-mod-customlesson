@@ -95,7 +95,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $output  =  $this->output->box_start('generalbox boxaligncenter');
         $output .=  $this->output->box_start('center');
         $output .=  $message;
-        $output .=  $this->output->box('<a href="'.$CFG->wwwroot.'/course/view.php?id='. $this->page->course->id .'">'. get_string('returnto', 'lesson', format_string($this->page->course->fullname, true)) .'</a>', 'lessonbutton standardbutton');
+        $output .=  $this->output->box('<a href="'.$CFG->wwwroot.'/course/view.php?id='. $this->page->course->id .'">'. get_string('returnto', 'customlesson', format_string($this->page->course->fullname, true)) .'</a>', 'lessonbutton standardbutton');
         $output .=  $this->output->box_end();
         $output .=  $this->output->box_end();
         return $output;
@@ -115,12 +115,12 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $output .=  '<fieldset class="invisiblefieldset center">';
         $output .=  '<input type="hidden" name="id" value="'. $this->page->cm->id .'" />';
         if ($failedattempt) {
-            $output .=  $this->output->notification(get_string('loginfail', 'lesson'));
+            $output .=  $this->output->notification(get_string('loginfail', 'customlesson'));
         }
-        $output .= get_string('passwordprotectedlesson', 'lesson', format_string($lesson->name)).'<br /><br />';
-        $output .= get_string('enterpassword', 'lesson')." <input type=\"password\" name=\"userpassword\" /><br /><br />";
-        $output .= "<div class='lessonbutton standardbutton submitbutton'><input type='submit' value='".get_string('continue', 'lesson')."' /></div>";
-        $output .= " <div class='lessonbutton standardbutton submitbutton'><input type='submit' name='backtocourse' value='".get_string('cancel', 'lesson')."' /></div>";
+        $output .= get_string('passwordprotectedlesson', 'customlesson', format_string($lesson->name)).'<br /><br />';
+        $output .= get_string('enterpassword', 'customlesson')." <input type=\"password\" name=\"userpassword\" /><br /><br />";
+        $output .= "<div class='lessonbutton standardbutton submitbutton'><input type='submit' value='".get_string('continue', 'customlesson')."' /></div>";
+        $output .= " <div class='lessonbutton standardbutton submitbutton'><input type='submit' name='backtocourse' value='".get_string('cancel', 'customlesson')."' /></div>";
         $output .=  '</fieldset></form>';
         $output .=  $this->output->box_end();
         $output .=  $this->output->box_end();
@@ -136,8 +136,8 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      */
     public function dependancy_errors($dependentlesson, $errors) {
         $output  = $this->output->box_start('generalbox boxaligncenter');
-        $output .= get_string('completethefollowingconditions', 'lesson', $dependentlesson->name);
-        $output .= $this->output->box(implode('<br />'.get_string('and', 'lesson').'<br />', $errors),'center');
+        $output .= get_string('completethefollowingconditions', 'customlesson', $dependentlesson->name);
+        $output .= $this->output->box(implode('<br />'.get_string('and', 'customlesson').'<br />', $errors),'center');
         $output .= $this->output->box_end();
         return $output;
     }
@@ -211,7 +211,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $npages = count($lesson->load_all_pages());
 
         $table = new html_table();
-        $table->head = array(get_string('pagetitle', 'lesson'), get_string('qtype', 'lesson'), get_string('jumps', 'lesson'), get_string('actions', 'lesson'));
+        $table->head = array(get_string('pagetitle', 'customlesson'), get_string('qtype', 'lesson'), get_string('jumps', 'lesson'), get_string('actions', 'lesson'));
         $table->align = array('left', 'left', 'left', 'center');
         $table->wrap = array('', 'nowrap', '', 'nowrap');
         $table->tablealign = 'center';
@@ -341,7 +341,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $links = array();
 
         $importquestionsurl = new moodle_url('/mod/customlesson/import.php',array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
-        $links[] = html_writer::link($importquestionsurl, get_string('importquestions', 'lesson'));
+        $links[] = html_writer::link($importquestionsurl, get_string('importquestions', 'customlesson'));
 
         $manager = lesson_page_type_manager::get($lesson);
         foreach($manager->get_add_page_type_links($prevpageid) as $link) {
@@ -349,7 +349,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         }
 
         $addquestionurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
-        $links[] = html_writer::link($addquestionurl, get_string('addaquestionpagehere', 'lesson'));
+        $links[] = html_writer::link($addquestionurl, get_string('addaquestionpagehere', 'customlesson'));
 
         return $this->output->box(implode(" | \n", $links), 'addlinks');
     }
@@ -367,7 +367,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $links = array();
 
         $importquestionsurl = new moodle_url('/mod/customlesson/import.php',array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
-        $links[] = html_writer::link($importquestionsurl, get_string('importquestions', 'lesson'));
+        $links[] = html_writer::link($importquestionsurl, get_string('importquestions', 'customlesson'));
 
         $manager = lesson_page_type_manager::get($lesson);
         foreach ($manager->get_add_page_type_links($prevpageid) as $link) {
@@ -376,7 +376,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         }
 
         $addquestionurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid, 'firstpage'=>1));
-        $links[] = html_writer::link($addquestionurl, get_string('addaquestionpage', 'lesson'));
+        $links[] = html_writer::link($addquestionurl, get_string('addaquestionpage', 'customlesson'));
 
         return $this->output->box($output.'<p>'.implode('</p><p>', $links).'</p>', 'generalbox firstpageoptions');
     }
@@ -414,10 +414,10 @@ class mod_customlesson_renderer extends plugin_renderer_base {
             foreach ($links as $link) {
                 $options[$link['type']] = $link['name'];
             }
-            $options[0] = get_string('question', 'lesson');
+            $options[0] = get_string('question', 'customlesson');
 
             $addpageurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$this->page->cm->id, 'pageid'=>$page->id, 'sesskey'=>sesskey()));
-            $addpageselect = new single_select($addpageurl, 'qtype', $options, null, array(''=>get_string('addanewpage', 'lesson').'...'), 'addpageafter'.$page->id);
+            $addpageselect = new single_select($addpageurl, 'qtype', $options, null, array(''=>get_string('addanewpage', 'customlesson').'...'), 'addpageafter'.$page->id);
             $addpageselector = $this->output->render($addpageselect);
         }
 
@@ -456,7 +456,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
 
         $context = context_module::instance($this->page->cm->id);
         if (has_capability('mod/customlesson:manage', $context)) {
-            return $this->output->box(get_string('teacherongoingwarning', 'lesson'), "ongoing center");
+            return $this->output->box(get_string('teacherongoingwarning', 'customlesson'), "ongoing center");
         } else {
             $ntries = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));
             if (isset($USER->modattempts[$lesson->id])) {
@@ -494,7 +494,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
 
         // catch teachers
         if (has_capability('mod/customlesson:manage', $context)) {
-            return $this->output->notification(get_string('progressbarteacherwarning2', 'lesson'));
+            return $this->output->notification(get_string('progressbarteacherwarning2', 'customlesson'));
         }
 
         if (!isset($USER->modattempts[$lesson->id])) {
@@ -547,7 +547,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
 
         // print out the Progress Bar.  Attempted to put as much as possible in the style sheets.
         $content = '<br />' . html_writer::tag('div', $progress . '%', array('class' => 'progress_bar_completed', 'style' => 'width: '. $progress . '%;'));
-        $printprogress = html_writer::tag('div', get_string('progresscompleted', 'lesson', $progress) . $content, array('class' => 'progress_bar'));
+        $printprogress = html_writer::tag('div', get_string('progresscompleted', 'customlesson', $progress) . $content, array('class' => 'progress_bar'));
 
         return $this->output->box($printprogress, 'progress_bar');
     }
@@ -594,7 +594,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
              <input type="hidden" name="mode" value="save" />
              <input type="hidden" name="sesskey" value="'.sesskey().'" />';
         $output .= get_string("entername", "customlesson").": <input type=\"text\" name=\"name\" size=\"7\" maxlength=\"5\" />";
-        $output .= $this->output->box("<input type='submit' value='".get_string('submitname', 'lesson')."' />", 'lessonbutton center');
+        $output .= $this->output->box("<input type='submit' value='".get_string('submitname', 'customlesson')."' />", 'lessonbutton center');
         $output .= "</form>";
         $output .= $this->output->box_end();
         $output .= $this->output->box_end();

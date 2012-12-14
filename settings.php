@@ -30,27 +30,27 @@ if ($ADMIN->fulltree) {
     require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 
     /** Slideshow settings */
-    $settings->add(new admin_setting_configtext('lesson_slideshowwidth', get_string('slideshowwidth', 'lesson'),
-            get_string('configslideshowwidth', 'lesson'), 640, PARAM_INT));
+    $settings->add(new admin_setting_configtext('lesson_slideshowwidth', get_string('slideshowwidth', 'customlesson'),
+            get_string('configslideshowwidth', 'customlesson'), 640, PARAM_INT));
 
-    $settings->add(new admin_setting_configtext('lesson_slideshowheight', get_string('slideshowheight', 'lesson'),
-            get_string('configslideshowheight', 'lesson'), 480, PARAM_INT));
+    $settings->add(new admin_setting_configtext('lesson_slideshowheight', get_string('slideshowheight', 'customlesson'),
+            get_string('configslideshowheight', 'customlesson'), 480, PARAM_INT));
 
-    $settings->add(new admin_setting_configtext('lesson_slideshowbgcolor', get_string('slideshowbgcolor', 'lesson'),
-            get_string('configslideshowbgcolor', 'lesson'), '#FFFFFF', PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('lesson_slideshowbgcolor', get_string('slideshowbgcolor', 'customlesson'),
+            get_string('configslideshowbgcolor', 'customlesson'), '#FFFFFF', PARAM_TEXT));
 
     /** Media file popup settings */
-    $settings->add(new admin_setting_configtext('lesson_mediawidth', get_string('mediawidth', 'lesson'),
-            get_string('configmediawidth', 'lesson'), 640, PARAM_INT));
+    $settings->add(new admin_setting_configtext('lesson_mediawidth', get_string('mediawidth', 'customlesson'),
+            get_string('configmediawidth', 'customlesson'), 640, PARAM_INT));
 
-    $settings->add(new admin_setting_configtext('lesson_mediaheight', get_string('mediaheight', 'lesson'),
-            get_string('configmediaheight', 'lesson'), 480, PARAM_INT));
+    $settings->add(new admin_setting_configtext('lesson_mediaheight', get_string('mediaheight', 'customlesson'),
+            get_string('configmediaheight', 'customlesson'), 480, PARAM_INT));
 
-    $settings->add(new admin_setting_configcheckbox('lesson_mediaclose', get_string('mediaclose', 'lesson'),
-            get_string('configmediaclose', 'lesson'), false, PARAM_TEXT));
+    $settings->add(new admin_setting_configcheckbox('lesson_mediaclose', get_string('mediaclose', 'customlesson'),
+            get_string('configmediaclose', 'customlesson'), false, PARAM_TEXT));
 
     /** Misc lesson settings */
-    $settings->add(new admin_setting_configtext('lesson_maxhighscores', get_string('maxhighscores', 'lesson'),
+    $settings->add(new admin_setting_configtext('lesson_maxhighscores', get_string('maxhighscores', 'customlesson'),
             get_string('configmaxhighscores','lesson'), 10, PARAM_INT));
 
     /** Default lesson settings */
@@ -59,12 +59,12 @@ if ($ADMIN->fulltree) {
         $numbers[$i] = $i;
     }
     $settings->add(new admin_setting_configselect('lesson_maxanswers', get_string('maximumnumberofanswersbranches','lesson'),
-            get_string('configmaxanswers', 'lesson'), 4, $numbers));
+            get_string('configmaxanswers', 'customlesson'), 4, $numbers));
 
     $defaultnextpages = array();
     $defaultnextpages[0] = get_string("normal", "customlesson");
     $defaultnextpages[LESSON_UNSEENPAGE] = get_string("showanunseenpage", "customlesson");
     $defaultnextpages[LESSON_UNANSWEREDPAGE] = get_string("showanunansweredpage", "customlesson");
     $settings->add(new admin_setting_configselect('lesson_defaultnextpage', get_string('actionaftercorrectanswer','lesson'),
-            get_string('configactionaftercorrectanswer', 'lesson'), 0, $defaultnextpages));
+            get_string('configactionaftercorrectanswer', 'customlesson'), 0, $defaultnextpages));
 }

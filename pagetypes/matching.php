@@ -41,7 +41,7 @@ class lesson_page_type_matching extends lesson_page {
     }
     public function get_typestring() {
         if ($this->string===null) {
-            $this->string = get_string($this->typeidstring, 'lesson');
+            $this->string = get_string($this->typeidstring, 'customlesson');
         }
         return $this->string;
     }
@@ -400,18 +400,18 @@ class lesson_page_type_matching extends lesson_page {
                     $answerdata->score = get_string("didnotreceivecredit", "customlesson");
                 }
             } elseif ($n > 1) {
-                $data = '<label class="accesshide" for="answer_' . $n . '">' . get_string('answer', 'lesson') . '</label>';
+                $data = '<label class="accesshide" for="answer_' . $n . '">' . get_string('answer', 'customlesson') . '</label>';
                 $data .= "<select id=\"answer_". $n ."\" disabled=\"disabled\"><option selected=\"selected\">".strip_tags(format_string($answer->answer))."</option></select>";
                 if ($useranswer != NULL) {
                     $userresponse = explode(",", $useranswer->useranswer);
-                    $data .= '<label class="accesshide" for="stu_answer_response_' . $n . '">' . get_string('matchesanswer', 'lesson') . '</label>';
+                    $data .= '<label class="accesshide" for="stu_answer_response_' . $n . '">' . get_string('matchesanswer', 'customlesson') . '</label>';
                     $data .= "<select id=\"stu_answer_response_" . $n . "\" disabled=\"disabled\"><option selected=\"selected\">";
                     if (array_key_exists($i, $userresponse)) {
                         $data .= strip_tags(format_string($answers[$userresponse[$i]]->response));
                     }
                     $data .= "</option></select>";
                 } else {
-                    $data .= '<label class="accesshide" for="answer_response_' . $n . '">' . get_string('matchesanswer', 'lesson') . '</label>';
+                    $data .= '<label class="accesshide" for="answer_response_' . $n . '">' . get_string('matchesanswer', 'customlesson') . '</label>';
                     $data .= "<select id=\"answer_response_" . $n . "\" disabled=\"disabled\"><option selected=\"selected\">".strip_tags(format_string($answer->response))."</option></select>";
                 }
 
@@ -460,18 +460,18 @@ class lesson_add_page_form_matching extends lesson_add_page_form_base {
 
     public function custom_definition() {
 
-        $this->_form->addElement('header', 'correctresponse', get_string('correctresponse', 'lesson'));
-        $this->_form->addElement('editor', 'answer_editor[0]', get_string('correctresponse', 'lesson'), array('rows'=>'4', 'columns'=>'80'), array('noclean'=>true));
+        $this->_form->addElement('header', 'correctresponse', get_string('correctresponse', 'customlesson'));
+        $this->_form->addElement('editor', 'answer_editor[0]', get_string('correctresponse', 'customlesson'), array('rows'=>'4', 'columns'=>'80'), array('noclean'=>true));
         $this->add_jumpto(0, get_string('correctanswerjump','lesson'), LESSON_NEXTPAGE);
         $this->add_score(0, get_string("correctanswerscore", "customlesson"), 1);
 
-        $this->_form->addElement('header', 'wrongresponse', get_string('wrongresponse', 'lesson'));
-        $this->_form->addElement('editor', 'answer_editor[1]', get_string('wrongresponse', 'lesson'), array('rows'=>'4', 'columns'=>'80'), array('noclean'=>true));
+        $this->_form->addElement('header', 'wrongresponse', get_string('wrongresponse', 'customlesson'));
+        $this->_form->addElement('editor', 'answer_editor[1]', get_string('wrongresponse', 'customlesson'), array('rows'=>'4', 'columns'=>'80'), array('noclean'=>true));
         $this->add_jumpto(1, get_string('wronganswerjump','lesson'), LESSON_THISPAGE);
         $this->add_score(1, get_string("wronganswerscore", "customlesson"), 0);
 
         for ($i = 2; $i < $this->_customdata['lesson']->maxanswers+2; $i++) {
-            $this->_form->addElement('header', 'matchingpair'.($i-1), get_string('matchingpair', 'lesson', $i-1));
+            $this->_form->addElement('header', 'matchingpair'.($i-1), get_string('matchingpair', 'customlesson', $i-1));
             $this->add_answer($i, NULL, ($i < 4));
             $this->add_response($i, get_string('matchesanswer','lesson'), ($i < 4));
         }

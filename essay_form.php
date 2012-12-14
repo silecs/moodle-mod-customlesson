@@ -42,7 +42,7 @@ class essay_grading_form extends moodleform {
     public function definition() {
         $mform = $this->_form;
 
-        $mform->addElement('header', 'formheader', get_string('question', 'lesson'));
+        $mform->addElement('header', 'formheader', get_string('question', 'customlesson'));
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
@@ -53,12 +53,12 @@ class essay_grading_form extends moodleform {
         $mform->addElement('hidden', 'mode', 'update');
         $mform->setType('mode', PARAM_ALPHA);
 
-        $mform->addElement('static', 'studentanswer', get_string('studentresponse', 'lesson', fullname($this->_customdata['user'], true)));
+        $mform->addElement('static', 'studentanswer', get_string('studentresponse', 'customlesson', fullname($this->_customdata['user'], true)));
 
-        $mform->addElement('textarea', 'response', get_string('comments', 'lesson'), array('rows'=>'15', 'cols'=>'60'));
+        $mform->addElement('textarea', 'response', get_string('comments', 'customlesson'), array('rows'=>'15', 'cols'=>'60'));
         $mform->setType('response', PARAM_TEXT);
 
-        $mform->addElement('select', 'score', get_string('essayscore', 'lesson'), $this->_customdata['scoreoptions']);
+        $mform->addElement('select', 'score', get_string('essayscore', 'customlesson'), $this->_customdata['scoreoptions']);
         $mform->setType('score', PARAM_INT);
 
         $this->add_action_buttons(get_string('cancel'), get_string('savechanges'));

@@ -262,9 +262,9 @@ function lesson_print_overview($courses, &$htmlarray) {
     }
 
 /// Get Necessary Strings
-    $strlesson       = get_string('modulename', 'lesson');
-    $strnotattempted = get_string('nolessonattempts', 'lesson');
-    $strattempted    = get_string('lessonattempted', 'lesson');
+    $strlesson       = get_string('modulename', 'customlesson');
+    $strnotattempted = get_string('nolessonattempts', 'customlesson');
+    $strattempted    = get_string('lessonattempted', 'customlesson');
 
     $now = time();
     foreach ($lessons as $lesson) {
@@ -282,13 +282,13 @@ function lesson_print_overview($courses, &$htmlarray) {
                              format_string($lesson->name).'</a>', 'name');
 
             // Deadline
-            $str .= $OUTPUT->box(get_string('lessoncloseson', 'lesson', userdate($lesson->deadline)), 'info');
+            $str .= $OUTPUT->box(get_string('lessoncloseson', 'customlesson', userdate($lesson->deadline)), 'info');
 
             // Attempt information
             if (has_capability('mod/customlesson:manage', context_module::instance($lesson->coursemodule))) {
                 // Number of user attempts
                 $attempts = $DB->count_records('customlesson_attempts', array('lessonid'=>$lesson->id));
-                $str     .= $OUTPUT->box(get_string('xattempts', 'lesson', $attempts), 'info');
+                $str     .= $OUTPUT->box(get_string('xattempts', 'customlesson', $attempts), 'info');
             } else {
                 // Determine if the user has attempted the lesson or not
                 if ($DB->count_records('customlesson_attempts', array('lessonid'=>$lesson->id, 'userid'=>$USER->id))) {
@@ -620,12 +620,12 @@ function lesson_process_post_save(&$lesson) {
         // Separate start and end events.
         $event->timeduration  = 0;
         if ($lesson->available) {
-            $event->name = $lesson->name.' ('.get_string('lessonopens', 'lesson').')';
+            $event->name = $lesson->name.' ('.get_string('lessonopens', 'customlesson').')';
             calendar_event::create(clone($event));
         }
 
         if ($lesson->deadline) {
-            $event->name      = $lesson->name.' ('.get_string('lessoncloses', 'lesson').')';
+            $event->name      = $lesson->name.' ('.get_string('lessoncloses', 'customlesson').')';
             $event->timestart = $lesson->deadline;
             $event->eventtype = 'close';
             calendar_event::create(clone($event));
@@ -641,7 +641,7 @@ function lesson_process_post_save(&$lesson) {
  * @param $mform form passed by reference
  */
 function lesson_reset_course_form_definition(&$mform) {
-    $mform->addElement('header', 'lessonheader', get_string('modulenameplural', 'lesson'));
+    $mform->addElement('header', 'lessonheader', get_string('modulenameplural', 'customlesson'));
     $mform->addElement('advcheckbox', 'reset_lesson', get_string('deleteallattempts','lesson'));
 }
 
@@ -688,7 +688,7 @@ function lesson_reset_gradebook($courseid, $type='') {
 function lesson_reset_userdata($data) {
     global $CFG, $DB;
 
-    $componentstr = get_string('modulenameplural', 'lesson');
+    $componentstr = get_string('modulenameplural', 'customlesson');
     $status = array();
 
     if (!empty($data->reset_lesson)) {
@@ -707,7 +707,7 @@ function lesson_reset_userdata($data) {
             lesson_reset_gradebook($data->courseid);
         }
 
-        $status[] = array('component'=>$componentstr, 'item'=>get_string('deleteallattempts', 'lesson'), 'error'=>false);
+        $status[] = array('component'=>$componentstr, 'item'=>get_string('deleteallattempts', 'customlesson'), 'error'=>false);
     }
 
     /// updating dates - shift may be negative too
@@ -767,29 +767,29 @@ function lesson_extend_settings_navigation($settings, $lessonnode) {
     $canedit = has_capability('mod/customlesson:edit', $PAGE->cm->context);
 
     $url = new moodle_url('/mod/customlesson/view.php', array('id'=>$PAGE->cm->id));
-    $lessonnode->add(get_string('preview', 'lesson'), $url);
+    $lessonnode->add(get_string('preview', 'customlesson'), $url);
 
     if ($canedit) {
         $url = new moodle_url('/mod/customlesson/edit.php', array('id'=>$PAGE->cm->id));
-        $lessonnode->add(get_string('edit', 'lesson'), $url);
+        $lessonnode->add(get_string('edit', 'customlesson'), $url);
     }
 
     if (has_capability('mod/customlesson:manage', $PAGE->cm->context)) {
-        $reportsnode = $lessonnode->add(get_string('reports', 'lesson'));
+        $reportsnode = $lessonnode->add(get_string('reports', 'customlesson'));
         $url = new moodle_url('/mod/customlesson/report.php', array('id'=>$PAGE->cm->id, 'action'=>'reportoverview'));
-        $reportsnode->add(get_string('overview', 'lesson'), $url);
+        $reportsnode->add(get_string('overview', 'customlesson'), $url);
         $url = new moodle_url('/mod/customlesson/report.php', array('id'=>$PAGE->cm->id, 'action'=>'reportdetail'));
-        $reportsnode->add(get_string('detailedstats', 'lesson'), $url);
+        $reportsnode->add(get_string('detailedstats', 'customlesson'), $url);
     }
 
     if ($canedit) {
         $url = new moodle_url('/mod/customlesson/essay.php', array('id'=>$PAGE->cm->id));
-        $lessonnode->add(get_string('manualgrading', 'lesson'), $url);
+        $lessonnode->add(get_string('manualgrading', 'customlesson'), $url);
     }
 
     if ($PAGE->activityrecord->highscores) {
         $url = new moodle_url('/mod/customlesson/highscores.php', array('id'=>$PAGE->cm->id));
-        $lessonnode->add(get_string('highscores', 'lesson'), $url);
+        $lessonnode->add(get_string('highscores', 'customlesson'), $url);
     }
 }
 
@@ -944,9 +944,9 @@ function lesson_get_file_info($browser, $areas, $course, $cm, $context, $fileare
  */
 function lesson_page_type_list($pagetype, $parentcontext, $currentcontext) {
     $module_pagetype = array(
-        'mod-lesson-*'=>get_string('page-mod-lesson-x', 'lesson'),
-        'mod-lesson-view'=>get_string('page-mod-lesson-view', 'lesson'),
-        'mod-lesson-edit'=>get_string('page-mod-lesson-edit', 'lesson'));
+        'mod-lesson-*'=>get_string('page-mod-lesson-x', 'customlesson'),
+        'mod-lesson-view'=>get_string('page-mod-lesson-view', 'customlesson'),
+        'mod-lesson-edit'=>get_string('page-mod-lesson-edit', 'customlesson'));
     return $module_pagetype;
 }
 

@@ -42,7 +42,7 @@ class lesson_page_type_branchtable extends lesson_page {
     }
     public function get_typestring() {
         if ($this->string===null) {
-            $this->string = get_string($this->typeidstring, 'lesson');
+            $this->string = get_string($this->typeidstring, 'customlesson');
         }
         return $this->string;
     }
@@ -240,7 +240,7 @@ class lesson_page_type_branchtable extends lesson_page {
         $formattextdefoptions->para = false;  //I'll use it widely in this page
         foreach ($answers as $answer) {
             $data = "<input type=\"button\" name=\"$answer->id\" value=\"".s(strip_tags(format_text($answer->answer, FORMAT_MOODLE,$formattextdefoptions)))."\" disabled=\"disabled\"> ";
-            $data .= get_string('jumpsto', 'lesson', $this->get_jump_name($answer->jumpto));
+            $data .= get_string('jumpsto', 'customlesson', $this->get_jump_name($answer->jumpto));
             $answerdata->answers[] = array($data, "");
             $answerpage->answerdata = $answerdata;
         }
@@ -259,7 +259,7 @@ class lesson_page_type_branchtable extends lesson_page {
     public function add_page_link($previd) {
         global $PAGE, $CFG;
         $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'qtype'=>LESSON_PAGE_BRANCHTABLE));
-        return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_BRANCHTABLE, 'name'=>get_string('addabranchtable', 'lesson'));
+        return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_BRANCHTABLE, 'name'=>get_string('addabranchtable', 'customlesson'));
     }
     protected function get_displayinmenublock() {
         return true;
@@ -301,7 +301,7 @@ class lesson_add_page_form_branchtable extends lesson_add_page_form_base {
 
         $jumptooptions = lesson_page_type_branchtable::get_jumptooptions($firstpage, $lesson);
 
-        $mform->setDefault('qtypeheading', get_string('addabranchtable', 'lesson'));
+        $mform->setDefault('qtypeheading', get_string('addabranchtable', 'customlesson'));
 
         $mform->addElement('hidden', 'firstpage');
         $mform->setType('firstpage', PARAM_BOOL);
@@ -325,7 +325,7 @@ class lesson_add_page_form_branchtable extends lesson_add_page_form_base {
         $mform->setDefault('display', true);
 
         for ($i = 0; $i < $lesson->maxanswers; $i++) {
-            $mform->addElement('header', 'headeranswer'.$i, get_string('branch', 'lesson').' '.($i+1));
+            $mform->addElement('header', 'headeranswer'.$i, get_string('branch', 'customlesson').' '.($i+1));
             $this->add_answer($i, get_string("description", "customlesson"), $i == 0);
 
             $mform->addElement('select', 'jumpto['.$i.']', get_string("jump", "customlesson"), $jumptooptions);

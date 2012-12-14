@@ -43,7 +43,7 @@ $lessonoutput = $PAGE->get_renderer('mod_customlesson');
 
 $url = new moodle_url('/mod/customlesson/continue.php', array('id'=>$cm->id));
 $PAGE->set_url($url);
-$PAGE->navbar->add(get_string('continue', 'lesson'));
+$PAGE->navbar->add(get_string('continue', 'customlesson'));
 
 // This is the code updates the lesson time for a timed test
 // get time information for this user
@@ -54,7 +54,7 @@ if (!$canmanage) {
         $timeleft = ($timer->starttime + $lesson->maxtime * 60) - time();
         if ($timeleft <= 0) {
             // Out of time
-            $lesson->add_message(get_string('eolstudentoutoftime', 'lesson'));
+            $lesson->add_message(get_string('eolstudentoutoftime', 'customlesson'));
             redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id,'pageid'=>LESSON_EOL, 'outoftime'=>'normal')));
         } else if ($timeleft < 60) {
             // One minute warning
@@ -161,7 +161,7 @@ if ($canmanage) {
 }
 // Report attempts remaining
 if ($result->attemptsremaining != 0 && !$lesson->review && !$reviewmode) {
-    $lesson->add_message(get_string('attemptsremaining', 'lesson', $result->attemptsremaining));
+    $lesson->add_message(get_string('attemptsremaining', 'customlesson', $result->attemptsremaining));
 }
 // Report if max attempts reached
 if ($result->maxattemptsreached != 0 && !$lesson->review && !$reviewmode) {
@@ -173,10 +173,10 @@ $PAGE->set_subpage($page->id);
 
 /// Print the header, heading and tabs
 lesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
-echo $lessonoutput->header($lesson, $cm, 'view', true, $page->id, get_string('continue', 'lesson'));
+echo $lessonoutput->header($lesson, $cm, 'view', true, $page->id, get_string('continue', 'customlesson'));
 
 if ($lesson->displayleft) {
-    echo '<a name="maincontent" id="maincontent" title="'.get_string('anchortitle', 'lesson').'"></a>';
+    echo '<a name="maincontent" id="maincontent" title="'.get_string('anchortitle', 'customlesson').'"></a>';
 }
 // This calculates and prints the ongoing score message
 if ($lesson->ongoing && !$reviewmode) {
@@ -192,7 +192,7 @@ if (isset($USER->modattempts[$lesson->id])) {
     $content .= $OUTPUT->box(get_string("continuetonextpage", "customlesson"), 'center');
     $content .= html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'id', 'value'=>$cm->id));
     $content .= html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'pageid', 'value'=>LESSON_EOL));
-    $content .= html_writer::empty_tag('input', array('type'=>'submit', 'name'=>'submit', 'value'=>get_string('finish', 'lesson')));
+    $content .= html_writer::empty_tag('input', array('type'=>'submit', 'name'=>'submit', 'value'=>get_string('finish', 'customlesson')));
     echo html_writer::tag('form', "<div>$content</div>", array('method'=>'post', 'action'=>$url));
 }
 
@@ -201,17 +201,17 @@ if (!$result->correctanswer && !$result->noanswer && !$result->isessayquestion &
     $url = $CFG->wwwroot.'/mod/customlesson/view.php';
     $content = html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'id', 'value'=>$cm->id));
     $content .= html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'pageid', 'value'=>$page->id));
-    $content .= html_writer::empty_tag('input', array('type'=>'submit', 'name'=>'submit', 'value'=>get_string('reviewquestionback', 'lesson')));
+    $content .= html_writer::empty_tag('input', array('type'=>'submit', 'name'=>'submit', 'value'=>get_string('reviewquestionback', 'customlesson')));
     echo html_writer::tag('form', "<div class=\"singlebutton\">$content</div>", array('method'=>'post', 'action'=>$url));
 }
 
 $url = new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id, 'pageid'=>$result->newpageid));
 if ($lesson->review && !$result->correctanswer && !$result->noanswer && !$result->isessayquestion) {
     // Review button continue
-    echo $OUTPUT->single_button($url, get_string('reviewquestioncontinue', 'lesson'));
+    echo $OUTPUT->single_button($url, get_string('reviewquestioncontinue', 'customlesson'));
 } else {
     // Normal continue button
-    echo $OUTPUT->single_button($url, get_string('continue', 'lesson'));
+    echo $OUTPUT->single_button($url, get_string('continue', 'customlesson'));
 }
 
 echo $lessonoutput->footer();

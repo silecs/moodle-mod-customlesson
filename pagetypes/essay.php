@@ -41,7 +41,7 @@ class lesson_page_type_essay extends lesson_page {
     }
     public function get_typestring() {
         if ($this->string===null) {
-            $this->string = get_string($this->typeidstring, 'lesson');
+            $this->string = get_string($this->typeidstring, 'customlesson');
         }
         return $this->string;
     }
@@ -296,11 +296,11 @@ class lesson_display_answer_form_essay extends moodleform {
         if ($hasattempt) {
             $mform->addElement('hidden', 'answer', $useranswerraw);
             $mform->setType('answer', PARAM_RAW);
-            $mform->addElement('html', $OUTPUT->container(get_string('youranswer', 'lesson'), 'youranswer'));
+            $mform->addElement('html', $OUTPUT->container(get_string('youranswer', 'customlesson'), 'youranswer'));
             $mform->addElement('html', $OUTPUT->container($useranswer, 'reviewessay'));
             $this->add_action_buttons(null, get_string("nextpage", "customlesson"));
         } else {
-            $mform->addElement('editor', 'answer', get_string('youranswer', 'lesson'), null, null);
+            $mform->addElement('editor', 'answer', get_string('youranswer', 'customlesson'), null, null);
             $mform->setType('answer', PARAM_RAW);
             $this->add_action_buttons(null, get_string("submit", "customlesson"));
         }

@@ -41,7 +41,7 @@ class lesson_page_type_multichoice extends lesson_page {
     }
     public function get_typestring() {
         if ($this->string===null) {
-            $this->string = get_string($this->typeidstring, 'lesson');
+            $this->string = get_string($this->typeidstring, 'customlesson');
         }
         return $this->string;
     }
@@ -443,7 +443,7 @@ class lesson_add_page_form_multichoice extends lesson_add_page_form_base {
 
     public function custom_definition() {
 
-        $this->_form->addElement('checkbox', 'qoption', get_string('options', 'lesson'), get_string('multianswer', 'lesson'));
+        $this->_form->addElement('checkbox', 'qoption', get_string('options', 'customlesson'), get_string('multianswer', 'lesson'));
         $this->_form->setDefault('qoption', 0);
         $this->_form->addHelpButton('qoption', 'multianswer', 'lesson');
 

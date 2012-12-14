@@ -45,7 +45,7 @@ class lesson_page_type_endofbranch extends lesson_page {
     }
     public function get_typestring() {
         if ($this->string===null) {
-            $this->string = get_string($this->typeidstring, 'lesson');
+            $this->string = get_string($this->typeidstring, 'customlesson');
         }
         return $this->string;
     }
@@ -140,7 +140,7 @@ class lesson_page_type_endofbranch extends lesson_page {
         global $PAGE, $CFG;
         if ($previd != 0) {
             $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>LESSON_PAGE_ENDOFBRANCH));
-            return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_ENDOFBRANCH, 'name'=>get_string('addanendofbranch', 'lesson'));
+            return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_ENDOFBRANCH, 'name'=>get_string('addanendofbranch', 'customlesson'));
         }
         return false;
     }
@@ -223,9 +223,9 @@ class lesson_add_page_form_endofbranch extends lesson_add_page_form_base {
             $newanswer->timecreated = $timenow;
             $newanswer->jumpto = $btpageid;
             $newanswerid = $DB->insert_record("customlesson_answers", $newanswer);
-            $lesson->add_message(get_string('addedanendofbranch', 'lesson'), 'notifysuccess');
+            $lesson->add_message(get_string('addedanendofbranch', 'customlesson'), 'notifysuccess');
         } else {
-            $lesson->add_message(get_string('nobranchtablefound', 'lesson'));
+            $lesson->add_message(get_string('nobranchtablefound', 'customlesson'));
         }
 
         redirect($CFG->wwwroot."/mod/customlesson/edit.php?id=".$PAGE->cm->id);

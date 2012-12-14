@@ -77,8 +77,8 @@ if ($pageid !== NULL) {
 }
 $PAGE->set_url($url);
 if ($action == 'reportoverview') {
-    $PAGE->navbar->add(get_string('reports', 'lesson'));
-    $PAGE->navbar->add(get_string('overview', 'lesson'));
+    $PAGE->navbar->add(get_string('reports', 'customlesson'));
+    $PAGE->navbar->add(get_string('overview', 'customlesson'));
 }
 
 $lessonoutput = $PAGE->get_renderer('mod_customlesson');
@@ -96,8 +96,8 @@ if (! $times = $DB->get_records('customlesson_timer', array('lessonid' => $lesso
 }
 
 if ($nothingtodisplay) {
-    echo $lessonoutput->header($lesson, $cm, $action, false, null, get_string('nolessonattempts', 'lesson'));
-    echo $OUTPUT->notification(get_string('nolessonattempts', 'lesson'));
+    echo $lessonoutput->header($lesson, $cm, $action, false, null, get_string('nolessonattempts', 'customlesson'));
+    echo $OUTPUT->notification(get_string('nolessonattempts', 'customlesson'));
     echo $OUTPUT->footer();
     exit();
 }
@@ -162,7 +162,7 @@ if ($action === 'delete') {
     /**************************************************************************
     this action is for default view and overview view
     **************************************************************************/
-    echo $lessonoutput->header($lesson, $cm, $action, false, null, get_string('overview', 'lesson'));
+    echo $lessonoutput->header($lesson, $cm, $action, false, null, get_string('overview', 'customlesson'));
 
     $course_context = context_course::instance($course->id);
     if (has_capability('gradereport/grader:view', $course_context) && has_capability('moodle/grade:viewall', $course_context)) {
@@ -233,7 +233,7 @@ if ($action === 'delete') {
     $table = new html_table();
 
     // set up the table object
-    $table->head = array(get_string('name'), get_string('attempts', 'lesson'), get_string('highscore', 'lesson'));
+    $table->head = array(get_string('name'), get_string('attempts', 'customlesson'), get_string('highscore', 'lesson'));
     $table->align = array('center', 'left', 'left');
     $table->wrap = array('nowrap', 'nowrap', 'nowrap');
     $table->attributes['class'] = 'standardtable generaltable';
@@ -356,11 +356,11 @@ if ($action === 'delete') {
     }
 
     // output the stats
-    echo $OUTPUT->heading(get_string('lessonstats', 'lesson'));
+    echo $OUTPUT->heading(get_string('lessonstats', 'customlesson'));
     $stattable = new html_table();
-    $stattable->head = array(get_string('averagescore', 'lesson'), get_string('averagetime', 'lesson'),
-                            get_string('highscore', 'lesson'), get_string('lowscore', 'lesson'),
-                            get_string('hightime', 'lesson'), get_string('lowtime', 'lesson'));
+    $stattable->head = array(get_string('averagescore', 'customlesson'), get_string('averagetime', 'lesson'),
+                            get_string('highscore', 'customlesson'), get_string('lowscore', 'lesson'),
+                            get_string('hightime', 'customlesson'), get_string('lowtime', 'lesson'));
     $stattable->align = array('center', 'center', 'center', 'center', 'center', 'center');
     $stattable->wrap = array('nowrap', 'nowrap', 'nowrap', 'nowrap', 'nowrap', 'nowrap');
     $stattable->attributes['class'] = 'standardtable generaltable';
@@ -381,7 +381,7 @@ if ($action === 'delete') {
     4.  Print out the object which contains all the try info
 
 **************************************************************************/
-    echo $lessonoutput->header($lesson, $cm, $action, false, null, get_string('detailedstats', 'lesson'));
+    echo $lessonoutput->header($lesson, $cm, $action, false, null, get_string('detailedstats', 'customlesson'));
 
     $course_context = context_course::instance($course->id);
     if (has_capability('gradereport/grader:view', $course_context) && has_capability('moodle/grade:viewall', $course_context)) {
@@ -501,7 +501,7 @@ if ($action === 'delete') {
             //$headingobject->firstname = $students[$userid]->firstname;
             //$headingobject->attempt = $try + 1;
             //print_heading(get_string("studentattemptlesson", "customlesson", $headingobject));
-        echo $OUTPUT->heading(get_string('attempt', 'lesson', $try+1));
+        echo $OUTPUT->heading(get_string('attempt', 'customlesson', $try+1));
 
         $table->head = array();
         $table->align = array('right', 'left');
@@ -535,7 +535,7 @@ if ($action === 'delete') {
             $table->data[] = array(get_string('name').':', $OUTPUT->user_picture($user, array('courseid'=>$course->id)).fullname($user, true));
             $table->data[] = array(get_string("timetaken", "customlesson").":", format_time($timetotake));
             $table->data[] = array(get_string("completed", "customlesson").":", userdate($completed));
-            $table->data[] = array(get_string('rawgrade', 'lesson').':', $gradeinfo->earned.'/'.$gradeinfo->total);
+            $table->data[] = array(get_string('rawgrade', 'customlesson').':', $gradeinfo->earned.'/'.$gradeinfo->total);
             $table->data[] = array(get_string("grade", "customlesson").":", $grade."%");
         }
         echo html_writer::table($table);
@@ -581,7 +581,7 @@ if ($action === 'delete') {
             }
             $table->data[] = array($page->answerdata->score, " ");
         } else {
-            $table->data[] = array(get_string('didnotanswerquestion', 'lesson'), " ");
+            $table->data[] = array(get_string('didnotanswerquestion', 'customlesson'), " ");
         }
         echo html_writer::table($table);
     }
