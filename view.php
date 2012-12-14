@@ -167,7 +167,7 @@ if ($pageid == LESSON_UNSEENBRANCHPAGE) {
 $attemptflag = false;
 if (empty($pageid)) {
     // make sure there are pages to view
-    if (!$DB->get_field('lesson_pages', 'id', array('lessonid' => $lesson->id, 'prevpageid' => 0))) {
+    if (!$DB->get_field('customlesson_pages', 'id', array('lessonid' => $lesson->id, 'prevpageid' => 0))) {
         if (!$canmanage) {
             $lesson->add_message(get_string('lessonnotready2', 'lesson')); // a nice message to the student
         } else {
@@ -195,12 +195,12 @@ if (empty($pageid)) {
     $corrrectattempts = $lesson->get_attempts($retries, true);
     if (!empty($corrrectattempts)) {
         $attempt = end($corrrectattempts);
-        $jumpto = $DB->get_field('lesson_answers', 'jumpto', array('id' => $attempt->answerid));
+        $jumpto = $DB->get_field('customlesson_answers', 'jumpto', array('id' => $attempt->answerid));
         // convert the jumpto to a proper page id
         if ($jumpto == 0) { // unlikely value!
             $lastpageseen = $attempt->pageid;
         } elseif ($jumpto == LESSON_NEXTPAGE) {
-            if (!$lastpageseen = $DB->get_field('lesson_pages', 'nextpageid', array('id' => $attempt->pageid))) {
+            if (!$lastpageseen = $DB->get_field('customlesson_pages', 'nextpageid', array('id' => $attempt->pageid))) {
                 // no nextpage go to end of lesson
                 $lastpageseen = LESSON_EOL;
             }
@@ -252,7 +252,7 @@ if (empty($pageid)) {
         }
     }
     // start at the first page
-    if (!$pageid = $DB->get_field('lesson_pages', 'id', array('lessonid' => $lesson->id, 'prevpageid' => 0))) {
+    if (!$pageid = $DB->get_field('customlesson_pages', 'id', array('lessonid' => $lesson->id, 'prevpageid' => 0))) {
             print_error('cannotfindfirstpage', 'lesson');
     }
     /// This is the code for starting a timed test

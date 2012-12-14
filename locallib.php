@@ -1066,7 +1066,7 @@ class lesson extends lesson_base {
         global $DB;
         if ($this->firstpageid == null) {
             if (!$this->loadedallpages) {
-                $firstpageid = $DB->get_field('lesson_pages', 'id', array('lessonid'=>$this->properties->id, 'prevpageid'=>0));
+                $firstpageid = $DB->get_field('customlesson_pages', 'id', array('lessonid'=>$this->properties->id, 'prevpageid'=>0));
                 if (!$firstpageid) {
                     print_error('cannotfindfirstpage', 'lesson');
                 }
@@ -1087,7 +1087,7 @@ class lesson extends lesson_base {
         global $DB;
         if ($this->lastpageid == null) {
             if (!$this->loadedallpages) {
-                $lastpageid = $DB->get_field('lesson_pages', 'id', array('lessonid'=>$this->properties->id, 'nextpageid'=>0));
+                $lastpageid = $DB->get_field('customlesson_pages', 'id', array('lessonid'=>$this->properties->id, 'nextpageid'=>0));
                 if (!$lastpageid) {
                     print_error('cannotfindlastpage', 'lesson');
                 }
@@ -1447,7 +1447,7 @@ class lesson extends lesson_base {
                     }
                     $clusterendid = $lessonpages[$clusterendid]->prevpageid;
                 }
-                $exitjump = $DB->get_field("lesson_answers", "jumpto", array("pageid" => $clusterendid, "lessonid" => $this->properties->id));
+                $exitjump = $DB->get_field("customlesson_answers", "jumpto", array("pageid" => $clusterendid, "lessonid" => $this->properties->id));
                 if ($exitjump == LESSON_NEXTPAGE) {
                     $exitjump = $lessonpages[$pageid]->nextpageid;
                 }
@@ -1462,7 +1462,7 @@ class lesson extends lesson_base {
                             if ($page->id === $clusterendid) {
                                 $found = true;
                             } else if ($page->qtype == LESSON_PAGE_ENDOFCLUSTER) {
-                                $exitjump = $DB->get_field("lesson_answers", "jumpto", array("pageid" => $page->id, "lessonid" => $this->properties->id));
+                                $exitjump = $DB->get_field("customlesson_answers", "jumpto", array("pageid" => $page->id, "lessonid" => $this->properties->id));
                                 break;
                             }
                         }
@@ -2054,7 +2054,7 @@ abstract class lesson_page extends lesson_base {
             } elseif ($jumpto == LESSON_CLUSTERJUMP) {
                 $jumptitle = get_string('clusterjump', 'lesson');
             } else {
-                if (!$jumptitle = $DB->get_field('lesson_pages', 'title', array('id' => $jumpto))) {
+                if (!$jumptitle = $DB->get_field('customlesson_pages', 'title', array('id' => $jumpto))) {
                     $jumptitle = '<strong>'.get_string('notdefined', 'lesson').'</strong>';
                 }
             }
@@ -2348,12 +2348,12 @@ abstract class lesson_page extends lesson_base {
             $jump[LESSON_CLUSTERJUMP] = get_string("clusterjump", "lesson");
         }
         if (!optional_param('firstpage', 0, PARAM_INT)) {
-            $apageid = $DB->get_field("lesson_pages", "id", array("lessonid" => $lesson->id, "prevpageid" => 0));
+            $apageid = $DB->get_field("customlesson_pages", "id", array("lessonid" => $lesson->id, "prevpageid" => 0));
             while (true) {
                 if ($apageid) {
-                    $title = $DB->get_field("lesson_pages", "title", array("id" => $apageid));
+                    $title = $DB->get_field("customlesson_pages", "title", array("id" => $apageid));
                     $jump[$apageid] = strip_tags(format_string($title,true));
-                    $apageid = $DB->get_field("lesson_pages", "nextpageid", array("id" => $apageid));
+                    $apageid = $DB->get_field("customlesson_pages", "nextpageid", array("id" => $apageid));
                 } else {
                     // last page reached
                     break;

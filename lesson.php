@@ -66,7 +66,7 @@ switch ($action) {
             echo $OUTPUT->heading(get_string("thefollowingpagesjumptothispage", "lesson"));
             echo "<p align=\"center\">\n";
             foreach ($answers as $answer) {
-                if (!$title = $DB->get_field("lesson_pages", "title", array("id" => $answer->pageid))) {
+                if (!$title = $DB->get_field("customlesson_pages", "title", array("id" => $answer->pageid))) {
                     print_error('cannotfindpagetitle', 'lesson');
                 }
                 echo $title."<br />\n";
@@ -78,7 +78,7 @@ switch ($action) {
     case 'move':
         $PAGE->navbar->add(get_string($action, 'lesson'));
 
-        $title = $DB->get_field("lesson_pages", "title", array("id" => $pageid));
+        $title = $DB->get_field("customlesson_pages", "title", array("id" => $pageid));
 
         echo $lessonoutput->header($lesson, $cm, '', false, null, get_string('moving', 'lesson', format_String($title)));
         echo $OUTPUT->heading(get_string("moving", "lesson", format_string($title)));
