@@ -47,7 +47,7 @@ if (!isset($course)) {
 $tabs = $row = $inactive = $activated = array();
 
 /// user attempt count for reports link hover (completed attempts - much faster)
-$attemptscount = $DB->count_records('lesson_grades', array('lessonid'=>$lesson->id));
+$attemptscount = $DB->count_records('customlesson_grades', array('lessonid'=>$lesson->id));
 
 $row[] = new tabobject('view', "$CFG->wwwroot/mod/customlesson/view.php?id=$cm->id", get_string('preview', 'lesson'), get_string('previewlesson', 'lesson', format_string($lesson->name)));
 $row[] = new tabobject('edit', "$CFG->wwwroot/mod/customlesson/edit.php?id=$cm->id", get_string('edit', 'lesson'), get_string('edita', 'moodle', format_string($lesson->name)));

@@ -277,7 +277,7 @@ class lesson_page_type_branchtable extends lesson_page {
             return true;
         } else {
             $nretakes = $param;
-            if (!$DB->count_records("lesson_attempts", array("pageid"=>$this->properties->id, "userid"=>$USER->id, "retry"=>$nretakes))) {
+            if (!$DB->count_records("customlesson_attempts", array("pageid"=>$this->properties->id, "userid"=>$USER->id, "retry"=>$nretakes))) {
                 return true;
             }
             return false;

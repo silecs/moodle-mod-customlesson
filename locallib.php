@@ -108,7 +108,7 @@ function lesson_unseen_question_jump($lesson, $user, $pageid) {
     global $DB;
 
     // get the number of retakes
-    if (!$retakes = $DB->count_records("lesson_grades", array("lessonid"=>$lesson->id, "userid"=>$user))) {
+    if (!$retakes = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$user))) {
         $retakes = 0;
     }
 
@@ -174,7 +174,7 @@ function lesson_unseen_question_jump($lesson, $user, $pageid) {
 function lesson_unseen_branch_jump($lesson, $userid) {
     global $DB;
 
-    if (!$retakes = $DB->count_records("lesson_grades", array("lessonid"=>$lesson->id, "userid"=>$userid))) {
+    if (!$retakes = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$userid))) {
         $retakes = 0;
     }
 
@@ -1111,19 +1111,19 @@ class lesson extends lesson_base {
         $allpages = $this->load_all_pages();
         if ($this->properties->nextpagedefault) {
             // in Flash Card mode...first get number of retakes
-            $nretakes = $DB->count_records("lesson_grades", array("lessonid" => $this->properties->id, "userid" => $USER->id));
+            $nretakes = $DB->count_records("customlesson_grades", array("lessonid" => $this->properties->id, "userid" => $USER->id));
             shuffle($allpages);
             $found = false;
             if ($this->properties->nextpagedefault == LESSON_UNSEENPAGE) {
                 foreach ($allpages as $nextpage) {
-                    if (!$DB->count_records("lesson_attempts", array("pageid" => $nextpage->id, "userid" => $USER->id, "retry" => $nretakes))) {
+                    if (!$DB->count_records("customlesson_attempts", array("pageid" => $nextpage->id, "userid" => $USER->id, "retry" => $nretakes))) {
                         $found = true;
                         break;
                     }
                 }
             } elseif ($this->properties->nextpagedefault == LESSON_UNANSWEREDPAGE) {
                 foreach ($allpages as $nextpage) {
-                    if (!$DB->count_records("lesson_attempts", array('pageid' => $nextpage->id, 'userid' => $USER->id, 'correct' => 1, 'retry' => $nretakes))) {
+                    if (!$DB->count_records("customlesson_attempts", array('pageid' => $nextpage->id, 'userid' => $USER->id, 'correct' => 1, 'retry' => $nretakes))) {
                         $found = true;
                         break;
                     }
@@ -1132,7 +1132,7 @@ class lesson extends lesson_base {
             if ($found) {
                 if ($this->properties->maxpages) {
                     // check number of pages viewed (in the lesson)
-                    if ($DB->count_records("lesson_attempts", array("lessonid" => $this->properties->id, "userid" => $USER->id, "retry" => $nretakes)) >= $this->properties->maxpages) {
+                    if ($DB->count_records("customlesson_attempts", array("lessonid" => $this->properties->id, "userid" => $USER->id, "retry" => $nretakes)) >= $this->properties->maxpages) {
                         return LESSON_EOL;
                     }
                 }
@@ -1248,7 +1248,7 @@ class lesson extends lesson_base {
      */
     public function has_pages() {
         global $DB;
-        $pagecount = $DB->count_records('lesson_pages', array('lessonid'=>$this->properties->id));
+        $pagecount = $DB->count_records('customlesson_pages', array('lessonid'=>$this->properties->id));
         return ($pagecount>0);
     }
 
@@ -1392,7 +1392,7 @@ class lesson extends lesson_base {
             $userid = $USER->id;
         }
         // get the number of retakes
-        if (!$retakes = $DB->count_records("lesson_grades", array("lessonid"=>$this->properties->id, "userid"=>$userid))) {
+        if (!$retakes = $DB->count_records("customlesson_grades", array("lessonid"=>$this->properties->id, "userid"=>$userid))) {
             $retakes = 0;
         }
         // get all the lesson_attempts aka what the user has seen
@@ -1929,7 +1929,7 @@ abstract class lesson_page extends lesson_base {
             $result->feedback  = get_string('noanswer', 'lesson');
         } else {
             if (!has_capability('mod/customlesson:manage', $context)) {
-                $nretakes = $DB->count_records("lesson_grades", array("lessonid"=>$this->lesson->id, "userid"=>$USER->id));
+                $nretakes = $DB->count_records("customlesson_grades", array("lessonid"=>$this->lesson->id, "userid"=>$USER->id));
                 // record student's attempt
                 $attempt = new stdClass;
                 $attempt->lessonid = $this->lesson->id;
@@ -1956,7 +1956,7 @@ abstract class lesson_page extends lesson_base {
                 if (!$result->correctanswer && ($result->newpageid == 0)) {
                     // wrong answer and student is stuck on this page - check how many attempts
                     // the student has had at this page/question
-                    $nattempts = $DB->count_records("lesson_attempts", array("pageid"=>$this->properties->id, "userid"=>$USER->id, "retry" => $attempt->retry));
+                    $nattempts = $DB->count_records("customlesson_attempts", array("pageid"=>$this->properties->id, "userid"=>$USER->id, "retry" => $attempt->retry));
                     // retreive the number of attempts left counter for displaying at bottom of feedback page
                     if ($nattempts >= $this->lesson->maxattempts) {
                         if ($this->lesson->maxattempts > 1) { // don't bother with message if only one attempt
@@ -1996,8 +1996,8 @@ abstract class lesson_page extends lesson_base {
 
             if ($result->response) {
                 if ($this->lesson->review && !$result->correctanswer && !$result->isessayquestion) {
-                    $nretakes = $DB->count_records("lesson_grades", array("lessonid"=>$this->lesson->id, "userid"=>$USER->id));
-                    $qattempts = $DB->count_records("lesson_attempts", array("userid"=>$USER->id, "retry"=>$nretakes, "pageid"=>$this->properties->id));
+                    $nretakes = $DB->count_records("customlesson_grades", array("lessonid"=>$this->lesson->id, "userid"=>$USER->id));
+                    $qattempts = $DB->count_records("customlesson_attempts", array("userid"=>$USER->id, "retry"=>$nretakes, "pageid"=>$this->properties->id));
                     if ($qattempts == 1) {
                         $result->feedback = $OUTPUT->box(get_string("firstwrong", "lesson"), 'feedback');
                     } else {
@@ -2182,7 +2182,7 @@ abstract class lesson_page extends lesson_base {
             return (!array_key_exists($this->properties->id, $seenpages));
         } else {
             $nretakes = $param;
-            if (!$DB->count_records("lesson_attempts", array("pageid"=>$this->properties->id, "userid"=>$USER->id, "retry"=>$nretakes))) {
+            if (!$DB->count_records("customlesson_attempts", array("pageid"=>$this->properties->id, "userid"=>$USER->id, "retry"=>$nretakes))) {
                 return true;
             }
         }
@@ -2196,7 +2196,7 @@ abstract class lesson_page extends lesson_base {
      */
     public function is_unanswered($nretakes) {
         global $DB, $USER;
-        if (!$DB->count_records("lesson_attempts", array('pageid'=>$this->properties->id, 'userid'=>$USER->id, 'correct'=>1, 'retry'=>$nretakes))) {
+        if (!$DB->count_records("customlesson_attempts", array('pageid'=>$this->properties->id, 'userid'=>$USER->id, 'correct'=>1, 'retry'=>$nretakes))) {
             return true;
         }
         return false;

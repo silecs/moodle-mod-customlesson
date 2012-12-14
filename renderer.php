@@ -458,7 +458,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         if (has_capability('mod/customlesson:manage', $context)) {
             return $this->output->box(get_string('teacherongoingwarning', 'lesson'), "ongoing center");
         } else {
-            $ntries = $DB->count_records("lesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));
+            $ntries = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));
             if (isset($USER->modattempts[$lesson->id])) {
                 $ntries--;
             }
@@ -508,7 +508,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
             }
 
             // current attempt number
-            if (!$ntries = $DB->count_records("lesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id))) {
+            if (!$ntries = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id))) {
                 $ntries = 0;  // may not be necessary
             }
 

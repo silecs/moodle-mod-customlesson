@@ -287,11 +287,11 @@ function lesson_print_overview($courses, &$htmlarray) {
             // Attempt information
             if (has_capability('mod/customlesson:manage', context_module::instance($lesson->coursemodule))) {
                 // Number of user attempts
-                $attempts = $DB->count_records('lesson_attempts', array('lessonid'=>$lesson->id));
+                $attempts = $DB->count_records('customlesson_attempts', array('lessonid'=>$lesson->id));
                 $str     .= $OUTPUT->box(get_string('xattempts', 'lesson', $attempts), 'info');
             } else {
                 // Determine if the user has attempted the lesson or not
-                if ($DB->count_records('lesson_attempts', array('lessonid'=>$lesson->id, 'userid'=>$USER->id))) {
+                if ($DB->count_records('customlesson_attempts', array('lessonid'=>$lesson->id, 'userid'=>$USER->id))) {
                     $str .= $OUTPUT->box($strattempted, 'info');
                 } else {
                     $str .= $OUTPUT->box($strnotattempted, 'info');
