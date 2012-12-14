@@ -20,7 +20,7 @@
  *
  * @package    mod
  * @subpackage customlesson
- * @copyright  2009 Sam Hemelryk
+ * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
@@ -34,7 +34,7 @@ require_once($CFG->libdir.'/formslib.php');
 /**
  * Essay grading form
  *
- * @copyright  2009 Sam Hemelryk
+ * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 class essay_grading_form extends moodleform {

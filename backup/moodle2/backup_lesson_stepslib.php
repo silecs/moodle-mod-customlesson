@@ -51,14 +51,14 @@
  *
  * @package    mod
  * @subpackage customlesson
- * @copyright  2010 Sam Hemelryk
+ * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
  * Structure step class that informs a backup task how to backup the lesson module.
  *
- * @copyright  2010 Sam Hemelryk
+ * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_lesson_activity_structure_step extends backup_activity_structure_step {
