@@ -697,10 +697,10 @@ function lesson_reset_userdata($data) {
                         WHERE l.course=:course";
 
         $params = array ("course" => $data->courseid);
-        $DB->delete_records_select('lesson_timer', "lessonid IN ($lessonssql)", $params);
-        $DB->delete_records_select('lesson_high_scores', "lessonid IN ($lessonssql)", $params);
-        $DB->delete_records_select('lesson_grades', "lessonid IN ($lessonssql)", $params);
-        $DB->delete_records_select('lesson_attempts', "lessonid IN ($lessonssql)", $params);
+        $DB->delete_records_select('customlesson_timer', "lessonid IN ($lessonssql)", $params);
+        $DB->delete_records_select('customlesson_high_scores', "lessonid IN ($lessonssql)", $params);
+        $DB->delete_records_select('customlesson_grades', "lessonid IN ($lessonssql)", $params);
+        $DB->delete_records_select('customlesson_attempts', "lessonid IN ($lessonssql)", $params);
 
         // remove all grades from gradebook
         if (empty($data->reset_gradebook_grades)) {
