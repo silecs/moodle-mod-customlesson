@@ -114,7 +114,7 @@ class lesson_page_type_endofbranch extends lesson_page {
         if (count($answers)>1) {
             $answer = array_shift($answers);
             foreach ($answers as $a) {
-                $DB->delete_record('lesson_answers', array('id'=>$a->id));
+                $DB->delete_record('customlesson_answers', array('id'=>$a->id));
             }
         } else if (count($answers)==1) {
             $answer = array_shift($answers);
