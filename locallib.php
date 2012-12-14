@@ -1758,10 +1758,10 @@ abstract class lesson_page extends lesson_base {
         $DB->update_record("lesson_pages", $editor);
 
         if ($newpage->prevpageid > 0) {
-            $DB->set_field("lesson_pages", "nextpageid", $newpage->id, array("id" => $newpage->prevpageid));
+            $DB->set_field("customlesson_pages", "nextpageid", $newpage->id, array("id" => $newpage->prevpageid));
         }
         if ($newpage->nextpageid > 0) {
-            $DB->set_field("lesson_pages", "prevpageid", $newpage->id, array("id" => $newpage->nextpageid));
+            $DB->set_field("customlesson_pages", "prevpageid", $newpage->id, array("id" => $newpage->nextpageid));
         }
 
         $page = lesson_page::load($newpage, $lesson);

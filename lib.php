@@ -973,9 +973,9 @@ function lesson_update_media_file($lessonid, $context, $draftitemid) {
         // Get the first (and only) file.
         $file = reset($files);
         // Set the mediafile column in the lessons table.
-        $DB->set_field('lesson', 'mediafile', '/' . $file->get_filename(), array('id' => $lessonid));
+        $DB->set_field('customlesson', 'mediafile', '/' . $file->get_filename(), array('id' => $lessonid));
     } else {
         // Set the mediafile column in the lessons table.
-        $DB->set_field('lesson', 'mediafile', '', array('id' => $lessonid));
+        $DB->set_field('customlesson', 'mediafile', '', array('id' => $lessonid));
     }
 }

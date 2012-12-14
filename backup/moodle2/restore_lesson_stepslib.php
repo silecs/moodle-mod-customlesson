@@ -189,7 +189,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
             $this->set_mapping('lesson_answer', $answer->id, $newitemid);
 
             // Update the lesson attempts to use the newly created answerid
-            $DB->set_field('lesson_attempts', 'answerid', $newitemid, array(
+            $DB->set_field('customlesson_attempts', 'answerid', $newitemid, array(
                     'lessonid' => $answer->lessonid,
                     'pageid' => $answer->pageid,
                     'answerid' => $answer->id));

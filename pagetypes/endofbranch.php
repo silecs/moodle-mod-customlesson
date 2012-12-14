@@ -211,10 +211,10 @@ class lesson_add_page_form_endofbranch extends lesson_add_page_form_base {
             $newpage->contents = get_string("endofbranch", "lesson");
             $newpageid = $DB->insert_record("lesson_pages", $newpage);
             // update the linked list...
-            $DB->set_field("lesson_pages", "nextpageid", $newpageid, array("id" => $pageid));
+            $DB->set_field("customlesson_pages", "nextpageid", $newpageid, array("id" => $pageid));
             if ($page->nextpageid) {
                 // the new page is not the last page
-                $DB->set_field("lesson_pages", "prevpageid", $newpageid, array("id" => $page->nextpageid));
+                $DB->set_field("customlesson_pages", "prevpageid", $newpageid, array("id" => $page->nextpageid));
             }
             // ..and the single "answer"
             $newanswer = new stdClass;

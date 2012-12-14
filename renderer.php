@@ -312,7 +312,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
             // links were not used in those versions
             if ($page->prevpageid != $prevpageid) {
                 // fix it
-                $DB->set_field("lesson_pages", "prevpageid", $prevpageid, array("id" => $page->id));
+                $DB->set_field("customlesson_pages", "prevpageid", $prevpageid, array("id" => $page->id));
                 debugging("<p>***prevpageid of page $page->id set to $prevpageid***");
             }
 

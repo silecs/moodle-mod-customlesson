@@ -156,7 +156,7 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
         $newpageid = $DB->insert_record("lesson_pages", $newpage);
         // update the linked list...
         if ($pageid != 0) {
-            $DB->set_field("lesson_pages", "nextpageid", $newpageid, array("id" => $pageid));
+            $DB->set_field("customlesson_pages", "nextpageid", $newpageid, array("id" => $pageid));
         }
 
         if ($pageid == 0) {
@@ -164,7 +164,7 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
         }
         if ($page->nextpageid) {
             // the new page is not the last page
-            $DB->set_field("lesson_pages", "prevpageid", $newpageid, array("id" => $page->nextpageid));
+            $DB->set_field("customlesson_pages", "prevpageid", $newpageid, array("id" => $page->nextpageid));
         }
         // ..and the single "answer"
         $newanswer = new stdClass;

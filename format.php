@@ -385,7 +385,7 @@ class qformat_default {
                         // insert the page and reset $pageid
                         $newpageid = $DB->insert_record("lesson_pages", $newpage);
                         // update the linked list
-                        $DB->set_field("lesson_pages", "nextpageid", $newpageid, array("id" => $pageid));
+                        $DB->set_field("customlesson_pages", "nextpageid", $newpageid, array("id" => $pageid));
 
                     } else {
                         // new page is the first page
@@ -402,7 +402,7 @@ class qformat_default {
                             $newpage->nextpageid = $page->id;
                             $newpageid = $DB->insert_record("lesson_pages", $newpage);
                             // update the linked list
-                            $DB->set_field("lesson_pages", "prevpageid", $newpageid, array("id" => $page->id));
+                            $DB->set_field("customlesson_pages", "prevpageid", $newpageid, array("id" => $page->id));
                         }
                     }
                     // reset $pageid and put the page ID in $question, used in save_question_option()
