@@ -4,7 +4,7 @@
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="lesson" COMMENT="Defines lesson" NEXT="lesson_pages">
+    <TABLE NAME="customlesson" COMMENT="Defines customlesson" NEXT="customlesson_pages">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="course"/>
         <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="name"/>
@@ -54,7 +54,7 @@
         <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="lesson_pages" COMMENT="Defines lesson_pages" PREVIOUS="lesson" NEXT="lesson_answers">
+    <TABLE NAME="customlesson_pages" COMMENT="Defines customlesson_pages" PREVIOUS="customlesson" NEXT="customlesson_answers">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="lessonid"/>
         <FIELD NAME="lessonid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="prevpageid"/>
@@ -75,7 +75,7 @@
         <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="lesson" REFFIELDS="id" PREVIOUS="primary"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="lesson_answers" COMMENT="Defines lesson_answers" PREVIOUS="lesson_pages" NEXT="lesson_attempts">
+    <TABLE NAME="customlesson_answers" COMMENT="Defines customlesson_answers" PREVIOUS="customlesson_pages" NEXT="customlesson_attempts">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="lessonid"/>
         <FIELD NAME="lessonid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="pageid"/>
@@ -97,7 +97,7 @@
         <KEY NAME="pageid" TYPE="foreign" FIELDS="pageid" REFTABLE="lesson_pages" REFFIELDS="id" PREVIOUS="lessonid"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="lesson_attempts" COMMENT="Defines lesson_attempts" PREVIOUS="lesson_answers" NEXT="lesson_grades">
+    <TABLE NAME="customlesson_attempts" COMMENT="Defines customlesson_attempts" PREVIOUS="customlesson_answers" NEXT="customlesson_grades">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="lessonid"/>
         <FIELD NAME="lessonid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="pageid"/>
@@ -119,7 +119,7 @@
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="lesson_grades" COMMENT="Defines lesson_grades" PREVIOUS="lesson_attempts" NEXT="lesson_timer">
+    <TABLE NAME="customlesson_grades" COMMENT="Defines customlesson_grades" PREVIOUS="customlesson_attempts" NEXT="customlesson_timer">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="lessonid"/>
         <FIELD NAME="lessonid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="userid"/>
@@ -136,7 +136,7 @@
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="lesson_timer" COMMENT="lesson timer for each lesson" PREVIOUS="lesson_grades" NEXT="lesson_branch">
+    <TABLE NAME="customlesson_timer" COMMENT="customlesson timer for each lesson" PREVIOUS="customlesson_grades" NEXT="customlesson_branch">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="lessonid"/>
         <FIELD NAME="lessonid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="userid"/>
@@ -152,7 +152,7 @@
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="lesson_branch" COMMENT="branches for each lesson/user" PREVIOUS="lesson_timer" NEXT="lesson_high_scores">
+    <TABLE NAME="customlesson_branch" COMMENT="branches for each customlesson/user" PREVIOUS="customlesson_timer" NEXT="customlesson_high_scores">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="lessonid"/>
         <FIELD NAME="lessonid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="userid"/>
@@ -171,7 +171,7 @@
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="lesson_high_scores" COMMENT="high scores for each lesson" PREVIOUS="lesson_branch">
+    <TABLE NAME="customlesson_high_scores" COMMENT="high scores for each customlesson" PREVIOUS="customlesson_branch">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="lessonid"/>
         <FIELD NAME="lessonid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="userid"/>

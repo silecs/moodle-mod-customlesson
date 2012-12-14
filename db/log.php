@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $logs = array(
-    array('module'=>'lesson', 'action'=>'start', 'mtable'=>'lesson', 'field'=>'name'),
-    array('module'=>'lesson', 'action'=>'end', 'mtable'=>'lesson', 'field'=>'name'),
-    array('module'=>'lesson', 'action'=>'view', 'mtable'=>'lesson_pages', 'field'=>'title'),
+    array('module'=>'customlesson', 'action'=>'start', 'mtable'=>'customlesson', 'field'=>'name'),
+    array('module'=>'customlesson', 'action'=>'end', 'mtable'=>'customlesson', 'field'=>'name'),
+    array('module'=>'customlesson', 'action'=>'view', 'mtable'=>'customlesson_pages', 'field'=>'title'),
 );

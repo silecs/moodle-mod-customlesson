@@ -19,8 +19,8 @@
  *
  * For naming conventions, see lib/db/access.php.
  *
- * @package    mod_lesson
- * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @package    mod_customlesson
+ * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
  */
 
@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'mod/lesson:addinstance' => array(
+    'mod/customlesson:addinstance' => array(
         'riskbitmask' => RISK_XSS,
 
         'captype' => 'write',
@@ -40,7 +40,7 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
     ),
 
-    'mod/lesson:edit' => array(
+    'mod/customlesson:edit' => array(
 
         'riskbitmask' => RISK_XSS, // we want flash and JS in question pages
 
@@ -52,7 +52,7 @@ $capabilities = array(
         )
     ),
 
-    'mod/lesson:manage' => array(
+    'mod/customlesson:manage' => array(
 
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
