@@ -266,7 +266,7 @@ Lessons may be used
 * For  scenarios or simulations/decision-making exercises
 * For differentiated revision, with different sets of revision questions depending upon answers given to initial questions';
 $string['modulename_link'] = 'mod/customlesson/view';
-$string['modulenameplural'] = 'Lessons';
+$string['modulenameplural'] = 'Custom lessons';
 $string['move'] = 'Move page';
 $string['movedpage'] = 'Moved page';
 $string['movepagehere'] = 'Move page to here';
