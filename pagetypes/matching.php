@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /** Matching question type */
 define("LESSON_PAGE_MATCHING",      "5");
 
-class lesson_page_type_matching extends lesson_page {
+class customlesson_page_type_matching extends lesson_page {
 
     protected $type = lesson_page::TYPE_QUESTION;
     protected $typeid = LESSON_PAGE_MATCHING;
@@ -453,7 +453,7 @@ class lesson_page_type_matching extends lesson_page {
     }
 }
 
-class lesson_add_page_form_matching extends lesson_add_page_form_base {
+class customlesson_add_page_form_matching extends lesson_add_page_form_base {
 
     public $qtype = 'matching';
     public $qtypestring = 'matching';
@@ -479,7 +479,7 @@ class lesson_add_page_form_matching extends lesson_add_page_form_base {
 }
 
 
-class lesson_display_answer_form_matching extends moodleform {
+class customlesson_display_answer_form_matching extends moodleform {
 
     public function definition() {
         global $USER, $OUTPUT;

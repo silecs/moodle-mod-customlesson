@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
  /** Short answer question type */
 define("LESSON_PAGE_SHORTANSWER",   "1");
 
-class lesson_page_type_shortanswer extends lesson_page {
+class customlesson_page_type_shortanswer extends lesson_page {
 
     protected $type = lesson_page::TYPE_QUESTION;
     protected $typeidstring = 'shortanswer';
@@ -305,7 +305,7 @@ class lesson_page_type_shortanswer extends lesson_page {
 }
 
 
-class lesson_add_page_form_shortanswer extends lesson_add_page_form_base {
+class customlesson_add_page_form_shortanswer extends lesson_add_page_form_base {
     public $qtype = 'shortanswer';
     public $qtypestring = 'shortanswer';
 
@@ -325,7 +325,7 @@ class lesson_add_page_form_shortanswer extends lesson_add_page_form_base {
     }
 }
 
-class lesson_display_answer_form_shortanswer extends moodleform {
+class customlesson_display_answer_form_shortanswer extends moodleform {
 
     public function definition() {
         global $OUTPUT, $USER;

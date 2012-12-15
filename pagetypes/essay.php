@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /** Essay question type */
 define("LESSON_PAGE_ESSAY", "10");
 
-class lesson_page_type_essay extends lesson_page {
+class customlesson_page_type_essay extends lesson_page {
 
     protected $type = lesson_page::TYPE_QUESTION;
     protected $typeidstring = 'essay';
@@ -244,7 +244,7 @@ class lesson_page_type_essay extends lesson_page {
     }
 }
 
-class lesson_add_page_form_essay extends lesson_add_page_form_base {
+class customlesson_add_page_form_essay extends lesson_add_page_form_base {
 
     public $qtype = 'essay';
     public $qtypestring = 'essay';
@@ -257,7 +257,7 @@ class lesson_add_page_form_essay extends lesson_add_page_form_base {
     }
 }
 
-class lesson_display_answer_form_essay extends moodleform {
+class customlesson_display_answer_form_essay extends moodleform {
 
     public function definition() {
         global $USER, $OUTPUT;

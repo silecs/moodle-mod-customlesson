@@ -644,7 +644,7 @@ function customlesson_get_media_html($lesson, $context) {
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-abstract class lesson_add_page_form_base extends moodleform {
+abstract class customlesson_add_page_form_base extends moodleform {
 
     /**
      * This is the classic define that is used to identify this pagetype.
@@ -832,7 +832,7 @@ abstract class lesson_add_page_form_base extends moodleform {
  * lesson::load($lessonid);
  * // or
  * $lessonrecord = $DB->get_record('customlesson', $lessonid);
- * $lesson = new lesson($lessonrecord);
+ * $lesson = new customlesson($lessonrecord);
  * </code>
  *
  * The class itself extends lesson_base as all classes within the lesson module should
@@ -884,7 +884,7 @@ abstract class lesson_add_page_form_base extends moodleform {
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class lesson extends lesson_base {
+class customlesson extends lesson_base {
 
     /**
      * The id of the first page (where prevpageid = 0) gets set and retrieved by
@@ -922,7 +922,7 @@ class lesson extends lesson_base {
      * @return lesson
      */
     public static function create($properties) {
-        return new lesson($properties);
+        return new customlesson($properties);
     }
 
     /**
@@ -937,7 +937,7 @@ class lesson extends lesson_base {
         if (!$lesson = $DB->get_record('customlesson', array('id' => $lessonid))) {
             print_error('invalidcoursemodule');
         }
-        return new lesson($lesson);
+        return new customlesson($lesson);
     }
 
     /**
@@ -1542,7 +1542,7 @@ class lesson extends lesson_base {
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-abstract class lesson_base {
+abstract class customlesson_base {
 
     /**
      * An object containing properties
@@ -1662,7 +1662,7 @@ abstract class lesson_base {
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-abstract class lesson_page extends lesson_base {
+abstract class customlesson_page extends lesson_base {
 
     /**
      * A reference to the lesson this page belongs to
@@ -1710,8 +1710,8 @@ abstract class lesson_page extends lesson_base {
     abstract public function display($renderer, $attempt);
 
     /**
-     * Creates a new lesson_page within the database and returns the correct pagetype
-     * object to use to interact with the new lesson
+     * Creates a new customlesson_page within the database and returns the correct pagetype
+     * object to use to interact with the new customlesson
      *
      * @final
      * @static
@@ -2528,7 +2528,7 @@ abstract class lesson_page extends lesson_base {
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class lesson_page_answer extends lesson_base {
+class customlesson_page_answer extends lesson_base {
 
     /**
      * Loads an page answer from the DB
@@ -2570,7 +2570,7 @@ class lesson_page_answer extends lesson_base {
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class lesson_page_type_manager {
+class customlesson_page_type_manager {
 
     /**
      * An array of different page type classes

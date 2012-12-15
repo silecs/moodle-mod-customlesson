@@ -113,7 +113,7 @@ function customlesson_delete_instance($id) {
     require_once($CFG->dirroot . '/mod/customlesson/locallib.php');
 
     $lesson = $DB->get_record("customlesson", array("id"=>$id), '*', MUST_EXIST);
-    $lesson = new lesson($lesson);
+    $lesson = new customlesson($lesson);
     return $lesson->delete();
 }
 

@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
  /** End of Cluster page */
 define("LESSON_PAGE_ENDOFCLUSTER",   "31");
 
-class lesson_page_type_endofcluster extends lesson_page {
+class customlesson_page_type_endofcluster extends lesson_page {
 
     protected $type = lesson_page::TYPE_STRUCTURE;
     protected $typeidstring = 'endofcluster';
@@ -131,7 +131,7 @@ class lesson_page_type_endofcluster extends lesson_page {
     }
 }
 
-class lesson_add_page_form_endofcluster extends lesson_add_page_form_base {
+class customlesson_add_page_form_endofcluster extends lesson_add_page_form_base {
 
     public $qtype = LESSON_PAGE_ENDOFCLUSTER;
     public $qtypestring = 'endofcluster';

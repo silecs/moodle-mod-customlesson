@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /** Multichoice question type */
 define("LESSON_PAGE_MULTICHOICE",   "3");
 
-class lesson_page_type_multichoice extends lesson_page {
+class customlesson_page_type_multichoice extends lesson_page {
 
     protected $type = lesson_page::TYPE_QUESTION;
     protected $typeidstring = 'multichoice';
@@ -436,7 +436,7 @@ class lesson_page_type_multichoice extends lesson_page {
 }
 
 
-class lesson_add_page_form_multichoice extends lesson_add_page_form_base {
+class customlesson_add_page_form_multichoice extends lesson_add_page_form_base {
 
     public $qtype = 'multichoice';
     public $qtypestring = 'multichoice';
@@ -457,7 +457,7 @@ class lesson_add_page_form_multichoice extends lesson_add_page_form_base {
     }
 }
 
-class lesson_display_answer_form_multichoice_singleanswer extends moodleform {
+class customlesson_display_answer_form_multichoice_singleanswer extends moodleform {
 
     public function definition() {
         global $USER, $OUTPUT;
@@ -514,7 +514,7 @@ class lesson_display_answer_form_multichoice_singleanswer extends moodleform {
 
 }
 
-class lesson_display_answer_form_multichoice_multianswer extends moodleform {
+class customlesson_display_answer_form_multichoice_multianswer extends moodleform {
 
     public function definition() {
         global $USER, $OUTPUT;

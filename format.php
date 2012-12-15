@@ -52,7 +52,7 @@ function customlesson_save_question_options($question, $lesson) {
     // These lines are required to ensure that all page types have
     // been loaded for the following switch
     if (!($lesson instanceof lesson)) {
-        $lesson = new lesson($lesson);
+        $lesson = new customlesson($lesson);
     }
     $manager = customlesson_page_type_manager::get($lesson);
 
