@@ -31,7 +31,7 @@ require_once($CFG->dirroot.'/mod/customlesson/locallib.php');
 
 $id = required_param('id', PARAM_INT);
 
-$cm = get_coursemodule_from_id('lesson', $id, 0, false, MUST_EXIST);;
+$cm = get_coursemodule_from_id('customlesson', $id, 0, false, MUST_EXIST);;
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
 $lesson = new customlesson($DB->get_record('customlesson', array('id' => $cm->instance), '*', MUST_EXIST));
 

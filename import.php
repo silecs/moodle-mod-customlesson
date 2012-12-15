@@ -35,7 +35,7 @@ $pageid = optional_param('pageid', '', PARAM_INT); // Page ID
 
 $PAGE->set_url('/mod/customlesson/import.php', array('id'=>$id, 'pageid'=>$pageid));
 
-$cm = get_coursemodule_from_id('lesson', $id, 0, false, MUST_EXIST);;
+$cm = get_coursemodule_from_id('customlesson', $id, 0, false, MUST_EXIST);;
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
 $lesson = new customlesson($DB->get_record('customlesson', array('id' => $cm->instance), '*', MUST_EXIST));
 
