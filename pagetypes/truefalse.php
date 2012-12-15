@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /** True/False question type */
 define("LESSON_PAGE_TRUEFALSE",     "2");
 
-class customlesson_page_type_truefalse extends lesson_page {
+class customlesson_page_type_truefalse extends customlesson_page {
 
     protected $type = lesson_page::TYPE_QUESTION;
     protected $typeidstring = 'truefalse';
@@ -321,7 +321,7 @@ class customlesson_page_type_truefalse extends lesson_page {
     }
 }
 
-class customlesson_add_page_form_truefalse extends lesson_add_page_form_base {
+class customlesson_add_page_form_truefalse extends customlesson_add_page_form_base {
 
     public $qtype = 'truefalse';
     public $qtypestring = 'truefalse';

@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /** Numerical question type */
 define("LESSON_PAGE_NUMERICAL",     "8");
 
-class customlesson_page_type_numerical extends lesson_page {
+class customlesson_page_type_numerical extends customlesson_page {
 
     protected $type = lesson_page::TYPE_QUESTION;
     protected $typeidstring = 'numerical';
@@ -241,7 +241,7 @@ class customlesson_page_type_numerical extends lesson_page {
     }
 }
 
-class customlesson_add_page_form_numerical extends lesson_add_page_form_base {
+class customlesson_add_page_form_numerical extends customlesson_add_page_form_base {
 
     public $qtype = 'numerical';
     public $qtypestring = 'numerical';

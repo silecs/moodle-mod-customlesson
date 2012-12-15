@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
-class customlesson_add_page_form_selection extends lesson_add_page_form_base {
+class customlesson_add_page_form_selection extends customlesson_add_page_form_base {
 
     public $qtype = 'questiontype';
     public $qtypestring = 'selectaqtype';
@@ -57,4 +57,4 @@ class customlesson_add_page_form_selection extends lesson_add_page_form_base {
  * Dummy class to represent an unknown question type and direct to the selection
  * form.
  */
-final class customlesson_add_page_form_unknown extends lesson_add_page_form_base {}
+final class customlesson_add_page_form_unknown extends customlesson_add_page_form_base {}

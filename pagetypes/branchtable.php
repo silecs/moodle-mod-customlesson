@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
  /** Branch Table page */
 define("LESSON_PAGE_BRANCHTABLE",   "20");
 
-class customlesson_page_type_branchtable extends lesson_page {
+class customlesson_page_type_branchtable extends customlesson_page {
 
     protected $type = lesson_page::TYPE_STRUCTURE;
     protected $typeid = LESSON_PAGE_BRANCHTABLE;
@@ -285,7 +285,7 @@ class customlesson_page_type_branchtable extends lesson_page {
     }
 }
 
-class customlesson_add_page_form_branchtable extends lesson_add_page_form_base {
+class customlesson_add_page_form_branchtable extends customlesson_add_page_form_base {
 
     public $qtype = LESSON_PAGE_BRANCHTABLE;
     public $qtypestring = 'branchtable';

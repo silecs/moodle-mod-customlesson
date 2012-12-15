@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /** Essay question type */
 define("LESSON_PAGE_ESSAY", "10");
 
-class customlesson_page_type_essay extends lesson_page {
+class customlesson_page_type_essay extends customlesson_page {
 
     protected $type = lesson_page::TYPE_QUESTION;
     protected $typeidstring = 'essay';
@@ -244,7 +244,7 @@ class customlesson_page_type_essay extends lesson_page {
     }
 }
 
-class customlesson_add_page_form_essay extends lesson_add_page_form_base {
+class customlesson_add_page_form_essay extends customlesson_add_page_form_base {
 
     public $qtype = 'essay';
     public $qtypestring = 'essay';

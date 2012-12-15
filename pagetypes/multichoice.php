@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /** Multichoice question type */
 define("LESSON_PAGE_MULTICHOICE",   "3");
 
-class customlesson_page_type_multichoice extends lesson_page {
+class customlesson_page_type_multichoice extends customlesson_page {
 
     protected $type = lesson_page::TYPE_QUESTION;
     protected $typeidstring = 'multichoice';
@@ -436,7 +436,7 @@ class customlesson_page_type_multichoice extends lesson_page {
 }
 
 
-class customlesson_add_page_form_multichoice extends lesson_add_page_form_base {
+class customlesson_add_page_form_multichoice extends customlesson_add_page_form_base {
 
     public $qtype = 'multichoice';
     public $qtypestring = 'multichoice';

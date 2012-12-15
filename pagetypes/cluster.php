@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
  /** Start of Cluster page */
 define("LESSON_PAGE_CLUSTER",   "30");
 
-class customlesson_page_type_cluster extends lesson_page {
+class customlesson_page_type_cluster extends customlesson_page {
 
     protected $type = lesson_page::TYPE_STRUCTURE;
     protected $typeidstring = 'cluster';
@@ -90,7 +90,7 @@ class customlesson_page_type_cluster extends lesson_page {
     }
 }
 
-class customlesson_add_page_form_cluster extends lesson_add_page_form_base {
+class customlesson_add_page_form_cluster extends customlesson_add_page_form_base {
 
     public $qtype = LESSON_PAGE_CLUSTER;
     public $qtypestring = 'cluster';

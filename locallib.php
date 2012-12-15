@@ -835,7 +835,7 @@ abstract class customlesson_add_page_form_base extends moodleform {
  * $lesson = new customlesson($lessonrecord);
  * </code>
  *
- * The class itself extends lesson_base as all classes within the lesson module should
+ * The class itself extends customlesson_base as all classes within the lesson module should
  *
  * These properties are from the database
  * @property int $id The id of this lesson
@@ -884,7 +884,7 @@ abstract class customlesson_add_page_form_base extends moodleform {
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class customlesson extends lesson_base {
+class customlesson extends customlesson_base {
 
     /**
      * The id of the first page (where prevpageid = 0) gets set and retrieved by
@@ -1662,7 +1662,7 @@ abstract class customlesson_base {
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-abstract class customlesson_page extends lesson_base {
+abstract class customlesson_page extends customlesson_base {
 
     /**
      * A reference to the lesson this page belongs to
@@ -1717,7 +1717,7 @@ abstract class customlesson_page extends lesson_base {
      * @static
      * @param object $properties
      * @param lesson $lesson
-     * @return lesson_page Specialised object that extends lesson_page
+     * @return lesson_page Specialised object that extends customlesson_page
      */
     final public static function create($properties, lesson $lesson, $context, $maxbytes) {
         global $DB;
@@ -1774,7 +1774,7 @@ abstract class customlesson_page extends lesson_base {
 
     /**
      * This method loads a page object from the database and returns it as a
-     * specialised object that extends lesson_page
+     * specialised object that extends customlesson_page
      *
      * @final
      * @static
@@ -2528,7 +2528,7 @@ abstract class customlesson_page extends lesson_base {
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class customlesson_page_answer extends lesson_base {
+class customlesson_page_answer extends customlesson_base {
 
     /**
      * Loads an page answer from the DB
@@ -2662,7 +2662,7 @@ class customlesson_page_type_manager {
      *
      * @param int $pageid The id of the page to load
      * @param lesson $lesson The lesson the page belongs to
-     * @return lesson_page A class that extends lesson_page
+     * @return lesson_page A class that extends customlesson_page
      */
     public function load_page($pageid, lesson $lesson) {
         global $DB;
