@@ -63,7 +63,7 @@ class lesson_page_type_endofbranch extends lesson_page {
         $jumpto = $answer->jumpto;
         if ($jumpto == LESSON_RANDOMBRANCH) {
 
-            $jumpto = lesson_unseen_branch_jump($this->lesson, $USER->id);
+            $jumpto = customlesson_unseen_branch_jump($this->lesson, $USER->id);
 
         } elseif ($jumpto == LESSON_CLUSTERJUMP) {
 
@@ -160,7 +160,7 @@ class lesson_add_page_form_endofbranch extends lesson_add_page_form_base {
 
         $mform = $this->_form;
         $lesson = $this->_customdata['lesson'];
-        $jumptooptions = lesson_page_type_branchtable::get_jumptooptions(optional_param('firstpage', false, PARAM_BOOL), $lesson);
+        $jumptooptions = customlesson_page_type_branchtable::get_jumptooptions(optional_param('firstpage', false, PARAM_BOOL), $lesson);
 
         $mform->addElement('hidden', 'firstpage');
         $mform->setType('firstpage', PARAM_BOOL);

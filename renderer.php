@@ -53,7 +53,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
     /// Header setup
         $this->page->set_title($title);
         $this->page->set_heading($this->page->course->fullname);
-        lesson_add_header_buttons($cm, $context, $extraeditbuttons, $lessonpageid);
+        customlesson_add_header_buttons($cm, $context, $extraeditbuttons, $lessonpageid);
         $output = $this->output->header();
 
         if (has_capability('mod/customlesson:manage', $context)) {
@@ -90,7 +90,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param string $message
      * @return <type>
      */
-    public function lesson_inaccessible($message) {
+    public function customlesson_inaccessible($message) {
         global $CFG;
         $output  =  $this->output->box_start('generalbox boxaligncenter');
         $output .=  $this->output->box_start('center');
@@ -206,7 +206,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
     public function display_edit_collapsed(lesson $lesson, $pageid) {
         global $DB, $CFG;
 
-        $manager = lesson_page_type_manager::get($lesson);
+        $manager = customlesson_page_type_manager::get($lesson);
         $qtypes = $manager->get_page_type_strings();
         $npages = count($lesson->load_all_pages());
 
@@ -252,7 +252,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
     public function display_edit_full(lesson $lesson, $pageid, $prevpageid, $single=false) {
         global $DB, $CFG;
 
-        $manager = lesson_page_type_manager::get($lesson);
+        $manager = customlesson_page_type_manager::get($lesson);
         $qtypes = $manager->get_page_type_strings();
         $npages = count($lesson->load_all_pages());
         $canedit = has_capability('mod/customlesson:edit', context_module::instance($this->page->cm->id));
@@ -343,7 +343,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $importquestionsurl = new moodle_url('/mod/customlesson/import.php',array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
         $links[] = html_writer::link($importquestionsurl, get_string('importquestions', 'customlesson'));
 
-        $manager = lesson_page_type_manager::get($lesson);
+        $manager = customlesson_page_type_manager::get($lesson);
         foreach($manager->get_add_page_type_links($prevpageid) as $link) {
             $links[] = html_writer::link($link['addurl'], $link['name']);
         }
@@ -369,7 +369,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $importquestionsurl = new moodle_url('/mod/customlesson/import.php',array('id'=>$this->page->cm->id, 'pageid'=>$prevpageid));
         $links[] = html_writer::link($importquestionsurl, get_string('importquestions', 'customlesson'));
 
-        $manager = lesson_page_type_manager::get($lesson);
+        $manager = customlesson_page_type_manager::get($lesson);
         foreach ($manager->get_add_page_type_links($prevpageid) as $link) {
             $link['addurl']->param('firstpage', 1);
             $links[] = html_writer::link($link['addurl'], $link['name']);
@@ -409,7 +409,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
 
         if ($printaddpage) {
             $options = array();
-            $manager = lesson_page_type_manager::get($page->lesson);
+            $manager = customlesson_page_type_manager::get($page->lesson);
             $links = $manager->get_add_page_type_links($page->id);
             foreach ($links as $link) {
                 $options[$link['type']] = $link['name'];
@@ -462,7 +462,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
             if (isset($USER->modattempts[$lesson->id])) {
                 $ntries--;
             }
-            $gradeinfo = lesson_grade($lesson, $ntries);
+            $gradeinfo = customlesson_grade($lesson, $ntries);
             $a = new stdClass;
             if ($lesson->custom) {
                 $a->score = $gradeinfo->earned;

@@ -46,13 +46,13 @@ require_capability('mod/customlesson:edit', $context);
 $strimportquestions = get_string("importquestions", "customlesson");
 $strlessons = get_string("modulenameplural", "customlesson");
 
-$manager = lesson_page_type_manager::get($lesson);
+$manager = customlesson_page_type_manager::get($lesson);
 
 $data = new stdClass;
 $data->id = $PAGE->cm->id;
 $data->pageid = $pageid;
 
-$mform = new lesson_import_form(null, array('formats'=>lesson_get_import_export_formats('import')));
+$mform = new customlesson_import_form(null, array('formats'=>lesson_get_import_export_formats('import')));
 $mform->set_data($data);
 
     $PAGE->navbar->add($strimportquestions);

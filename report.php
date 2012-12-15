@@ -149,7 +149,7 @@ if ($action === 'delete') {
                     $DB->execute("UPDATE {customlesson_branch} SET retry = retry - 1 WHERE userid = ? AND lessonid = ? AND retry > ?", array($userid, $lesson->id, $try));
 
                 /// update central gradebook
-                    lesson_update_grades($lesson, $userid);
+                    customlesson_update_grades($lesson, $userid);
 
                     $modifier++;
                 }
@@ -430,7 +430,7 @@ if ($action === 'delete') {
         $pageid = $page->nextpageid;
     }
 
-    $manager = lesson_page_type_manager::get($lesson);
+    $manager = customlesson_page_type_manager::get($lesson);
     $qtypes = $manager->get_page_type_strings();
 
     $answerpages = array();
@@ -530,7 +530,7 @@ if ($action === 'delete') {
         } else {
             $user = $students[$userid];
 
-            $gradeinfo = lesson_grade($lesson, $try, $user->id);
+            $gradeinfo = customlesson_grade($lesson, $try, $user->id);
 
             $table->data[] = array(get_string('name').':', $OUTPUT->user_picture($user, array('courseid'=>$course->id)).fullname($user, true));
             $table->data[] = array(get_string("timetaken", "customlesson").":", format_time($timetotake));

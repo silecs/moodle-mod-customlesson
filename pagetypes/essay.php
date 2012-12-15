@@ -51,7 +51,7 @@ class lesson_page_type_essay extends lesson_page {
     public function display($renderer, $attempt) {
         global $PAGE, $CFG, $USER;
 
-        $mform = new lesson_display_answer_form_essay($CFG->wwwroot.'/mod/customlesson/continue.php', array('contents'=>$this->get_contents(), 'lessonid'=>$this->lesson->id));
+        $mform = new customlesson_display_answer_form_essay($CFG->wwwroot.'/mod/customlesson/continue.php', array('contents'=>$this->get_contents(), 'lessonid'=>$this->lesson->id));
 
         $data = new stdClass;
         $data->id = $PAGE->cm->id;
@@ -78,7 +78,7 @@ class lesson_page_type_essay extends lesson_page {
             $newanswer->score = $properties->score[0];
         }
         $newanswer->id = $DB->insert_record("customlesson_answers", $newanswer);
-        $answers = array($newanswer->id => new lesson_page_answer($newanswer));
+        $answers = array($newanswer->id => new customlesson_page_answer($newanswer));
         $this->answers = $answers;
         return $answers;
     }
@@ -87,7 +87,7 @@ class lesson_page_type_essay extends lesson_page {
         $result = parent::check_answer();
         $result->isessayquestion = true;
 
-        $mform = new lesson_display_answer_form_essay($CFG->wwwroot.'/mod/customlesson/continue.php', array('contents'=>$this->get_contents()));
+        $mform = new customlesson_display_answer_form_essay($CFG->wwwroot.'/mod/customlesson/continue.php', array('contents'=>$this->get_contents()));
         $data = $mform->get_data();
         require_sesskey();
 

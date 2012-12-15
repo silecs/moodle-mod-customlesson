@@ -101,7 +101,7 @@ class lesson_add_page_form_cluster extends lesson_add_page_form_base {
 
         $mform = $this->_form;
         $lesson = $this->_customdata['lesson'];
-        $jumptooptions = lesson_page_type_branchtable::get_jumptooptions(optional_param('firstpage', false, PARAM_BOOL), $lesson);
+        $jumptooptions = customlesson_page_type_branchtable::get_jumptooptions(optional_param('firstpage', false, PARAM_BOOL), $lesson);
 
         $mform->addElement('hidden', 'firstpage');
         $mform->setType('firstpage', PARAM_BOOL);

@@ -183,11 +183,11 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
         if ($this->get_setting_value('userinfo')) {
             // Set the source table for elements that are reliant on the user
             // lesson_attempts, lesson_branch, lesson_grades, lesson_high_scores, lesson_timer
-            $attempt->set_source_table('lesson_attempts', array('answerid' => backup::VAR_PARENTID));
-            $branch->set_source_table('lesson_branch', array('pageid' => backup::VAR_PARENTID));
-            $grade->set_source_table('lesson_grades', array('lessonid'=>backup::VAR_PARENTID));
-            $highscore->set_source_table('lesson_high_scores', array('lessonid' => backup::VAR_PARENTID));
-            $timer->set_source_table('lesson_timer', array('lessonid' => backup::VAR_PARENTID));
+            $attempt->set_source_table('customlesson_attempts', array('answerid' => backup::VAR_PARENTID));
+            $branch->set_source_table('customlesson_branch', array('pageid' => backup::VAR_PARENTID));
+            $grade->set_source_table('customlesson_grades', array('lessonid'=>backup::VAR_PARENTID));
+            $highscore->set_source_table('customlesson_high_scores', array('lessonid' => backup::VAR_PARENTID));
+            $timer->set_source_table('customlesson_timer', array('lessonid' => backup::VAR_PARENTID));
         }
 
         // Annotate the user id's where required.

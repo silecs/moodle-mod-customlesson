@@ -75,9 +75,9 @@ if (!$canmanage) {
     if (!$lesson->is_accessible()) {  // Deadline restrictions
         echo $lessonoutput->header($lesson, $cm, '', false, null, get_string('notavailable'));
         if ($lesson->deadline != 0 && time() > $lesson->deadline) {
-            echo $lessonoutput->lesson_inaccessible(get_string('lessonclosed', 'customlesson', userdate($lesson->deadline)));
+            echo $lessonoutput->customlesson_inaccessible(get_string('lessonclosed', 'customlesson', userdate($lesson->deadline)));
         } else {
-            echo $lessonoutput->lesson_inaccessible(get_string('lessonopen', 'customlesson', userdate($lesson->available)));
+            echo $lessonoutput->customlesson_inaccessible(get_string('lessonopen', 'customlesson', userdate($lesson->available)));
         }
         echo $lessonoutput->footer();
         exit();
@@ -158,7 +158,7 @@ if (!$canmanage) {
 
     // this is called if a student leaves during a lesson
 if ($pageid == LESSON_UNSEENBRANCHPAGE) {
-    $pageid = lesson_unseen_question_jump($lesson, $USER->id, $pageid);
+    $pageid = customlesson_unseen_question_jump($lesson, $USER->id, $pageid);
 }
 
 // display individual pages and their sets of answers
@@ -290,7 +290,7 @@ if ($pageid != LESSON_EOL) {
 
     // check to see if the user can see the left menu
     if (!$canmanage) {
-        $lesson->displayleft = lesson_displayleftif($lesson);
+        $lesson->displayleft = customlesson_displayleftif($lesson);
 
         $continue = ($startlastseen !== '');
         $restart  = ($continue && $startlastseen == 'yes');
@@ -312,7 +312,7 @@ if ($pageid != LESSON_EOL) {
         if ($page->qtype == LESSON_PAGE_BRANCHTABLE && $lesson->minquestions) {
             // tell student how many questions they have seen, how many are required and their grade
             $ntries = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));
-            $gradeinfo = lesson_grade($lesson, $ntries);
+            $gradeinfo = customlesson_grade($lesson, $ntries);
             if ($gradeinfo->attempts) {
                 if ($gradeinfo->nquestions < $lesson->minquestions) {
                     $a = new stdClass;
@@ -335,7 +335,7 @@ if ($pageid != LESSON_EOL) {
         if ($lesson->timed) {
             $lesson->add_message(get_string('teachertimerwarning', 'customlesson'));
         }
-        if (lesson_display_teacher_warning($lesson)) {
+        if (customlesson_display_teacher_warning($lesson)) {
             // This is the warning msg for teachers to inform them that cluster
             // and unseen does not work while logged in as a teacher
             $warningvars->cluster = get_string('clusterjump', 'customlesson');
@@ -379,7 +379,7 @@ if ($pageid != LESSON_EOL) {
             'title'     => $page->title,
             'contents'  => $page->get_contents()
         );
-        $mform = new lesson_page_without_answers($CFG->wwwroot.'/mod/customlesson/continue.php', $customdata);
+        $mform = new customlesson_page_without_answers($CFG->wwwroot.'/mod/customlesson/continue.php', $customdata);
         $mform->set_data($data);
         ob_start();
         $mform->display();
@@ -387,7 +387,7 @@ if ($pageid != LESSON_EOL) {
         ob_end_clean();
     }
 
-    lesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
+    customlesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
     echo $lessonoutput->header($lesson, $cm, $currenttab, $extraeditbuttons, $lessonpageid, $extrapagetitle);
     if ($attemptflag) {
         // We are using level 3 header because attempt heading is a sub-heading of lesson title (MDL-30911).
@@ -424,7 +424,7 @@ if ($pageid != LESSON_EOL) {
     }
     if (!$canmanage) {
         $lesson->stop_timer();
-        $gradeinfo = lesson_grade($lesson, $ntries);
+        $gradeinfo = customlesson_grade($lesson, $ntries);
 
         if ($gradeinfo->attempts) {
             if (!$lesson->custom) {
@@ -490,7 +490,7 @@ if ($pageid != LESSON_EOL) {
         }
 
         // update central gradebook
-        lesson_update_grades($lesson, $USER->id);
+        customlesson_update_grades($lesson, $USER->id);
 
     } else {
         // display for teacher
@@ -572,7 +572,7 @@ if ($pageid != LESSON_EOL) {
     $url = new moodle_url('/grade/index.php', array('id'=>$course->id));
     $lessoncontent .= html_writer::link($url, get_string('viewgrades', 'customlesson'), array('class'=>'centerpadded lessonbutton standardbutton'));
 
-    lesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
+    customlesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
     echo $lessonoutput->header($lesson, $cm, $currenttab, $extraeditbuttons, $lessonpageid, get_string("congratulations", "customlesson"));
     echo $lessoncontent;
     echo $lessonoutput->footer();

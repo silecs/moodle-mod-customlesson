@@ -90,9 +90,9 @@ class lesson_page_type_multichoice extends lesson_page {
         $action = $CFG->wwwroot.'/mod/customlesson/continue.php';
         $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents(), 'attempt'=>$attempt);
         if ($this->properties->qoption) {
-            $mform = new lesson_display_answer_form_multichoice_multianswer($action, $params);
+            $mform = new customlesson_display_answer_form_multichoice_multianswer($action, $params);
         } else {
-            $mform = new lesson_display_answer_form_multichoice_singleanswer($action, $params);
+            $mform = new customlesson_display_answer_form_multichoice_singleanswer($action, $params);
         }
         $data = new stdClass;
         $data->id = $PAGE->cm->id;
@@ -114,9 +114,9 @@ class lesson_page_type_multichoice extends lesson_page {
         $action = $CFG->wwwroot.'/mod/customlesson/continue.php';
         $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents());
         if ($this->properties->qoption) {
-            $mform = new lesson_display_answer_form_multichoice_multianswer($action, $params);
+            $mform = new customlesson_display_answer_form_multichoice_multianswer($action, $params);
         } else {
-            $mform = new lesson_display_answer_form_multichoice_singleanswer($action, $params);
+            $mform = new customlesson_display_answer_form_multichoice_singleanswer($action, $params);
         }
         $data = $mform->get_data();
         require_sesskey();

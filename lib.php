@@ -39,14 +39,14 @@ defined('MOODLE_INTERNAL') || die();
  * @param object $lesson Lesson post data from the form
  * @return int
  **/
-function lesson_add_instance($data, $mform) {
+function customlesson_add_instance($data, $mform) {
     global $DB;
 
     $cmid = $data->coursemodule;
     $draftitemid = $data->mediafile;
     $context = context_module::instance($cmid);
 
-    lesson_process_pre_save($data);
+    customlesson_process_pre_save($data);
 
     unset($data->mediafile);
     $lessonid = $DB->insert_record("customlesson", $data);
@@ -54,11 +54,11 @@ function lesson_add_instance($data, $mform) {
 
     $lesson = $DB->get_record('customlesson', array('id'=>$lessonid), '*', MUST_EXIST);
 
-    lesson_update_media_file($lessonid, $context, $draftitemid);
+    customlesson_update_media_file($lessonid, $context, $draftitemid);
 
-    lesson_process_post_save($data);
+    customlesson_process_post_save($data);
 
-    lesson_grade_item_update($data);
+    customlesson_grade_item_update($data);
 
     return $lesson->id;
 }
@@ -72,7 +72,7 @@ function lesson_add_instance($data, $mform) {
  * @param object $lesson Lesson post data from the form
  * @return boolean
  **/
-function lesson_update_instance($data, $mform) {
+function customlesson_update_instance($data, $mform) {
     global $DB;
 
     $data->id = $data->instance;
@@ -80,20 +80,20 @@ function lesson_update_instance($data, $mform) {
     $draftitemid = $data->mediafile;
     $context = context_module::instance($cmid);
 
-    lesson_process_pre_save($data);
+    customlesson_process_pre_save($data);
 
     unset($data->mediafile);
     $DB->update_record("customlesson", $data);
 
-    lesson_update_media_file($data->id, $context, $draftitemid);
+    customlesson_update_media_file($data->id, $context, $draftitemid);
 
-    lesson_process_post_save($data);
+    customlesson_process_post_save($data);
 
     // update grade item definition
-    lesson_grade_item_update($data);
+    customlesson_grade_item_update($data);
 
     // update grades - TODO: do it only when grading style changes
-    lesson_update_grades($data, 0, false);
+    customlesson_update_grades($data, 0, false);
 
     return true;
 }
@@ -108,7 +108,7 @@ function lesson_update_instance($data, $mform) {
  * @param int $id
  * @return bool
  */
-function lesson_delete_instance($id) {
+function customlesson_delete_instance($id) {
     global $DB, $CFG;
     require_once($CFG->dirroot . '/mod/customlesson/locallib.php');
 
@@ -126,7 +126,7 @@ function lesson_delete_instance($id) {
  * @param boolean $feedback to specify if the process must output a summary of its work
  * @return boolean
  */
-function lesson_delete_course($course, $feedback=true) {
+function customlesson_delete_course($course, $feedback=true) {
     return true;
 }
 
@@ -144,7 +144,7 @@ function lesson_delete_course($course, $feedback=true) {
  * @param object $lesson
  * @return object
  */
-function lesson_user_outline($course, $user, $mod, $lesson) {
+function customlesson_user_outline($course, $user, $mod, $lesson) {
     global $CFG;
 
     require_once("$CFG->libdir/gradelib.php");
@@ -180,7 +180,7 @@ function lesson_user_outline($course, $user, $mod, $lesson) {
  * @param object $lesson
  * @return bool
  */
-function lesson_user_complete($course, $user, $mod, $lesson) {
+function customlesson_user_complete($course, $user, $mod, $lesson) {
     global $DB, $OUTPUT, $CFG;
 
     require_once("$CFG->libdir/gradelib.php");
@@ -254,7 +254,7 @@ function lesson_user_complete($course, $user, $mod, $lesson) {
  * @param array $htmlarray Store overview output array( course ID => 'lesson' => HTML output )
  * @return void
  */
-function lesson_print_overview($courses, &$htmlarray) {
+function customlesson_print_overview($courses, &$htmlarray) {
     global $USER, $CFG, $DB, $OUTPUT;
 
     if (!$lessons = get_all_instances_in_courses('lesson', $courses)) {
@@ -315,7 +315,7 @@ function lesson_print_overview($courses, &$htmlarray) {
  * @global stdClass
  * @return bool true
  */
-function lesson_cron () {
+function customlesson_cron () {
     global $CFG;
 
     return true;
@@ -330,7 +330,7 @@ function lesson_cron () {
  * @param int $userid optional user id, 0 means all users
  * @return array array of grades, false if none
  */
-function lesson_get_user_grades($lesson, $userid=0) {
+function customlesson_get_user_grades($lesson, $userid=0) {
     global $CFG, $DB;
 
     $params = array("lessonid" => $lesson->id,"lessonid2" => $lesson->id);
@@ -388,24 +388,24 @@ function lesson_get_user_grades($lesson, $userid=0) {
  * @param int $userid specific user only, 0 means all
  * @param bool $nullifnone
  */
-function lesson_update_grades($lesson, $userid=0, $nullifnone=true) {
+function customlesson_update_grades($lesson, $userid=0, $nullifnone=true) {
     global $CFG, $DB;
     require_once($CFG->libdir.'/gradelib.php');
 
     if ($lesson->grade == 0) {
-        lesson_grade_item_update($lesson);
+        customlesson_grade_item_update($lesson);
 
-    } else if ($grades = lesson_get_user_grades($lesson, $userid)) {
-        lesson_grade_item_update($lesson, $grades);
+    } else if ($grades = customlesson_get_user_grades($lesson, $userid)) {
+        customlesson_grade_item_update($lesson, $grades);
 
     } else if ($userid and $nullifnone) {
         $grade = new stdClass();
         $grade->userid   = $userid;
         $grade->rawgrade = NULL;
-        lesson_grade_item_update($lesson, $grade);
+        customlesson_grade_item_update($lesson, $grade);
 
     } else {
-        lesson_grade_item_update($lesson);
+        customlesson_grade_item_update($lesson);
     }
 }
 
@@ -414,7 +414,7 @@ function lesson_update_grades($lesson, $userid=0, $nullifnone=true) {
  *
  * @global object
  */
-function lesson_upgrade_grades() {
+function customlesson_upgrade_grades() {
     global $DB;
 
     $sql = "SELECT COUNT('x')
@@ -432,7 +432,7 @@ function lesson_upgrade_grades() {
         foreach ($rs as $lesson) {
             $i++;
             upgrade_set_timeout(60*5); // set up timeout, may also abort execution
-            lesson_update_grades($lesson, 0, false);
+            customlesson_update_grades($lesson, 0, false);
             $pbar->update($i, $count, "Updating Lesson grades ($i/$count).");
         }
     }
@@ -449,7 +449,7 @@ function lesson_upgrade_grades() {
  * @param array|object $grades optional array/object of grade(s); 'reset' means reset grades in gradebook
  * @return int 0 if ok, error code otherwise
  */
-function lesson_grade_item_update($lesson, $grades=NULL) {
+function customlesson_grade_item_update($lesson, $grades=NULL) {
     global $CFG;
     if (!function_exists('grade_update')) { //workaround for buggy PHP versions
         require_once($CFG->libdir.'/gradelib.php');
@@ -506,7 +506,7 @@ function lesson_grade_item_update($lesson, $grades=NULL) {
  * @param object $lesson object
  * @return object lesson
  */
-function lesson_grade_item_delete($lesson) {
+function customlesson_grade_item_delete($lesson) {
     global $CFG;
 
 }
@@ -514,14 +514,14 @@ function lesson_grade_item_delete($lesson) {
 /**
  * @return array
  */
-function lesson_get_view_actions() {
+function customlesson_get_view_actions() {
     return array('view','view all');
 }
 
 /**
  * @return array
  */
-function lesson_get_post_actions() {
+function customlesson_get_post_actions() {
     return array('end','start');
 }
 
@@ -533,7 +533,7 @@ function lesson_get_post_actions() {
  * @param object $lesson Lesson form data
  * @return void
  **/
-function lesson_process_pre_save(&$lesson) {
+function customlesson_process_pre_save(&$lesson) {
     global $DB;
 
     $lesson->timemodified = time();
@@ -586,7 +586,7 @@ function lesson_process_pre_save(&$lesson) {
  * @param object $lesson Lesson form data
  * @return void
  **/
-function lesson_process_post_save(&$lesson) {
+function customlesson_process_post_save(&$lesson) {
     global $DB, $CFG;
     require_once($CFG->dirroot.'/calendar/lib.php');
     require_once($CFG->dirroot . '/mod/customlesson/locallib.php');
@@ -640,7 +640,7 @@ function lesson_process_post_save(&$lesson) {
  *
  * @param $mform form passed by reference
  */
-function lesson_reset_course_form_definition(&$mform) {
+function customlesson_reset_course_form_definition(&$mform) {
     $mform->addElement('header', 'lessonheader', get_string('modulenameplural', 'customlesson'));
     $mform->addElement('advcheckbox', 'reset_lesson', get_string('deleteallattempts','lesson'));
 }
@@ -650,7 +650,7 @@ function lesson_reset_course_form_definition(&$mform) {
  * @param object $course
  * @return array
  */
-function lesson_reset_course_form_defaults($course) {
+function customlesson_reset_course_form_defaults($course) {
     return array('reset_lesson'=>1);
 }
 
@@ -662,7 +662,7 @@ function lesson_reset_course_form_defaults($course) {
  * @param int $courseid
  * @param string optional type
  */
-function lesson_reset_gradebook($courseid, $type='') {
+function customlesson_reset_gradebook($courseid, $type='') {
     global $CFG, $DB;
 
     $sql = "SELECT l.*, cm.idnumber as cmidnumber, l.course as courseid
@@ -671,7 +671,7 @@ function lesson_reset_gradebook($courseid, $type='') {
     $params = array ("course" => $courseid);
     if ($lessons = $DB->get_records_sql($sql,$params)) {
         foreach ($lessons as $lesson) {
-            lesson_grade_item_update($lesson, 'reset');
+            customlesson_grade_item_update($lesson, 'reset');
         }
     }
 }
@@ -685,7 +685,7 @@ function lesson_reset_gradebook($courseid, $type='') {
  * @param object $data the data submitted from the reset course.
  * @return array status array
  */
-function lesson_reset_userdata($data) {
+function customlesson_reset_userdata($data) {
     global $CFG, $DB;
 
     $componentstr = get_string('modulenameplural', 'customlesson');
@@ -704,7 +704,7 @@ function lesson_reset_userdata($data) {
 
         // remove all grades from gradebook
         if (empty($data->reset_gradebook_grades)) {
-            lesson_reset_gradebook($data->courseid);
+            customlesson_reset_gradebook($data->courseid);
         }
 
         $status[] = array('component'=>$componentstr, 'item'=>get_string('deleteallattempts', 'customlesson'), 'error'=>false);
@@ -723,7 +723,7 @@ function lesson_reset_userdata($data) {
  * Returns all other caps used in module
  * @return array
  */
-function lesson_get_extra_capabilities() {
+function customlesson_get_extra_capabilities() {
     return array('moodle/site:accessallgroups');
 }
 
@@ -738,7 +738,7 @@ function lesson_get_extra_capabilities() {
  * @param string $feature FEATURE_xx constant for requested feature
  * @return mixed True if module supports feature, false if not, null if doesn't know
  */
-function lesson_supports($feature) {
+function customlesson_supports($feature) {
     switch($feature) {
         case FEATURE_GROUPS:                  return false;
         case FEATURE_GROUPINGS:               return false;
@@ -761,7 +761,7 @@ function lesson_supports($feature) {
  * @param settings_navigation $settings
  * @param navigation_node $lessonnode
  */
-function lesson_extend_settings_navigation($settings, $lessonnode) {
+function customlesson_extend_settings_navigation($settings, $lessonnode) {
     global $PAGE, $DB;
 
     $canedit = has_capability('mod/customlesson:edit', $PAGE->cm->context);
@@ -801,7 +801,7 @@ function lesson_extend_settings_navigation($settings, $lessonnode) {
  * @param string $type 'import' if import list, otherwise export list assumed
  * @return array sorted list of import/export formats available
  */
-function lesson_get_import_export_formats($type) {
+function customlesson_get_import_export_formats($type) {
     global $CFG;
     $fileformats = get_plugin_list("qformat");
 
@@ -843,14 +843,14 @@ function lesson_get_import_export_formats($type) {
  * @param array $options additional options affecting the file serving
  * @return bool false if file not found, does not return if found - justsend the file
  */
-function lesson_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+function customlesson_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
     global $CFG, $DB;
 
     if ($context->contextlevel != CONTEXT_MODULE) {
         return false;
     }
 
-    $fileareas = lesson_get_file_areas();
+    $fileareas = customlesson_get_file_areas();
     if (!array_key_exists($filearea, $fileareas)) {
         return false;
     }
@@ -893,7 +893,7 @@ function lesson_pluginfile($course, $cm, $context, $filearea, $args, $forcedownl
  * @todo MDL-31048 localize
  * @return array a list of available file areas
  */
-function lesson_get_file_areas() {
+function customlesson_get_file_areas() {
     $areas = array();
     $areas['page_contents'] = 'Page contents'; //TODO: localize!!!!
     $areas['mediafile'] = 'Media file'; //TODO: localize!!!!
@@ -918,7 +918,7 @@ function lesson_get_file_areas() {
  * @param string $filename file name
  * @return file_info_stored
  */
-function lesson_get_file_info($browser, $areas, $course, $cm, $context, $filearea, $itemid, $filepath, $filename) {
+function customlesson_get_file_info($browser, $areas, $course, $cm, $context, $filearea, $itemid, $filepath, $filename) {
     global $CFG;
     if (has_capability('moodle/course:managefiles', $context)) {
         // no peaking here for students!!
@@ -942,7 +942,7 @@ function lesson_get_file_info($browser, $areas, $course, $cm, $context, $fileare
  * @param stdClass $parentcontext Block's parent context
  * @param stdClass $currentcontext Current context of block
  */
-function lesson_page_type_list($pagetype, $parentcontext, $currentcontext) {
+function customlesson_page_type_list($pagetype, $parentcontext, $currentcontext) {
     $module_pagetype = array(
         'mod-lesson-*'=>get_string('page-mod-lesson-x', 'customlesson'),
         'mod-lesson-view'=>get_string('page-mod-lesson-view', 'customlesson'),
@@ -959,7 +959,7 @@ function lesson_page_type_list($pagetype, $parentcontext, $currentcontext) {
  * @param stdClass $context the context
  * @param int $draftitemid the draft item
  */
-function lesson_update_media_file($lessonid, $context, $draftitemid) {
+function customlesson_update_media_file($lessonid, $context, $draftitemid) {
     global $DB;
 
     // Set the filestorage object.

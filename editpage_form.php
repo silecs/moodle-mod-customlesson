@@ -40,7 +40,7 @@ class lesson_add_page_form_selection extends lesson_add_page_form_base {
     protected $manager = null;
 
     public function __construct($arg1, $arg2) {
-        $this->manager = lesson_page_type_manager::get($arg2['lesson']);
+        $this->manager = customlesson_page_type_manager::get($arg2['lesson']);
         parent::__construct($arg1, $arg2);
     }
 

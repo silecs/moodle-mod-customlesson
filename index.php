@@ -106,7 +106,7 @@ foreach ($lessons as $lesson) {
         } else {
             // it's a student, show their grade
             $grade_value = 0;
-            if ($return = lesson_get_user_grades($lesson, $USER->id)) {
+            if ($return = customlesson_get_user_grades($lesson, $USER->id)) {
                 $grade_value = $return[$USER->id]->rawgrade;
             }
         }

@@ -122,7 +122,7 @@ switch ($mode) {
 
             // Get grade information
             $grade = current($grades);
-            $gradeinfo = lesson_grade($lesson, $attempt->retry, $attempt->userid);
+            $gradeinfo = customlesson_grade($lesson, $attempt->retry, $attempt->userid);
 
             // Set and update
             $updategrade = new stdClass();
@@ -135,7 +135,7 @@ switch ($mode) {
             $lesson->add_message(get_string('changessaved'), 'notifysuccess');
 
             // update central gradebook
-            lesson_update_grades($lesson, $grade->userid);
+            customlesson_update_grades($lesson, $grade->userid);
 
             redirect(new moodle_url('/mod/customlesson/essay.php', array('id'=>$cm->id)));
         } else {

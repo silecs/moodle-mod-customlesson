@@ -181,7 +181,7 @@ class lesson_page_type_branchtable extends lesson_page {
             if (has_capability('mod/customlesson:manage', $context)) {
                  $newpageid = LESSON_NEXTPAGE;
             } else {
-                 $newpageid = lesson_unseen_question_jump($this->lesson, $USER->id, $this->properties->id);  // this may return 0
+                 $newpageid = customlesson_unseen_question_jump($this->lesson, $USER->id, $this->properties->id);  // this may return 0
             }
         }
         // convert jumpto page into a proper page id
@@ -195,9 +195,9 @@ class lesson_page_type_branchtable extends lesson_page {
         } elseif ($newpageid == LESSON_PREVIOUSPAGE) {
             $newpageid = $this->prevpageid;
         } elseif ($newpageid == LESSON_RANDOMPAGE) {
-            $newpageid = lesson_random_question_jump($this->lesson, $this->properties->id);
+            $newpageid = customlesson_random_question_jump($this->lesson, $this->properties->id);
         } elseif ($newpageid == LESSON_RANDOMBRANCH) {
-            $newpageid = lesson_unseen_branch_jump($this->lesson, $USER->id);
+            $newpageid = customlesson_unseen_branch_jump($this->lesson, $USER->id);
         }
         // no need to record anything in lesson_attempts
         redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$PAGE->cm->id,'pageid'=>$newpageid)));
@@ -299,7 +299,7 @@ class lesson_add_page_form_branchtable extends lesson_add_page_form_base {
 
         $firstpage = optional_param('firstpage', false, PARAM_BOOL);
 
-        $jumptooptions = lesson_page_type_branchtable::get_jumptooptions($firstpage, $lesson);
+        $jumptooptions = customlesson_page_type_branchtable::get_jumptooptions($firstpage, $lesson);
 
         $mform->setDefault('qtypeheading', get_string('addabranchtable', 'customlesson'));
 

@@ -46,15 +46,15 @@ require_capability('mod/customlesson:edit', $context);
 $PAGE->set_url('/mod/customlesson/editpage.php', array('pageid'=>$pageid, 'id'=>$id, 'qtype'=>$qtype));
 
 if ($edit) {
-    $editpage = lesson_page::load($pageid, $lesson);
+    $editpage = customlesson_page::load($pageid, $lesson);
     $qtype = $editpage->qtype;
     $edit = true;
 } else {
     $edit = false;
 }
 
-$jumpto = lesson_page::get_jumptooptions($pageid, $lesson);
-$manager = lesson_page_type_manager::get($lesson);
+$jumpto = customlesson_page::get_jumptooptions($pageid, $lesson);
+$manager = customlesson_page_type_manager::get($lesson);
 $editoroptions = array('noclean'=>true, 'maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$CFG->maxbytes);
 
 // If the previous page was the Question type selection form, this form
@@ -119,7 +119,7 @@ if ($data = $mform->get_data()) {
         unset($data->edit);
         $editpage->update($data, $context, $PAGE->course->maxbytes);
     } else {
-        $editpage = lesson_page::create($data, $lesson, $context, $PAGE->course->maxbytes);
+        $editpage = customlesson_page::create($data, $lesson, $context, $PAGE->course->maxbytes);
     }
     redirect(new moodle_url('/mod/customlesson/edit.php', array('id'=>$cm->id)));
 }

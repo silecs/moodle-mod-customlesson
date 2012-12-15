@@ -48,7 +48,7 @@ $PAGE->navbar->add(get_string('continue', 'customlesson'));
 // This is the code updates the lesson time for a timed test
 // get time information for this user
 if (!$canmanage) {
-    $lesson->displayleft = lesson_displayleftif($lesson);
+    $lesson->displayleft = customlesson_displayleftif($lesson);
     $timer = $lesson->update_timer();
     if ($lesson->timed) {
         $timeleft = ($timer->starttime + $lesson->maxtime * 60) - time();
@@ -121,12 +121,12 @@ if (isset($USER->modattempts[$lesson->id])) {
             $result->newpageid = $page->nextpageid;
         }
     } else {
-        $result->newpageid = lesson_unseen_question_jump($lesson, $USER->id, $page->id);
+        $result->newpageid = customlesson_unseen_question_jump($lesson, $USER->id, $page->id);
     }
 } elseif ($result->newpageid == LESSON_PREVIOUSPAGE) {
     $result->newpageid = $page->prevpageid;
 } elseif ($result->newpageid == LESSON_RANDOMPAGE) {
-    $result->newpageid = lesson_random_question_jump($lesson, $page->id);
+    $result->newpageid = customlesson_random_question_jump($lesson, $page->id);
 } elseif ($result->newpageid == LESSON_CLUSTERJUMP) {
     if ($canmanage) {
         if ($page->nextpageid == 0) {  // if teacher, go to next page
@@ -148,7 +148,7 @@ if ($result->nodefaultresponse) {
 
 if ($canmanage) {
     // This is the warning msg for teachers to inform them that cluster and unseen does not work while logged in as a teacher
-    if(lesson_display_teacher_warning($lesson)) {
+    if(customlesson_display_teacher_warning($lesson)) {
         $warningvars = new stdClass();
         $warningvars->cluster = get_string("clusterjump", "customlesson");
         $warningvars->unseen = get_string("unseenpageinbranch", "customlesson");
@@ -172,7 +172,7 @@ $PAGE->set_url('/mod/customlesson/view.php', array('id' => $cm->id, 'pageid' => 
 $PAGE->set_subpage($page->id);
 
 /// Print the header, heading and tabs
-lesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
+customlesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
 echo $lessonoutput->header($lesson, $cm, 'view', true, $page->id, get_string('continue', 'customlesson'));
 
 if ($lesson->displayleft) {

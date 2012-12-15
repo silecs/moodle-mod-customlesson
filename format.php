@@ -46,7 +46,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param opject $question Contains question data like question, type and answers.
  * @return object Returns $result->error or $result->notice.
  **/
-function lesson_save_question_options($question, $lesson) {
+function customlesson_save_question_options($question, $lesson) {
     global $DB;
 
     // These lines are required to ensure that all page types have
@@ -54,7 +54,7 @@ function lesson_save_question_options($question, $lesson) {
     if (!($lesson instanceof lesson)) {
         $lesson = new lesson($lesson);
     }
-    $manager = lesson_page_type_manager::get($lesson);
+    $manager = customlesson_page_type_manager::get($lesson);
 
     $timenow = time();
     $result = new stdClass();
@@ -415,7 +415,7 @@ class qformat_default {
 
                     $question->lessonid = $lesson->id; // needed for foreign key
                     $question->qtype = $this->qtypeconvert[$question->qtype];
-                    $result = lesson_save_question_options($question, $lesson);
+                    $result = customlesson_save_question_options($question, $lesson);
 
                     if (!empty($result->error)) {
                         echo $OUTPUT->notification($result->error);

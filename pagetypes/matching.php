@@ -93,7 +93,7 @@ class lesson_page_type_matching extends lesson_page {
 
         $action = $CFG->wwwroot.'/mod/customlesson/continue.php';
         $params = array('answers'=>$answers, 'useranswers'=>$useranswers, 'responseoptions'=>$responseoptions, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents());
-        $mform = new lesson_display_answer_form_matching($action, $params);
+        $mform = new customlesson_display_answer_form_matching($action, $params);
         return $mform;
     }
 
@@ -129,10 +129,10 @@ class lesson_page_type_matching extends lesson_page {
 
             if (isset($answer->answer) && $answer->answer != '') {
                 $answer->id = $DB->insert_record("customlesson_answers", $answer);
-                $answers[$answer->id] = new lesson_page_answer($answer);
+                $answers[$answer->id] = new customlesson_page_answer($answer);
             } else if ($i < 2) {
                 $answer->id = $DB->insert_record("customlesson_answers", $answer);
-                $answers[$answer->id] = new lesson_page_answer($answer);
+                $answers[$answer->id] = new customlesson_page_answer($answer);
             } else {
                 break;
             }

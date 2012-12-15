@@ -74,7 +74,7 @@ define("LESSON_MAX_EVENT_LENGTH", "432000");
  * @param stdClass $lesson Id of the lesson that is to be checked.
  * @return boolean True or false.
  **/
-function lesson_display_teacher_warning($lesson) {
+function customlesson_display_teacher_warning($lesson) {
     global $DB;
 
     // get all of the lesson answers
@@ -104,7 +104,7 @@ function lesson_display_teacher_warning($lesson) {
  * @param int $pageid Id of the page from which we are jumping.
  * @return int Id of the next page.
  **/
-function lesson_unseen_question_jump($lesson, $user, $pageid) {
+function customlesson_unseen_question_jump($lesson, $user, $pageid) {
     global $DB;
 
     // get the number of retakes
@@ -171,7 +171,7 @@ function lesson_unseen_question_jump($lesson, $user, $pageid) {
  * @param int $userid User id.
  * @return int Will return the page id of a branch table or end of lesson
  **/
-function lesson_unseen_branch_jump($lesson, $userid) {
+function customlesson_unseen_branch_jump($lesson, $userid) {
     global $DB;
 
     if (!$retakes = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$userid))) {
@@ -229,7 +229,7 @@ function lesson_unseen_branch_jump($lesson, $userid) {
  * @param int $pageid The id of the page that we are jumping from (?)
  * @return int The pageid of a random page that is within a branch table
  **/
-function lesson_random_question_jump($lesson, $pageid) {
+function customlesson_random_question_jump($lesson, $pageid) {
     global $DB;
 
     // get the lesson pages
@@ -272,7 +272,7 @@ function lesson_random_question_jump($lesson, $pageid) {
                     nmanual => number of manually graded questions
                     manualpoints => point value for manually graded questions }
  */
-function lesson_grade($lesson, $ntries, $userid = 0) {
+function customlesson_grade($lesson, $ntries, $userid = 0) {
     global $USER, $DB;
 
     if (empty($userid)) {
@@ -314,7 +314,7 @@ function lesson_grade($lesson, $ntries, $userid = 0) {
         $nquestions = count($pages);
 
         foreach ($attemptset as $attempts) {
-            $page = lesson_page::load($pages[end($attempts)->pageid], $lesson);
+            $page = customlesson_page::load($pages[end($attempts)->pageid], $lesson);
             if ($lesson->custom) {
                 $attempt = end($attempts);
                 // If essay question, handle it, otherwise add to score
@@ -390,7 +390,7 @@ function lesson_grade($lesson, $ntries, $userid = 0) {
  * @param object $lesson Lesson object of the current lesson
  * @return boolean 0 if the user cannot see, or $lesson->displayleft to keep displayleft unchanged
  **/
-function lesson_displayleftif($lesson) {
+function customlesson_displayleftif($lesson) {
     global $CFG, $USER, $DB;
 
     if (!empty($lesson->displayleftif)) {
@@ -416,21 +416,21 @@ function lesson_displayleftif($lesson) {
  * @param $page
  * @return unknown_type
  */
-function lesson_add_fake_blocks($page, $cm, $lesson, $timer = null) {
-    $bc = lesson_menu_block_contents($cm->id, $lesson);
+function customlesson_add_fake_blocks($page, $cm, $lesson, $timer = null) {
+    $bc = customlesson_menu_block_contents($cm->id, $lesson);
     if (!empty($bc)) {
         $regions = $page->blocks->get_regions();
         $firstregion = reset($regions);
         $page->blocks->add_fake_block($bc, $firstregion);
     }
 
-    $bc = lesson_mediafile_block_contents($cm->id, $lesson);
+    $bc = customlesson_mediafile_block_contents($cm->id, $lesson);
     if (!empty($bc)) {
         $page->blocks->add_fake_block($bc, $page->blocks->get_default_region());
     }
 
     if (!empty($timer)) {
-        $bc = lesson_clock_block_contents($cm->id, $lesson, $timer, $page);
+        $bc = customlesson_clock_block_contents($cm->id, $lesson, $timer, $page);
         if (!empty($bc)) {
             $page->blocks->add_fake_block($bc, $page->blocks->get_default_region());
         }
@@ -445,7 +445,7 @@ function lesson_add_fake_blocks($page, $cm, $lesson, $timer = null) {
  * @param object $lesson Full lesson record object
  * @return block_contents
  **/
-function lesson_mediafile_block_contents($cmid, $lesson) {
+function customlesson_mediafile_block_contents($cmid, $lesson) {
     global $OUTPUT;
     if (empty($lesson->mediafile)) {
         return null;
@@ -482,7 +482,7 @@ function lesson_mediafile_block_contents($cmid, $lesson) {
  * @param object $timer Full timer record object
  * @return block_contents
  **/
-function lesson_clock_block_contents($cmid, $lesson, $timer, $page) {
+function customlesson_clock_block_contents($cmid, $lesson, $timer, $page) {
     // Display for timed lessons and for students only
     $context = context_module::instance($cmid);
     if(!$lesson->timed || has_capability('mod/customlesson:manage', $context)) {
@@ -514,7 +514,7 @@ function lesson_clock_block_contents($cmid, $lesson, $timer, $page) {
  * @param lesson $lesson Full lesson record object
  * @return void
  **/
-function lesson_menu_block_contents($cmid, $lesson) {
+function customlesson_menu_block_contents($cmid, $lesson) {
     global $CFG, $DB;
 
     if (!$lesson->displayleft) {
@@ -568,7 +568,7 @@ function lesson_menu_block_contents($cmid, $lesson) {
  * @param bool $extraeditbuttons
  * @param int $lessonpageid
  */
-function lesson_add_header_buttons($cm, $context, $extraeditbuttons=false, $lessonpageid=null) {
+function customlesson_add_header_buttons($cm, $context, $extraeditbuttons=false, $lessonpageid=null) {
     global $CFG, $PAGE, $OUTPUT;
     if (has_capability('mod/customlesson:edit', $context) && $extraeditbuttons) {
         if ($lessonpageid === null) {
@@ -590,7 +590,7 @@ function lesson_add_header_buttons($cm, $context, $extraeditbuttons=false, $less
  * @param object $context
  * @return string $code the html code of media
  */
-function lesson_get_media_html($lesson, $context) {
+function customlesson_get_media_html($lesson, $context) {
     global $CFG, $PAGE, $OUTPUT;
     require_once("$CFG->libdir/resourcelib.php");
 
@@ -916,7 +916,7 @@ class lesson extends lesson_base {
 
     /**
      * Simply generates a lesson object given an array/object of properties
-     * Overrides {@see lesson_base->create()}
+     * Overrides {@see customlesson_base->create()}
      * @static
      * @param object|array $properties
      * @return lesson
@@ -982,7 +982,7 @@ class lesson extends lesson_base {
         global $SESSION;
 
         $messages = array();
-        if (!empty($SESSION->lesson_messages) && is_array($SESSION->lesson_messages) && array_key_exists($this->properties->id, $SESSION->lesson_messages)) {
+        if (!empty($SESSION->customlesson_messages) && is_array($SESSION->lesson_messages) && array_key_exists($this->properties->id, $SESSION->lesson_messages)) {
             $messages = $SESSION->lesson_messages[$this->properties->id];
             unset($SESSION->lesson_messages[$this->properties->id]);
         }
@@ -1160,14 +1160,14 @@ class lesson extends lesson_base {
     public function add_message($message, $class="notifyproblem", $align='center') {
         global $SESSION;
 
-        if (empty($SESSION->lesson_messages) || !is_array($SESSION->lesson_messages)) {
-            $SESSION->lesson_messages = array();
-            $SESSION->lesson_messages[$this->properties->id] = array();
+        if (empty($SESSION->customlesson_messages) || !is_array($SESSION->lesson_messages)) {
+            $SESSION->customlesson_messages = array();
+            $SESSION->customlesson_messages[$this->properties->id] = array();
         } else if (!array_key_exists($this->properties->id, $SESSION->lesson_messages)) {
-            $SESSION->lesson_messages[$this->properties->id] = array();
+            $SESSION->customlesson_messages[$this->properties->id] = array();
         }
 
-        $SESSION->lesson_messages[$this->properties->id][] = array($message, $class, $align);
+        $SESSION->customlesson_messages[$this->properties->id][] = array($message, $class, $align);
 
         return true;
     }
@@ -1286,7 +1286,7 @@ class lesson extends lesson_base {
      */
     public function load_page($pageid) {
         if (!array_key_exists($pageid, $this->pages)) {
-            $manager = lesson_page_type_manager::get($this);
+            $manager = customlesson_page_type_manager::get($this);
             $this->pages[$pageid] = $manager->load_page($pageid, $this);
         }
         return $this->pages[$pageid];
@@ -1299,7 +1299,7 @@ class lesson extends lesson_base {
      */
     public function load_all_pages() {
         if (!$this->loadedallpages) {
-            $manager = lesson_page_type_manager::get($this);
+            $manager = customlesson_page_type_manager::get($this);
             $this->pages = $manager->load_all_pages($this);
             $this->loadedallpages = true;
         }
@@ -1764,7 +1764,7 @@ abstract class lesson_page extends lesson_base {
             $DB->set_field("customlesson_pages", "prevpageid", $newpage->id, array("id" => $newpage->nextpageid));
         }
 
-        $page = lesson_page::load($newpage, $lesson);
+        $page = customlesson_page::load($newpage, $lesson);
         $page->create_answers($properties);
 
         $lesson->add_message(get_string('insertedpage', 'customlesson').': '.format_string($newpage->title, true), 'notifysuccess');
@@ -1793,9 +1793,9 @@ abstract class lesson_page extends lesson_base {
                 print_error('cannotfindpages', 'lesson');
             }
         }
-        $manager = lesson_page_type_manager::get($lesson);
+        $manager = customlesson_page_type_manager::get($lesson);
 
-        $class = 'lesson_page_type_'.$manager->get_page_type_idstring($page->qtype);
+        $class = 'customlesson_page_type_'.$manager->get_page_type_idstring($page->qtype);
         if (!class_exists($class)) {
             $class = 'lesson_page';
         }
@@ -1880,7 +1880,7 @@ abstract class lesson_page extends lesson_base {
                 return array();
             }
             foreach ($answers as $answer) {
-                $this->answers[count($this->answers)] = new lesson_page_answer($answer);
+                $this->answers[count($this->answers)] = new customlesson_page_answer($answer);
             }
         }
         return $this->answers;
@@ -2238,7 +2238,7 @@ abstract class lesson_page extends lesson_base {
                     $answer->score = $properties->score[$i];
                 }
                 $answer->id = $DB->insert_record("customlesson_answers", $answer);
-                $answers[$answer->id] = new lesson_page_answer($answer);
+                $answers[$answer->id] = new customlesson_page_answer($answer);
             } else {
                 break;
             }
@@ -2539,7 +2539,7 @@ class lesson_page_answer extends lesson_base {
     public static function load($id) {
         global $DB;
         $answer = $DB->get_record("customlesson_answers", array("id" => $id));
-        return new lesson_page_answer($answer);
+        return new customlesson_page_answer($answer);
     }
 
     /**
@@ -2562,7 +2562,7 @@ class lesson_page_answer extends lesson_base {
  * This class is responsible for managing the different pages. A manager object can
  * be retrieved by calling the following line of code:
  * <code>
- * $manager  = lesson_page_type_manager::get($lesson);
+ * $manager  = customlesson_page_type_manager::get($lesson);
  * </code>
  * The first time the page type manager is retrieved the it includes all of the
  * different page types located in mod/customlesson/pagetypes.
@@ -2590,7 +2590,7 @@ class lesson_page_type_manager {
     public static function get(lesson $lesson) {
         static $pagetypemanager;
         if (!($pagetypemanager instanceof lesson_page_type_manager)) {
-            $pagetypemanager = new lesson_page_type_manager();
+            $pagetypemanager = new customlesson_page_type_manager();
             $pagetypemanager->load_lesson_types($lesson);
         }
         return $pagetypemanager;
@@ -2610,7 +2610,7 @@ class lesson_page_type_manager {
                 continue;
             }
             require_once($basedir.$entry);
-            $class = 'lesson_page_type_'.strtok($entry,'.');
+            $class = 'customlesson_page_type_'.strtok($entry,'.');
             if (class_exists($class)) {
                 $pagetype = new $class(new stdClass, $lesson);
                 $this->types[$pagetype->typeid] = $pagetype;
@@ -2719,7 +2719,7 @@ class lesson_page_type_manager {
      * @return lesson_add_page_form_base
      */
     public function get_page_form($type, $arguments) {
-        $class = 'lesson_add_page_form_'.$this->get_page_type_idstring($type);
+        $class = 'customlesson_add_page_form_'.$this->get_page_type_idstring($type);
         if (!class_exists($class) || get_parent_class($class)!=='lesson_add_page_form_base') {
             debugging('Lesson page type unknown class requested '.$class, DEBUG_DEVELOPER);
             $class = 'lesson_add_page_form_selection';

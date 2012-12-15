@@ -76,9 +76,9 @@ if (!$canmanage) {
     if (!$lesson->is_accessible()) {  // Deadline restrictions
         echo $lessonoutput->header($lesson, $cm);
         if ($lesson->deadline != 0 && time() > $lesson->deadline) {
-            echo $lessonoutput->lesson_inaccessible(get_string('lessonclosed', 'customlesson', userdate($lesson->deadline)));
+            echo $lessonoutput->customlesson_inaccessible(get_string('lessonclosed', 'customlesson', userdate($lesson->deadline)));
         } else {
-            echo $lessonoutput->lesson_inaccessible(get_string('lessonopen', 'customlesson', userdate($lesson->available)));
+            echo $lessonoutput->customlesson_inaccessible(get_string('lessonopen', 'customlesson', userdate($lesson->available)));
         }
         echo $lessonoutput->footer();
         exit();
@@ -101,7 +101,7 @@ if (!$canmanage) {
 }
 
 // print the embedded media html code
-echo $OUTPUT->box(lesson_get_media_html($lesson, $context));
+echo $OUTPUT->box(customlesson_get_media_html($lesson, $context));
 
 if ($lesson->mediaclose) {
    echo '<div class="lessonmediafilecontrol">';
