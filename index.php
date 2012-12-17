@@ -89,7 +89,7 @@ foreach ($lessons as $lesson) {
         //Show normal if the mod is visible
         $link = "<a href=\"view.php?id=$lesson->coursemodule\">".format_string($lesson->name,true)."</a>";
     }
-    $cm = get_coursemodule_from_instance('lesson', $lesson->id);
+    $cm = get_coursemodule_from_instance('customlesson', $lesson->id);
     $context = context_module::instance($cm->id);
 
     if ($lesson->deadline == 0) {

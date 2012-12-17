@@ -148,7 +148,7 @@ function customlesson_user_outline($course, $user, $mod, $lesson) {
     global $CFG;
 
     require_once("$CFG->libdir/gradelib.php");
-    $grades = grade_get_grades($course->id, 'mod', 'lesson', $lesson->id, $user->id);
+    $grades = grade_get_grades($course->id, 'mod', 'customlesson', $lesson->id, $user->id);
 
     $return = new stdClass();
     if (empty($grades->items[0]->grades)) {
@@ -185,7 +185,7 @@ function customlesson_user_complete($course, $user, $mod, $lesson) {
 
     require_once("$CFG->libdir/gradelib.php");
 
-    $grades = grade_get_grades($course->id, 'mod', 'lesson', $lesson->id, $user->id);
+    $grades = grade_get_grades($course->id, 'mod', 'customlesson', $lesson->id, $user->id);
     if (!empty($grades->items[0]->grades)) {
         $grade = reset($grades->items[0]->grades);
         echo $OUTPUT->container(get_string('grade').': '.$grade->str_long_grade);
@@ -496,7 +496,7 @@ function customlesson_grade_item_update($lesson, $grades=NULL) {
         }
     }
 
-    return grade_update('mod/customlesson', $lesson->course, 'mod', 'lesson', $lesson->id, 0, $grades, $params);
+    return grade_update('mod/customlesson', $lesson->course, 'mod', 'customlesson', $lesson->id, 0, $grades, $params);
 }
 
 /**
@@ -712,7 +712,7 @@ function customlesson_reset_userdata($data) {
 
     /// updating dates - shift may be negative too
     if ($data->timeshift) {
-        shift_course_mod_dates('lesson', array('available', 'deadline'), $data->timeshift, $data->courseid);
+        shift_course_mod_dates('customlesson', array('available', 'deadline'), $data->timeshift, $data->courseid);
         $status[] = array('component'=>$componentstr, 'item'=>get_string('datechanged'), 'error'=>false);
     }
 

@@ -963,7 +963,7 @@ class customlesson extends customlesson_base {
             }
         }
 
-        grade_update('mod/customlesson', $this->properties->course, 'mod', 'lesson', $this->properties->id, 0, NULL, array('deleted'=>1));
+        grade_update('mod/customlesson', $this->properties->course, 'mod', 'customlesson', $this->properties->id, 0, NULL, array('deleted'=>1));
         return true;
     }
 

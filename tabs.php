@@ -37,7 +37,7 @@ if (!isset($currenttab)) {
     $currenttab = '';
 }
 if (!isset($cm)) {
-    $cm = get_coursemodule_from_instance('lesson', $lesson->id);
+    $cm = get_coursemodule_from_instance('customlesson', $lesson->id);
     $context = context_module::instance($cm->id);
 }
 if (!isset($course)) {

@@ -167,7 +167,7 @@ class mod_customlesson_mod_form extends moodleform_mod {
         $mform->addElement('header', 'flowcontrol', get_string('flowcontrol', 'customlesson'));
 
         $mform->addElement('selectyesno', 'modattempts', get_string('modattempts', 'customlesson'));
-        $mform->addHelpButton('modattempts', 'modattempts', 'lesson');
+        $mform->addHelpButton('modattempts', 'modattempts', 'customlesson');
         $mform->setDefault('modattempts', 0);
 
         $mform->addElement('selectyesno', 'review', get_string('displayreview', 'customlesson'));
