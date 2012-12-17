@@ -445,7 +445,7 @@ class customlesson_add_page_form_multichoice extends customlesson_add_page_form_
 
         $this->_form->addElement('checkbox', 'qoption', get_string('options', 'customlesson'), get_string('multianswer', 'customlesson'));
         $this->_form->setDefault('qoption', 0);
-        $this->_form->addHelpButton('qoption', 'multianswer', 'lesson');
+        $this->_form->addHelpButton('qoption', 'multianswer', 'customlesson');
 
         for ($i = 0; $i < $this->_customdata['lesson']->maxanswers; $i++) {
             $this->_form->addElement('header', 'answertitle'.$i, get_string('answer').' '.($i+1));

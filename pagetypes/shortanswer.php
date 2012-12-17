@@ -313,7 +313,7 @@ class customlesson_add_page_form_shortanswer extends customlesson_add_page_form_
 
         $this->_form->addElement('checkbox', 'qoption', get_string('options', 'customlesson'), get_string('casesensitive', 'customlesson')); //oh my, this is a regex option!
         $this->_form->setDefault('qoption', 0);
-        $this->_form->addHelpButton('qoption', 'casesensitive', 'lesson');
+        $this->_form->addHelpButton('qoption', 'casesensitive', 'customlesson');
 
         for ($i = 0; $i < $this->_customdata['lesson']->maxanswers; $i++) {
             $this->_form->addElement('header', 'answertitle'.$i, get_string('answer').' '.($i+1));

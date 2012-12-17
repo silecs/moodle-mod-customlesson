@@ -747,7 +747,7 @@ abstract class customlesson_add_page_form_base extends moodleform {
         }
         $this->_form->addElement('select', $name, $label, $this->_customdata['jumpto']);
         $this->_form->setDefault($name, $selected);
-        $this->_form->addHelpButton($name, 'jumps', 'lesson');
+        $this->_form->addHelpButton($name, 'jumps', 'customlesson');
     }
 
     /**
