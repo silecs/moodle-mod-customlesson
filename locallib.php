@@ -2720,11 +2720,11 @@ class customlesson_page_type_manager {
      */
     public function get_page_form($type, $arguments) {
         $class = 'customlesson_add_page_form_'.$this->get_page_type_idstring($type);
-        if (!class_exists($class) || get_parent_class($class)!=='lesson_add_page_form_base') {
+        if (!class_exists($class) || get_parent_class($class)!=='customlesson_add_page_form_base') {
             debugging('Lesson page type unknown class requested '.$class, DEBUG_DEVELOPER);
-            $class = 'lesson_add_page_form_selection';
-        } else if ($class === 'lesson_add_page_form_unknown') {
-            $class = 'lesson_add_page_form_selection';
+            $class = 'customlesson_add_page_form_selection';
+        } else if ($class === 'customlesson_add_page_form_unknown') {
+            $class = 'customlesson_add_page_form_selection';
         }
         return new $class(null, $arguments);
     }
