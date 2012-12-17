@@ -187,7 +187,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param object $attempt
      * @return string
      */
-    public function display_page(customlesson $lesson, lesson_page $page, $attempt) {
+    public function display_page(customlesson $lesson, customlesson_page $page, $attempt) {
         // We need to buffer here as there is an mforms display call
         ob_start();
         echo $page->display($this, $attempt);

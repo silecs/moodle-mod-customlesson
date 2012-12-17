@@ -72,7 +72,7 @@ class customlesson_page_type_branchtable extends customlesson_page {
         return $jumps;
     }
 
-    public static function get_jumptooptions($firstpage, lesson $lesson) {
+    public static function get_jumptooptions($firstpage, customlesson $lesson) {
         global $DB, $PAGE;
         $jump = array();
         $jump[0] = get_string("thispage", "customlesson");

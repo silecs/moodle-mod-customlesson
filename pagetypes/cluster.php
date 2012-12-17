@@ -120,7 +120,7 @@ class customlesson_add_page_form_cluster extends customlesson_add_page_form_base
     }
 
 
-    public function construction_override($pageid, lesson $lesson) {
+    public function construction_override($pageid, customlesson $lesson) {
         global $PAGE, $CFG, $DB;
         require_sesskey();
 

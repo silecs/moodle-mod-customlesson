@@ -815,7 +815,7 @@ abstract class customlesson_add_page_form_base extends moodleform {
      *
      * @return bool
      */
-    public function construction_override($pageid, lesson $lesson) {
+    public function construction_override($pageid, customlesson $lesson) {
         return true;
     }
 }
@@ -1719,7 +1719,7 @@ abstract class customlesson_page extends customlesson_base {
      * @param lesson $lesson
      * @return lesson_page Specialised object that extends customlesson_page
      */
-    final public static function create($properties, lesson $lesson, $context, $maxbytes) {
+    final public static function create($properties, customlesson $lesson, $context, $maxbytes) {
         global $DB;
         $newpage = new stdClass;
         $newpage->title = $properties->title;
@@ -1782,7 +1782,7 @@ abstract class customlesson_page extends customlesson_base {
      * @param lesson $lesson
      * @return lesson_page Specialised lesson_page object
      */
-    final public static function load($id, lesson $lesson) {
+    final public static function load($id, customlesson $lesson) {
         global $DB;
 
         if (is_object($id) && !empty($id->qtype)) {
@@ -2069,7 +2069,7 @@ abstract class customlesson_page extends customlesson_base {
      * @param object $properties
      * @param lesson $lesson
      */
-    public function __construct($properties, lesson $lesson) {
+    public function __construct($properties, customlesson $lesson) {
         parent::__construct($properties);
         $this->lesson = $lesson;
     }
@@ -2327,7 +2327,7 @@ abstract class customlesson_page extends customlesson_base {
      * @param lesson $lesson
      * @return array
      */
-    public static function get_jumptooptions($pageid, lesson $lesson) {
+    public static function get_jumptooptions($pageid, customlesson $lesson) {
         global $DB;
         $jump = array();
         $jump[0] = get_string("thispage", "customlesson");
@@ -2550,7 +2550,7 @@ class customlesson_page_answer extends customlesson_base {
      * @param lesson_page $page
      * @return array
      */
-    public static function create($properties, lesson_page $page) {
+    public static function create($properties, customlesson_page $page) {
         return $page->create_answers($properties);
     }
 
@@ -2664,7 +2664,7 @@ class customlesson_page_type_manager {
      * @param lesson $lesson The lesson the page belongs to
      * @return lesson_page A class that extends customlesson_page
      */
-    public function load_page($pageid, lesson $lesson) {
+    public function load_page($pageid, customlesson $lesson) {
         global $DB;
         if (!($page =$DB->get_record('customlesson_pages', array('id'=>$pageid, 'lessonid'=>$lesson->id)))) {
             print_error('cannotfindpages', 'customlesson');

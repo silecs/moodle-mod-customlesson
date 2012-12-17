@@ -160,7 +160,7 @@ class customlesson_add_page_form_endofcluster extends customlesson_add_page_form
         $this->add_jumpto(0);
     }
 
-    public function construction_override($pageid, lesson $lesson) {
+    public function construction_override($pageid, customlesson $lesson) {
         global $CFG, $PAGE, $DB;
         require_sesskey();
 
