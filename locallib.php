@@ -2589,7 +2589,7 @@ class customlesson_page_type_manager {
      */
     public static function get(lesson $lesson) {
         static $pagetypemanager;
-        if (!($pagetypemanager instanceof lesson_page_type_manager)) {
+        if (!($pagetypemanager instanceof customlesson_page_type_manager)) {
             $pagetypemanager = new customlesson_page_type_manager();
             $pagetypemanager->load_lesson_types($lesson);
         }
