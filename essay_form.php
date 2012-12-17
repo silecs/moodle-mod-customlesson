@@ -37,7 +37,7 @@ require_once($CFG->libdir.'/formslib.php');
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
-class essay_grading_form extends moodleform {
+class customlesson_essay_grading_form extends moodleform {
 
     public function definition() {
         $mform = $this->_form;

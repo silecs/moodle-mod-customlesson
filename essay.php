@@ -94,7 +94,7 @@ switch ($mode) {
             print_error('cannotfinduser', 'customlesson');
         }
 
-        $mform = new essay_grading_form(null, array('scoreoptions'=>$scoreoptions, 'user'=>$user));
+        $mform = new customlesson_essay_grading_form(null, array('scoreoptions'=>$scoreoptions, 'user'=>$user));
         if ($mform->is_cancelled()) {
             redirect("$CFG->wwwroot/mod/customlesson/essay.php?id=$cm->id");
         }
@@ -388,7 +388,7 @@ switch ($mode) {
         // Expects the following to be set: $attemptid, $answer, $user, $page, $attempt
         $essayinfo = unserialize($attempt->useranswer);
 
-        $mform = new essay_grading_form(null, array('scoreoptions'=>$scoreoptions, 'user'=>$user));
+        $mform = new customlesson_essay_grading_form(null, array('scoreoptions'=>$scoreoptions, 'user'=>$user));
         $data = new stdClass;
         $data->id = $cm->id;
         $data->attemptid = $attemptid;
