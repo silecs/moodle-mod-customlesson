@@ -57,7 +57,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $output = $this->output->header();
 
         if (has_capability('mod/customlesson:manage', $context)) {
-            $output .= $this->output->heading_with_help($activityname, 'overview', 'lesson');
+            $output .= $this->output->heading_with_help($activityname, 'overview', 'customlesson');
 
             if (!empty($currenttab)) {
                 ob_start();

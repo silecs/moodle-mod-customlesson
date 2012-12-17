@@ -60,7 +60,7 @@ $mform->set_data($data);
     $PAGE->set_heading($strimportquestions);
     echo $OUTPUT->header();
 
-echo $OUTPUT->heading_with_help($strimportquestions, 'importquestions', 'lesson' );
+echo $OUTPUT->heading_with_help($strimportquestions, 'importquestions', 'customlesson' );
 
 if ($data = $mform->get_data()) {
 
