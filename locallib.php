@@ -2587,7 +2587,7 @@ class customlesson_page_type_manager {
      * @param lesson $lesson
      * @return lesson_page_type_manager
      */
-    public static function get(lesson $lesson) {
+    public static function get(customlesson $lesson) {
         static $pagetypemanager;
         if (!($pagetypemanager instanceof customlesson_page_type_manager)) {
             $pagetypemanager = new customlesson_page_type_manager();
@@ -2601,7 +2601,7 @@ class customlesson_page_type_manager {
      *
      * @param lesson $lesson
      */
-    public function load_lesson_types(lesson $lesson) {
+    public function load_lesson_types(customlesson $lesson) {
         global $CFG;
         $basedir = $CFG->dirroot.'/mod/customlesson/pagetypes/';
         $dir = dir($basedir);
@@ -2680,7 +2680,7 @@ class customlesson_page_type_manager {
      * @param lesson $lesson
      * @return array An array of lesson_page_type_*
      */
-    public function load_all_pages(lesson $lesson) {
+    public function load_all_pages(customlesson $lesson) {
         global $DB;
         if (!($pages =$DB->get_records('customlesson_pages', array('lessonid'=>$lesson->id)))) {
             print_error('cannotfindpages', 'customlesson');

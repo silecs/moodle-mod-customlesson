@@ -107,7 +107,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param bool $failedattempt
      * @return string
      */
-    public function login_prompt(lesson $lesson, $failedattempt = false) {
+    public function login_prompt(customlesson $lesson, $failedattempt = false) {
         global $CFG;
         $output  = $this->output->box_start('password-form');
         $output .= $this->output->box_start('generalbox boxaligncenter');
@@ -164,7 +164,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param int $lastpageseen
      * @return string
      */
-    public function continue_links(lesson $lesson, $lastpageseenid) {
+    public function continue_links(customlesson $lesson, $lastpageseenid) {
         global $CFG;
         $output = $this->output->box(get_string('youhaveseen', 'customlesson'), 'generalbox boxaligncenter');
         $output .= $this->output->box_start('center');
@@ -187,7 +187,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param object $attempt
      * @return string
      */
-    public function display_page(lesson $lesson, lesson_page $page, $attempt) {
+    public function display_page(customlesson $lesson, lesson_page $page, $attempt) {
         // We need to buffer here as there is an mforms display call
         ob_start();
         echo $page->display($this, $attempt);
@@ -203,7 +203,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param int $pageid
      * @return string
      */
-    public function display_edit_collapsed(lesson $lesson, $pageid) {
+    public function display_edit_collapsed(customlesson $lesson, $pageid) {
         global $DB, $CFG;
 
         $manager = customlesson_page_type_manager::get($lesson);
@@ -249,7 +249,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param bool $single
      * @return string
      */
-    public function display_edit_full(lesson $lesson, $pageid, $prevpageid, $single=false) {
+    public function display_edit_full(customlesson $lesson, $pageid, $prevpageid, $single=false) {
         global $DB, $CFG;
 
         $manager = customlesson_page_type_manager::get($lesson);
@@ -335,7 +335,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param int $prevpageid
      * @return string
      */
-    public function add_page_links(lesson $lesson, $prevpageid=false) {
+    public function add_page_links(customlesson $lesson, $prevpageid=false) {
         global $CFG;
 
         $links = array();
@@ -359,7 +359,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param lesson $lesson
      * @return string
      */
-    public function add_first_page_links(lesson $lesson) {
+    public function add_first_page_links(customlesson $lesson) {
         global $CFG;
         $prevpageid = 0;
 
@@ -451,7 +451,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
       * @param lesson $lesson
       * @return string
       */
-    public function ongoing_score(lesson $lesson) {
+    public function ongoing_score(customlesson $lesson) {
         global $USER, $DB;
 
         $context = context_module::instance($this->page->cm->id);
@@ -482,7 +482,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param lesson $lesson
      * @return string
      */
-    public function progress_bar(lesson $lesson) {
+    public function progress_bar(customlesson $lesson) {
         global $CFG, $USER, $DB;
 
         $context = context_module::instance($this->page->cm->id);
@@ -556,7 +556,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * Returns HTML to show the start of a slideshow
      * @param lesson $lesson
      */
-    public function slideshow_start(lesson $lesson) {
+    public function slideshow_start(customlesson $lesson) {
         $attributes = array();
         $attributes['class'] = 'slideshow';
         $attributes['style'] = 'background-color:'.$lesson->bgcolor.';height:'.$lesson->height.'px;width:'.$lesson->width.'px;';
@@ -585,7 +585,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param lesson $lesson
      * @return string
      */
-    public function add_highscores_form(lesson $lesson) {
+    public function add_highscores_form(customlesson $lesson) {
         global $CFG;
         $output  = $this->output->box_start('generalbox boxaligncenter');
         $output .= $this->output->box_start('mdl-align');
