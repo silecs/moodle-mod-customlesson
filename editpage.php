@@ -88,7 +88,7 @@ if ($edit) {
     $data = file_prepare_standard_editor($data, 'contents', $editoroptions, $context, 'mod_customlesson', 'page_contents',  $editpage->id);
     $mform->set_data($data);
     $PAGE->navbar->add(get_string('edit'), new moodle_url('/mod/customlesson/edit.php', array('id'=>$id)));
-    $PAGE->navbar->add(get_string('editingquestionpage', 'customlesson', get_string($mform->qtypestring, 'lesson')));
+    $PAGE->navbar->add(get_string('editingquestionpage', 'customlesson', get_string($mform->qtypestring, 'customlesson')));
 } else {
     // Give the page type being created a chance to override the creation process
     // this is used by endofbranch, cluster, and endofcluster to skip the creation form.

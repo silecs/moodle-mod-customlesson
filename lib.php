@@ -199,7 +199,7 @@ function customlesson_user_complete($course, $user, $mod, $lesson) {
                 "retry, timeseen")) {
         echo $OUTPUT->box_start();
         $table = new html_table();
-        $table->head = array (get_string("attempt", "customlesson"),  get_string("numberofpagesviewed", "lesson"),
+        $table->head = array (get_string("attempt", "customlesson"),  get_string("numberofpagesviewed", "customlesson"),
             get_string("numberofcorrectanswers", "customlesson"), get_string("time"));
         $table->width = "100%";
         $table->align = array ("center", "center", "center", "center");
@@ -642,7 +642,7 @@ function customlesson_process_post_save(&$lesson) {
  */
 function customlesson_reset_course_form_definition(&$mform) {
     $mform->addElement('header', 'lessonheader', get_string('modulenameplural', 'customlesson'));
-    $mform->addElement('advcheckbox', 'reset_lesson', get_string('deleteallattempts','lesson'));
+    $mform->addElement('advcheckbox', 'reset_lesson', get_string('deleteallattempts', 'customlesson'));
 }
 
 /**

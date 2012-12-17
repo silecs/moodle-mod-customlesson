@@ -233,7 +233,7 @@ if ($action === 'delete') {
     $table = new html_table();
 
     // set up the table object
-    $table->head = array(get_string('name'), get_string('attempts', 'customlesson'), get_string('highscore', 'lesson'));
+    $table->head = array(get_string('name'), get_string('attempts', 'customlesson'), get_string('highscore', 'customlesson'));
     $table->align = array('center', 'left', 'left');
     $table->wrap = array('nowrap', 'nowrap', 'nowrap');
     $table->attributes['class'] = 'standardtable generaltable';
@@ -358,9 +358,9 @@ if ($action === 'delete') {
     // output the stats
     echo $OUTPUT->heading(get_string('lessonstats', 'customlesson'));
     $stattable = new html_table();
-    $stattable->head = array(get_string('averagescore', 'customlesson'), get_string('averagetime', 'lesson'),
-                            get_string('highscore', 'customlesson'), get_string('lowscore', 'lesson'),
-                            get_string('hightime', 'customlesson'), get_string('lowtime', 'lesson'));
+    $stattable->head = array(get_string('averagescore', 'customlesson'), get_string('averagetime', 'customlesson'),
+                            get_string('highscore', 'customlesson'), get_string('lowscore', 'customlesson'),
+                            get_string('hightime', 'customlesson'), get_string('lowtime', 'customlesson'));
     $stattable->align = array('center', 'center', 'center', 'center', 'center', 'center');
     $stattable->wrap = array('nowrap', 'nowrap', 'nowrap', 'nowrap', 'nowrap', 'nowrap');
     $stattable->attributes['class'] = 'standardtable generaltable';

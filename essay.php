@@ -320,7 +320,7 @@ switch ($mode) {
 
         // Setup table
         $table = new html_table();
-        $table->head = array(get_string('name'), get_string('essays', 'customlesson'), get_string('email', 'lesson'));
+        $table->head = array(get_string('name'), get_string('essays', 'customlesson'), get_string('email', 'customlesson'));
         $table->attributes['class'] = 'standardtable generaltable';
         $table->align = array('left', 'left', 'left');
         $table->wrap = array('nowrap', 'nowrap', '');

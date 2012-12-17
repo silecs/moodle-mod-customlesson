@@ -51,20 +51,20 @@ if ($ADMIN->fulltree) {
 
     /** Misc lesson settings */
     $settings->add(new admin_setting_configtext('customlesson_maxhighscores', get_string('maxhighscores', 'customlesson'),
-            get_string('configmaxhighscores','lesson'), 10, PARAM_INT));
+            get_string('configmaxhighscores', 'customlesson'), 10, PARAM_INT));
 
     /** Default lesson settings */
     $numbers = array();
     for ($i=20; $i>1; $i--) {
         $numbers[$i] = $i;
     }
-    $settings->add(new admin_setting_configselect('customlesson_maxanswers', get_string('maximumnumberofanswersbranches','lesson'),
+    $settings->add(new admin_setting_configselect('customlesson_maxanswers', get_string('maximumnumberofanswersbranches', 'customlesson'),
             get_string('configmaxanswers', 'customlesson'), 4, $numbers));
 
     $defaultnextpages = array();
     $defaultnextpages[0] = get_string("normal", "customlesson");
     $defaultnextpages[LESSON_UNSEENPAGE] = get_string("showanunseenpage", "customlesson");
     $defaultnextpages[LESSON_UNANSWEREDPAGE] = get_string("showanunansweredpage", "customlesson");
-    $settings->add(new admin_setting_configselect('customlesson_defaultnextpage', get_string('actionaftercorrectanswer','lesson'),
+    $settings->add(new admin_setting_configselect('customlesson_defaultnextpage', get_string('actionaftercorrectanswer', 'customlesson'),
             get_string('configactionaftercorrectanswer', 'customlesson'), 0, $defaultnextpages));
 }

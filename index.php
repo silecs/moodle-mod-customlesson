@@ -56,7 +56,7 @@ echo $OUTPUT->header();
 
 /// Get all the appropriate data
 
-if (! $lessons = get_all_instances_in_course("lesson", $course)) {
+if (! $lessons = get_all_instances_in_course("customlesson", $course)) {
     notice(get_string('thereareno', 'moodle', $strlessons), "../../course/view.php?id=$course->id");
     die;
 }

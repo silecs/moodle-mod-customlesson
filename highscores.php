@@ -190,7 +190,7 @@ switch ($mode) {
             $table->cellspacing = '10px';
             $table->size = array('*', '*', '*');
 
-            $table->head = array(get_string("rank", "customlesson"), get_string('name'), get_string("scores", "lesson"));
+            $table->head = array(get_string("rank", "customlesson"), get_string('name'), get_string("scores", "customlesson"));
 
             $printed = 0;
             while (true) {

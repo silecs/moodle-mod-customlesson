@@ -30,7 +30,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
     /**
      * Returns the header for the lesson module
      *
-     * @param lesson $lesson a lesson object.
+     * @param lesson $lesson a customlesson object.
      * @param string $currenttab current tab that is shown.
      * @param bool   $extraeditbuttons if extra edit buttons should be displayed.
      * @param int    $lessonpageid id of the lesson page that needs to be displayed.
@@ -166,7 +166,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      */
     public function continue_links(lesson $lesson, $lastpageseenid) {
         global $CFG;
-        $output = $this->output->box(get_string('youhaveseen','lesson'), 'generalbox boxaligncenter');
+        $output = $this->output->box(get_string('youhaveseen', 'customlesson'), 'generalbox boxaligncenter');
         $output .= $this->output->box_start('center');
 
         $yeslink = html_writer::link(new moodle_url('/mod/customlesson/view.php', array('id'=>$this->page->cm->id, 'pageid'=>$lastpageseenid, 'startlastseen'=>'yes')), get_string('yes'));
@@ -211,7 +211,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         $npages = count($lesson->load_all_pages());
 
         $table = new html_table();
-        $table->head = array(get_string('pagetitle', 'customlesson'), get_string('qtype', 'lesson'), get_string('jumps', 'lesson'), get_string('actions', 'lesson'));
+        $table->head = array(get_string('pagetitle', 'customlesson'), get_string('qtype', 'customlesson'), get_string('jumps', 'customlesson'), get_string('actions', 'customlesson'));
         $table->align = array('left', 'left', 'left', 'center');
         $table->wrap = array('', 'nowrap', '', 'nowrap');
         $table->tablealign = 'center';

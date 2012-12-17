@@ -463,7 +463,7 @@ function customlesson_mediafile_block_contents($cmid, $lesson) {
 
     $link = new moodle_url('/mod/customlesson/mediafile.php?id='.$cmid);
     $action = new popup_action('click', $link, 'lessonmediafile', $options);
-    $content = $OUTPUT->action_link($link, get_string('mediafilepopup', 'customlesson'), $action, array('title'=>get_string('mediafilepopup', 'lesson')));
+    $content = $OUTPUT->action_link($link, get_string('mediafilepopup', 'customlesson'), $action, array('title'=>get_string('mediafilepopup', 'customlesson')));
 
     $bc = new block_contents();
     $bc->title = get_string('linkedmedia', 'customlesson');
@@ -696,7 +696,7 @@ abstract class customlesson_add_page_form_base extends moodleform {
         $mform = $this->_form;
         $editoroptions = $this->_customdata['editoroptions'];
 
-        $mform->addElement('header', 'qtypeheading', get_string('addaquestionpage', 'customlesson', get_string($this->qtypestring, 'lesson')));
+        $mform->addElement('header', 'qtypeheading', get_string('addaquestionpage', 'customlesson', get_string($this->qtypestring, 'customlesson')));
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);

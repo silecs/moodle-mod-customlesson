@@ -52,7 +52,7 @@ $data = new stdClass;
 $data->id = $PAGE->cm->id;
 $data->pageid = $pageid;
 
-$mform = new customlesson_import_form(null, array('formats'=>lesson_get_import_export_formats('import')));
+$mform = new customlesson_import_form(null, array('formats'=>customlesson_get_import_export_formats('import')));
 $mform->set_data($data);
 
     $PAGE->navbar->add($strimportquestions);

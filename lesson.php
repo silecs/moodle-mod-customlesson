@@ -72,7 +72,7 @@ switch ($action) {
                 echo $title."<br />\n";
             }
         }
-        echo $OUTPUT->confirm(get_string("confirmdeletionofthispage","lesson"),"lesson.php?action=delete&id=$cm->id&pageid=$pageid","view.php?id=$cm->id");
+        echo $OUTPUT->confirm(get_string("confirmdeletionofthispage", "customlesson"),"lesson.php?action=delete&id=$cm->id&pageid=$pageid","view.php?id=$cm->id");
 
         break;
     case 'move':
