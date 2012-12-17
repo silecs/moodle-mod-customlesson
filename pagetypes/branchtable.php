@@ -85,7 +85,7 @@ class customlesson_page_type_branchtable extends customlesson_page {
 
         if (!$firstpage) {
             if (!$apageid = $DB->get_field("customlesson_pages", "id", array("lessonid" => $lesson->id, "prevpageid" => 0))) {
-                print_error('cannotfindfirstpage', 'lesson');
+                print_error('cannotfindfirstpage', 'customlesson');
             }
             while (true) {
                 if ($apageid) {

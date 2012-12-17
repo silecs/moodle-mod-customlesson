@@ -82,7 +82,7 @@ switch ($mode) {
             }
             $params = array ("lessonid" => $lesson->id, "userid" => $USER->id);
             if (!$grades = $DB->get_records_select('customlesson_grades', "lessonid = :lessonid", $params, 'completed')) {
-                print_error('cannotfindfirstgrade', 'lesson');
+                print_error('cannotfindfirstgrade', 'customlesson');
             }
 
             if (!$newgrade = $DB->get_record_sql("SELECT *
@@ -90,12 +90,12 @@ switch ($mode) {
                                               WHERE lessonid = :lessonid
                                                 AND userid = :userid
                                            ORDER BY completed DESC", $params, true)) {
-                print_error('cannotfindnewestgrade', 'lesson');
+                print_error('cannotfindnewestgrade', 'customlesson');
             }
 
             // Check for multiple submissions
             if ($DB->record_exists('customlesson_high_scores', array('gradeid' => $newgrade->id))) {
-                print_error('onpostperpage', 'lesson');
+                print_error('onpostperpage', 'customlesson');
             }
 
             // Find out if we need to delete any records

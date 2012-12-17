@@ -67,7 +67,7 @@ switch ($action) {
             echo "<p align=\"center\">\n";
             foreach ($answers as $answer) {
                 if (!$title = $DB->get_field("customlesson_pages", "title", array("id" => $answer->pageid))) {
-                    print_error('cannotfindpagetitle', 'lesson');
+                    print_error('cannotfindpagetitle', 'customlesson');
                 }
                 echo $title."<br />\n";
             }
@@ -85,7 +85,7 @@ switch ($action) {
 
         $params = array ("lessonid" => $lesson->id, "prevpageid" => 0);
         if (!$page = $DB->get_record_select("customlesson_pages", "lessonid = :lessonid AND prevpageid = :prevpageid", $params)) {
-            print_error('cannotfindfirstpage', 'lesson');
+            print_error('cannotfindfirstpage', 'customlesson');
         }
 
         echo "<center><table cellpadding=\"5\" border=\"1\">\n";
@@ -102,7 +102,7 @@ switch ($action) {
             }
             if ($page->nextpageid) {
                 if (!$page = $DB->get_record("customlesson_pages", array("id" => $page->nextpageid))) {
-                    print_error('cannotfindnextpage', 'lesson');
+                    print_error('cannotfindnextpage', 'customlesson');
                 }
             } else {
                 // last page reached
@@ -123,7 +123,7 @@ switch ($action) {
         $pages = $lesson->load_all_pages();
 
         if (!array_key_exists($pageid, $pages) || ($after!=0 && !array_key_exists($after, $pages))) {
-            print_error('cannotfindpages', 'lesson', "$CFG->wwwroot/mod/customlesson/edit.php?id=$cm->id");
+            print_error('cannotfindpages', 'customlesson', "$CFG->wwwroot/mod/customlesson/edit.php?id=$cm->id");
         }
         $pagetomove = clone($pages[$pageid]);
         unset($pages[$pageid]);

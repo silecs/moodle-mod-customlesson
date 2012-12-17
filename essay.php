@@ -74,13 +74,13 @@ switch ($mode) {
         require_sesskey();
 
         if (empty($attempt)) {
-            print_error('cannotfindattempt', 'lesson');
+            print_error('cannotfindattempt', 'customlesson');
         }
         if (empty($user)) {
-            print_error('cannotfinduser', 'lesson');
+            print_error('cannotfinduser', 'customlesson');
         }
         if (empty($answer)) {
-            print_error('cannotfindanswer', 'lesson');
+            print_error('cannotfindanswer', 'customlesson');
         }
         break;
 
@@ -88,10 +88,10 @@ switch ($mode) {
         require_sesskey();
 
         if (empty($attempt)) {
-            print_error('cannotfindattempt', 'lesson');
+            print_error('cannotfindattempt', 'customlesson');
         }
         if (empty($user)) {
-            print_error('cannotfinduser', 'lesson');
+            print_error('cannotfinduser', 'customlesson');
         }
 
         $mform = new essay_grading_form(null, array('scoreoptions'=>$scoreoptions, 'user'=>$user));
@@ -100,7 +100,7 @@ switch ($mode) {
         }
         if ($form = $mform->get_data()) {
             if (!$grades = $DB->get_records('customlesson_grades', array("lessonid"=>$lesson->id, "userid"=>$attempt->userid), 'completed', '*', $attempt->retry, 1)) {
-                print_error('cannotfindgrade', 'lesson');
+                print_error('cannotfindgrade', 'customlesson');
             }
 
             $essayinfo = new stdClass;
@@ -150,7 +150,7 @@ switch ($mode) {
         if ($userid = optional_param('userid', 0, PARAM_INT)) {
             $queryadd = " AND userid = ?";
             if (! $users = $DB->get_records('user', array('id' => $userid))) {
-                print_error('cannotfinduser', 'lesson');
+                print_error('cannotfinduser', 'customlesson');
             }
         } else {
             $queryadd = '';
@@ -164,7 +164,7 @@ switch ($mode) {
                              FROM {customlesson_attempts}
                             WHERE lessonid = :lessonid
                        ) ui ON u.id = ui.id", $params)) {
-                print_error('cannotfinduser', 'lesson');
+                print_error('cannotfinduser', 'customlesson');
             }
         }
 
@@ -181,13 +181,13 @@ switch ($mode) {
             $params[] = $userid;
         }
         if (!$attempts = $DB->get_records_select('customlesson_attempts', "pageid $usql".$queryadd, $params)) {
-            print_error('nooneansweredthisquestion', 'lesson');
+            print_error('nooneansweredthisquestion', 'customlesson');
         }
         // Get the answers
         list($answerUsql, $parameters) = $DB->get_in_or_equal(array_keys($pages));
         array_unshift($parameters, $lesson->id);
         if (!$answers = $DB->get_records_select('customlesson_answers', "lessonid = ? AND pageid $answerUsql", $parameters, '', 'pageid, score')) {
-            print_error('cannotfindanswer', 'lesson');
+            print_error('cannotfindanswer', 'customlesson');
         }
         $options = new stdClass;
         $options->noclean = true;

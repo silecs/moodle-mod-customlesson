@@ -84,17 +84,17 @@ if ($data = $mform->get_data()) {
 
     // Do anything before that we need to
     if (! $format->importpreprocess()) {
-                print_error('preprocesserror', 'lesson');
+                print_error('preprocesserror', 'customlesson');
             }
 
     // Process the uploaded file
     if (! $format->importprocess($importfile, $lesson, $pageid)) {
-                print_error('processerror', 'lesson');
+                print_error('processerror', 'customlesson');
             }
 
     // In case anything needs to be done after
     if (! $format->importpostprocess()) {
-                print_error('postprocesserror', 'lesson');
+                print_error('postprocesserror', 'customlesson');
             }
 
             echo "<hr>";

@@ -168,7 +168,7 @@ class customlesson_add_page_form_endofcluster extends customlesson_add_page_form
 
         // the new page is not the first page (end of cluster always comes after an existing page)
         if (!$page = $DB->get_record("customlesson_pages", array("id" => $pageid))) {
-            print_error('cannotfindpages', 'lesson');
+            print_error('cannotfindpages', 'customlesson');
         }
 
         // could put code in here to check if the user really can insert an end of cluster

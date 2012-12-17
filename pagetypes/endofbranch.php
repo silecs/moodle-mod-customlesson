@@ -188,7 +188,7 @@ class customlesson_add_page_form_endofbranch extends customlesson_add_page_form_
 
         // the new page is not the first page (end of branch always comes after an existing page)
         if (!$page = $DB->get_record("customlesson_pages", array("id" => $pageid))) {
-            print_error('cannotfindpagerecord', 'lesson');
+            print_error('cannotfindpagerecord', 'customlesson');
         }
         // chain back up to find the (nearest branch table)
         $btpage = clone($page);
@@ -196,7 +196,7 @@ class customlesson_add_page_form_endofbranch extends customlesson_add_page_form_
         while (($btpage->qtype != LESSON_PAGE_BRANCHTABLE) && ($btpage->prevpageid > 0)) {
             $btpageid = $btpage->prevpageid;
             if (!$btpage = $DB->get_record("customlesson_pages", array("id" => $btpageid))) {
-                print_error('cannotfindpagerecord', 'lesson');
+                print_error('cannotfindpagerecord', 'customlesson');
             }
         }
 

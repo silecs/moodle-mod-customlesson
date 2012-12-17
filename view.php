@@ -253,7 +253,7 @@ if (empty($pageid)) {
     }
     // start at the first page
     if (!$pageid = $DB->get_field('customlesson_pages', 'id', array('lessonid' => $lesson->id, 'prevpageid' => 0))) {
-            print_error('cannotfindfirstpage', 'lesson');
+            print_error('cannotfindfirstpage', 'customlesson');
     }
     /// This is the code for starting a timed test
     if(!isset($USER->startlesson[$lesson->id]) && !$canmanage) {
@@ -361,7 +361,7 @@ if ($pageid != LESSON_EOL) {
         if (isset($USER->modattempts[$lesson->id])) {
             $retries = $DB->count_records('customlesson_grades', array("lessonid"=>$lesson->id, "userid"=>$USER->id));
             if (!$attempts = $lesson->get_attempts($retries-1, false, $page->id)) {
-                print_error('cannotfindpreattempt', 'lesson');
+                print_error('cannotfindpreattempt', 'customlesson');
             }
             $attempt = end($attempts);
             $USER->modattempts[$lesson->id] = $attempt;
@@ -460,7 +460,7 @@ if ($pageid != LESSON_EOL) {
             if (!$lesson->practice) {
                 if (isset($USER->modattempts[$lesson->id])) { // if reviewing, make sure update old grade record
                     if (!$grades = $DB->get_records("customlesson_grades", array("lessonid" => $lesson->id, "userid" => $USER->id), "completed DESC", '*', 0, 1)) {
-                        print_error('cannotfindgrade', 'lesson');
+                        print_error('cannotfindgrade', 'customlesson');
                     }
                     $oldgrade = array_shift($grades);
                     $grade->id = $oldgrade->id;

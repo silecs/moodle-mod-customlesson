@@ -181,7 +181,7 @@ function customlesson_unseen_branch_jump($lesson, $userid) {
     $params = array ("lessonid" => $lesson->id, "userid" => $userid, "retry" => $retakes);
     if (!$seenbranches = $DB->get_records_select("customlesson_branch", "lessonid = :lessonid AND userid = :userid AND retry = :retry", $params,
                 "timeseen DESC")) {
-        print_error('cannotfindrecords', 'lesson');
+        print_error('cannotfindrecords', 'customlesson');
     }
 
     // get the lesson pages
@@ -235,7 +235,7 @@ function customlesson_random_question_jump($lesson, $pageid) {
     // get the lesson pages
     $params = array ("lessonid" => $lesson->id);
     if (!$lessonpages = $DB->get_records_select("customlesson_pages", "lessonid = :lessonid", $params)) {
-        print_error('cannotfindpages', 'lesson');
+        print_error('cannotfindpages', 'customlesson');
     }
 
     // go up the pages till branch table
@@ -572,7 +572,7 @@ function customlesson_add_header_buttons($cm, $context, $extraeditbuttons=false,
     global $CFG, $PAGE, $OUTPUT;
     if (has_capability('mod/customlesson:edit', $context) && $extraeditbuttons) {
         if ($lessonpageid === null) {
-            print_error('invalidpageid', 'lesson');
+            print_error('invalidpageid', 'customlesson');
         }
         if (!empty($lessonpageid) && $lessonpageid != LESSON_EOL) {
             $url = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$cm->id, 'pageid'=>$lessonpageid, 'edit'=>1));
@@ -1068,7 +1068,7 @@ class customlesson extends customlesson_base {
             if (!$this->loadedallpages) {
                 $firstpageid = $DB->get_field('customlesson_pages', 'id', array('lessonid'=>$this->properties->id, 'prevpageid'=>0));
                 if (!$firstpageid) {
-                    print_error('cannotfindfirstpage', 'lesson');
+                    print_error('cannotfindfirstpage', 'customlesson');
                 }
                 $this->firstpageid = $firstpageid;
             } else {
@@ -1089,7 +1089,7 @@ class customlesson extends customlesson_base {
             if (!$this->loadedallpages) {
                 $lastpageid = $DB->get_field('customlesson_pages', 'id', array('lessonid'=>$this->properties->id, 'nextpageid'=>0));
                 if (!$lastpageid) {
-                    print_error('cannotfindlastpage', 'lesson');
+                    print_error('cannotfindlastpage', 'customlesson');
                 }
                 $this->lastpageid = $lastpageid;
             } else {
@@ -1213,7 +1213,7 @@ class customlesson extends customlesson_base {
         // clock code
         // get time information for this user
         if (!$timer = $DB->get_records('customlesson_timer', array ("lessonid" => $this->properties->id, "userid" => $USER->id), 'starttime DESC', '*', 0, 1)) {
-            print_error('cannotfindtimer', 'lesson');
+            print_error('cannotfindtimer', 'customlesson');
         } else {
             $timer = current($timer); // this will get the latest start time record
         }
@@ -1737,7 +1737,7 @@ abstract class customlesson_page extends customlesson_base {
         if ($properties->pageid) {
             $prevpage = $DB->get_record("customlesson_pages", array("id" => $properties->pageid), 'id, nextpageid');
             if (!$prevpage) {
-                print_error('cannotfindpages', 'lesson');
+                print_error('cannotfindpages', 'customlesson');
             }
             $newpage->prevpageid = $prevpage->id;
             $newpage->nextpageid = $prevpage->nextpageid;
@@ -1790,7 +1790,7 @@ abstract class customlesson_page extends customlesson_base {
         } else {
             $page = $DB->get_record("customlesson_pages", array("id" => $id));
             if (!$page) {
-                print_error('cannotfindpages', 'lesson');
+                print_error('cannotfindpages', 'customlesson');
             }
         }
         $manager = customlesson_page_type_manager::get($lesson);
@@ -2667,7 +2667,7 @@ class customlesson_page_type_manager {
     public function load_page($pageid, lesson $lesson) {
         global $DB;
         if (!($page =$DB->get_record('customlesson_pages', array('id'=>$pageid, 'lessonid'=>$lesson->id)))) {
-            print_error('cannotfindpages', 'lesson');
+            print_error('cannotfindpages', 'customlesson');
         }
         $pagetype = get_class($this->types[$page->qtype]);
         $page = new $pagetype($page, $lesson);
@@ -2683,7 +2683,7 @@ class customlesson_page_type_manager {
     public function load_all_pages(lesson $lesson) {
         global $DB;
         if (!($pages =$DB->get_records('customlesson_pages', array('lessonid'=>$lesson->id)))) {
-            print_error('cannotfindpages', 'lesson');
+            print_error('cannotfindpages', 'customlesson');
         }
         foreach ($pages as $key=>$page) {
             $pagetype = get_class($this->types[$page->qtype]);
