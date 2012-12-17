@@ -608,7 +608,7 @@ function customlesson_process_post_save(&$lesson) {
     $event->eventtype   = 'open';
     $event->timestart   = $lesson->available;
 
-    $event->visible     = instance_is_visible('lesson', $lesson);
+    $event->visible     = instance_is_visible('customlesson', $lesson);
 
     $event->timeduration = ($lesson->deadline - $lesson->available);
 
