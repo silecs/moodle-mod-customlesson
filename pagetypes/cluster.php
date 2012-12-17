@@ -31,7 +31,7 @@ define("LESSON_PAGE_CLUSTER",   "30");
 
 class customlesson_page_type_cluster extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_STRUCTURE;
+    protected $type = customlesson_page::TYPE_STRUCTURE;
     protected $typeidstring = 'cluster';
     protected $typeid = LESSON_PAGE_CLUSTER;
     protected $string = null;

@@ -31,7 +31,7 @@ define("LESSON_PAGE_TRUEFALSE",     "2");
 
 class customlesson_page_type_truefalse extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_QUESTION;
+    protected $type = customlesson_page::TYPE_QUESTION;
     protected $typeidstring = 'truefalse';
     protected $typeid = LESSON_PAGE_TRUEFALSE;
     protected $string = null;

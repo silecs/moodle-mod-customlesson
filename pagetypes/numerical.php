@@ -31,7 +31,7 @@ define("LESSON_PAGE_NUMERICAL",     "8");
 
 class customlesson_page_type_numerical extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_QUESTION;
+    protected $type = customlesson_page::TYPE_QUESTION;
     protected $typeidstring = 'numerical';
     protected $typeid = LESSON_PAGE_NUMERICAL;
     protected $string = null;

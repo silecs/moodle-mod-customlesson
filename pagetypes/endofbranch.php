@@ -31,7 +31,7 @@ define("LESSON_PAGE_ENDOFBRANCH",   "21");
 
 class customlesson_page_type_endofbranch extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_STRUCTURE;
+    protected $type = customlesson_page::TYPE_STRUCTURE;
     protected $typeidstring = 'endofbranch';
     protected $typeid = LESSON_PAGE_ENDOFBRANCH;
     protected $string = null;

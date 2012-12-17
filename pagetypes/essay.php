@@ -31,7 +31,7 @@ define("LESSON_PAGE_ESSAY", "10");
 
 class customlesson_page_type_essay extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_QUESTION;
+    protected $type = customlesson_page::TYPE_QUESTION;
     protected $typeidstring = 'essay';
     protected $typeid = LESSON_PAGE_ESSAY;
     protected $string = null;

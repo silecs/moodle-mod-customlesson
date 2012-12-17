@@ -31,7 +31,7 @@ define("LESSON_PAGE_SHORTANSWER",   "1");
 
 class customlesson_page_type_shortanswer extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_QUESTION;
+    protected $type = customlesson_page::TYPE_QUESTION;
     protected $typeidstring = 'shortanswer';
     protected $typeid = LESSON_PAGE_SHORTANSWER;
     protected $string = null;

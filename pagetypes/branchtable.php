@@ -31,7 +31,7 @@ define("LESSON_PAGE_BRANCHTABLE",   "20");
 
 class customlesson_page_type_branchtable extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_STRUCTURE;
+    protected $type = customlesson_page::TYPE_STRUCTURE;
     protected $typeid = LESSON_PAGE_BRANCHTABLE;
     protected $typeidstring = 'branchtable';
     protected $string = null;

@@ -31,7 +31,7 @@ define("LESSON_PAGE_MATCHING",      "5");
 
 class customlesson_page_type_matching extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_QUESTION;
+    protected $type = customlesson_page::TYPE_QUESTION;
     protected $typeid = LESSON_PAGE_MATCHING;
     protected $typeidstring = 'matching';
     protected $string = null;

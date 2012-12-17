@@ -31,7 +31,7 @@ define("LESSON_PAGE_MULTICHOICE",   "3");
 
 class customlesson_page_type_multichoice extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_QUESTION;
+    protected $type = customlesson_page::TYPE_QUESTION;
     protected $typeidstring = 'multichoice';
     protected $typeid = LESSON_PAGE_MULTICHOICE;
     protected $string = null;

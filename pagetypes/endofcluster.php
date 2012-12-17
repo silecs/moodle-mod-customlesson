@@ -31,7 +31,7 @@ define("LESSON_PAGE_ENDOFCLUSTER",   "31");
 
 class customlesson_page_type_endofcluster extends customlesson_page {
 
-    protected $type = lesson_page::TYPE_STRUCTURE;
+    protected $type = customlesson_page::TYPE_STRUCTURE;
     protected $typeidstring = 'endofcluster';
     protected $typeid = LESSON_PAGE_ENDOFCLUSTER;
     protected $string = null;
