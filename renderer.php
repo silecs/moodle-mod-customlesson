@@ -389,7 +389,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @param bool $printaddpage
      * @return string
      */
-    public function page_action_links(lesson_page $page, $printmove, $printaddpage=false) {
+    public function page_action_links(customlesson_page $page, $printmove, $printaddpage=false) {
         global $CFG;
 
         $actions = array();

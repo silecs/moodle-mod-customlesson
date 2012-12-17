@@ -982,9 +982,9 @@ class customlesson extends customlesson_base {
         global $SESSION;
 
         $messages = array();
-        if (!empty($SESSION->customlesson_messages) && is_array($SESSION->lesson_messages) && array_key_exists($this->properties->id, $SESSION->lesson_messages)) {
-            $messages = $SESSION->lesson_messages[$this->properties->id];
-            unset($SESSION->lesson_messages[$this->properties->id]);
+        if (!empty($SESSION->customlesson_messages) && is_array($SESSION->customlesson_messages) && array_key_exists($this->properties->id, $SESSION->customlesson_messages)) {
+            $messages = $SESSION->customlesson_messages[$this->properties->id];
+            unset($SESSION->customlesson_messages[$this->properties->id]);
         }
 
         return $messages;
