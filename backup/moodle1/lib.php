@@ -127,7 +127,7 @@ class moodle1_mod_customlesson_handler extends moodle1_mod_handler {
         // start writing lesson.xml
         $this->open_xml_writer("activities/lesson_{$this->moduleid}/lesson.xml");
         $this->xmlwriter->begin_tag('activity', array('id' => $instanceid, 'moduleid' => $this->moduleid,
-            'modulename' => 'lesson', 'contextid' => $contextid));
+            'modulename' => 'customlesson', 'contextid' => $contextid));
         $this->xmlwriter->begin_tag('lesson', array('id' => $instanceid));
 
         foreach ($data as $field => $value) {

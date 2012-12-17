@@ -226,7 +226,7 @@ switch ($mode) {
                 $subject = get_string('essayemailsubject', 'customlesson', format_string($pages[$attempt->pageid]->title,true));
 
                 $eventdata = new stdClass();
-                $eventdata->modulename       = 'lesson';
+                $eventdata->modulename       = 'customlesson';
                 $eventdata->userfrom         = $USER;
                 $eventdata->userto           = $users[$attempt->userid];
                 $eventdata->subject          = $subject;

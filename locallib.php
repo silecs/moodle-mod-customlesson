@@ -956,7 +956,7 @@ class customlesson extends customlesson_base {
         $DB->delete_records("customlesson_timer", array("lessonid"=>$this->properties->id));
         $DB->delete_records("customlesson_branch", array("lessonid"=>$this->properties->id));
         $DB->delete_records("customlesson_high_scores", array("lessonid"=>$this->properties->id));
-        if ($events = $DB->get_records('event', array("modulename"=>'lesson', "instance"=>$this->properties->id))) {
+        if ($events = $DB->get_records('event', array("modulename"=>'customlesson', "instance"=>$this->properties->id))) {
             foreach($events as $event) {
                 $event = calendar_event::load($event);
                 $event->delete();

@@ -591,7 +591,7 @@ function customlesson_process_post_save(&$lesson) {
     require_once($CFG->dirroot.'/calendar/lib.php');
     require_once($CFG->dirroot . '/mod/customlesson/locallib.php');
 
-    if ($events = $DB->get_records('event', array('modulename'=>'lesson', 'instance'=>$lesson->id))) {
+    if ($events = $DB->get_records('event', array('modulename'=>'customlesson', 'instance'=>$lesson->id))) {
         foreach($events as $event) {
             $event = calendar_event::load($event->id);
             $event->delete();
@@ -603,7 +603,7 @@ function customlesson_process_post_save(&$lesson) {
     $event->courseid    = $lesson->course;
     $event->groupid     = 0;
     $event->userid      = 0;
-    $event->modulename  = 'lesson';
+    $event->modulename  = 'customlesson';
     $event->instance    = $lesson->id;
     $event->eventtype   = 'open';
     $event->timestart   = $lesson->available;
