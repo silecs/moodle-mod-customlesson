@@ -179,7 +179,7 @@ if (empty($pageid)) {
         }
     }
 
-    add_to_log($course->id, 'lesson', 'start', 'view.php?id='. $cm->id, $lesson->id, $cm->id);
+    add_to_log($course->id, 'customlesson', 'start', 'view.php?id='. $cm->id, $lesson->id, $cm->id);
 
     // if no pageid given see if the lesson has been started
     $retries = $DB->count_records('customlesson_grades', array("lessonid" => $lesson->id, "userid" => $USER->id));
@@ -283,7 +283,7 @@ if ($pageid != LESSON_EOL) {
         $page = $lesson->load_page($newpageid);
     }
 
-    add_to_log($PAGE->course->id, 'lesson', 'view', 'view.php?id='. $PAGE->cm->id, $page->id, $PAGE->cm->id);
+    add_to_log($PAGE->course->id, 'customlesson', 'view', 'view.php?id='. $PAGE->cm->id, $page->id, $PAGE->cm->id);
 
     // This is where several messages (usually warnings) are displayed
     // all of this is displayed above the actual page
@@ -413,7 +413,7 @@ if ($pageid != LESSON_EOL) {
     $outoftime = optional_param('outoftime', '', PARAM_ALPHA);
 
     // Update the clock / get time information for this user
-    add_to_log($course->id, "lesson", "end", "view.php?id=".$PAGE->cm->id, "$lesson->id", $PAGE->cm->id);
+    add_to_log($course->id, "customlesson", "end", "view.php?id=".$PAGE->cm->id, "$lesson->id", $PAGE->cm->id);
 
     // We are using level 3 header because the page title is a sub-heading of lesson title (MDL-30911).
     $lessoncontent .= $OUTPUT->heading(get_string("congratulations", "customlesson"), 3);

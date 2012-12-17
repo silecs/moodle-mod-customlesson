@@ -146,7 +146,7 @@ switch ($mode) {
             $DB->insert_record('customlesson_high_scores', $newhighscore);
 
             // Log it
-            add_to_log($course->id, 'lesson', 'update highscores', "highscores.php?id=$cm->id", $name, $cm->id);
+            add_to_log($course->id, 'customlesson', 'update highscores', "highscores.php?id=$cm->id", $name, $cm->id);
 
             $lesson->add_message(get_string('postsuccess', 'customlesson'), 'notifysuccess');
             redirect("$CFG->wwwroot/mod/customlesson/highscores.php?id=$cm->id&amp;link=1");
@@ -157,7 +157,7 @@ switch ($mode) {
 }
 
 // Log it
-add_to_log($course->id, 'lesson', 'view highscores', "highscores.php?id=$cm->id", $lesson->name, $cm->id);
+add_to_log($course->id, 'customlesson', 'view highscores', "highscores.php?id=$cm->id", $lesson->name, $cm->id);
 
 $lessonoutput = $PAGE->get_renderer('mod_customlesson');
 echo $lessonoutput->header($lesson, $cm, 'highscores', false, null, get_string('viewhighscores', 'customlesson'));

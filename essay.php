@@ -130,7 +130,7 @@ switch ($mode) {
             $updategrade->grade = $gradeinfo->grade;
             $DB->update_record('customlesson_grades', $updategrade);
             // Log it
-            add_to_log($course->id, 'lesson', 'update grade', "essay.php?id=$cm->id", $lesson->name, $cm->id);
+            add_to_log($course->id, 'customlesson', 'update grade', "essay.php?id=$cm->id", $lesson->name, $cm->id);
 
             $lesson->add_message(get_string('changessaved'), 'notifysuccess');
 
@@ -244,7 +244,7 @@ switch ($mode) {
                 $attempt->useranswer = serialize($essayinfo);
                 $DB->update_record('customlesson_attempts', $attempt);
                 // Log it
-                add_to_log($course->id, 'lesson', 'update email essay grade', "essay.php?id=$cm->id", format_string($pages[$attempt->pageid]->title,true).': '.fullname($users[$attempt->userid]), $cm->id);
+                add_to_log($course->id, 'customlesson', 'update email essay grade', "essay.php?id=$cm->id", format_string($pages[$attempt->pageid]->title,true).': '.fullname($users[$attempt->userid]), $cm->id);
             }
         }
         $lesson->add_message(get_string('emailsuccess', 'customlesson'), 'notifysuccess');
@@ -300,7 +300,7 @@ switch ($mode) {
         break;
 }
 // Log it
-add_to_log($course->id, 'lesson', 'view grade', "essay.php?id=$cm->id", get_string('manualgrading', 'customlesson'), $cm->id);
+add_to_log($course->id, 'customlesson', 'view grade', "essay.php?id=$cm->id", get_string('manualgrading', 'customlesson'), $cm->id);
 
 $lessonoutput = $PAGE->get_renderer('mod_customlesson');
 echo $lessonoutput->header($lesson, $cm, 'essay', false, null, get_string('manualgrading', 'customlesson'));
