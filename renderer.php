@@ -15,6 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+defined('MOODLE_INTERNAL') || die();
+
+/* @var $DB moodle_database */
+
 /**
  * Moodle renderer used to display special elements of the lesson module
  *
@@ -23,8 +27,6 @@
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
-
-defined('MOODLE_INTERNAL') || die();
 
 class mod_customlesson_renderer extends plugin_renderer_base {
     /**
@@ -188,11 +190,13 @@ class mod_customlesson_renderer extends plugin_renderer_base {
      * @return string
      */
     public function display_page(customlesson $lesson, customlesson_page $page, $attempt) {
+        global $USER;
         // We need to buffer here as there is an mforms display call
         ob_start();
         echo $page->display($this, $attempt);
         $output = ob_get_contents();
         ob_end_clean();
+        $output = $lesson->customizeOutput($output, $USER->id);
         return $output;
     }
 

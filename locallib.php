@@ -1622,6 +1622,34 @@ abstract class customlesson_base {
     public function properties() {
         return $this->properties;
     }
+
+    /**
+     * Returns the text where the user parameters have been replaced.
+     * @global moodle_database $DB
+     * @param string $text
+     * @param integer $userid
+     * @return string
+     */
+    public function customizeOutput($text, $userid) {
+        global $DB;
+        static $lastuserid;
+        static $vars;
+        if ($vars === null || $userid !== $lastuserid) {
+            $lastuserid = $userid;
+            $concat = $DB->sql_concat("'['", "substkey", "']'");
+            $vars = $DB->get_records_menu(
+                    'customlesson_keys',
+                    array("userid" => $userid, "lessonid" => $this->id),
+                    null,
+                    $concat . ', value'
+            );
+        }
+        if ($vars) {
+            return str_replace(array_keys($vars), array_values($vars), $text);
+        } else {
+            return $text;
+        }
+    }
 }
 
 
