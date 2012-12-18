@@ -27,13 +27,13 @@
 defined('MOODLE_INTERNAL') || die();
 
  /** Start of Cluster page */
-define("LESSON_PAGE_CLUSTER",   "30");
+define("CUSTOMLESSON_PAGE_CLUSTER",   "30");
 
 class customlesson_page_type_cluster extends customlesson_page {
 
     protected $type = customlesson_page::TYPE_STRUCTURE;
     protected $typeidstring = 'cluster';
-    protected $typeid = LESSON_PAGE_CLUSTER;
+    protected $typeid = CUSTOMLESSON_PAGE_CLUSTER;
     protected $string = null;
     protected $jumpto = null;
 
@@ -72,12 +72,12 @@ class customlesson_page_type_cluster extends customlesson_page {
     }
     public function add_page_link($previd) {
         global $PAGE, $CFG;
-        $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>LESSON_PAGE_CLUSTER));
-        return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_CLUSTER, 'name'=>get_string('addcluster', 'customlesson'));
+        $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>CUSTOMLESSON_PAGE_CLUSTER));
+        return array('addurl'=>$addurl, 'type'=>CUSTOMLESSON_PAGE_CLUSTER, 'name'=>get_string('addcluster', 'customlesson'));
     }
     public function valid_page_and_view(&$validpages, &$pageviews) {
         $validpages[$this->properties->id] = 1;  // add the cluster page as a valid page
-        foreach ($this->lesson->get_sub_pages_of($this->properties->id, array(LESSON_PAGE_ENDOFCLUSTER)) as $subpage) {
+        foreach ($this->lesson->get_sub_pages_of($this->properties->id, array(CUSTOMLESSON_PAGE_ENDOFCLUSTER)) as $subpage) {
             if (in_array($subpage->id, $pageviews)) {
                 unset($pageviews[array_search($subpage->id, $pageviews)]);  // remove it
                 // since the user did see one page in the cluster, add the cluster pageid to the viewedpageids
@@ -92,7 +92,7 @@ class customlesson_page_type_cluster extends customlesson_page {
 
 class customlesson_add_page_form_cluster extends customlesson_add_page_form_base {
 
-    public $qtype = LESSON_PAGE_CLUSTER;
+    public $qtype = CUSTOMLESSON_PAGE_CLUSTER;
     public $qtypestring = 'cluster';
     protected $standard = false;
 
@@ -171,7 +171,7 @@ class customlesson_add_page_form_cluster extends customlesson_add_page_form_base
         $newanswer->lessonid = $lesson->id;
         $newanswer->pageid = $newpageid;
         $newanswer->timecreated = $timenow;
-        $newanswer->jumpto = LESSON_CLUSTERJUMP;
+        $newanswer->jumpto = CUSTOMLESSON_CLUSTERJUMP;
         $newanswerid = $DB->insert_record("customlesson_answers", $newanswer);
         $lesson->add_message(get_string('addedcluster', 'customlesson'), 'notifysuccess');
         redirect($CFG->wwwroot.'/mod/customlesson/edit.php?id='.$PAGE->cm->id);

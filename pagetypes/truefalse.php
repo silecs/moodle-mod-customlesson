@@ -27,13 +27,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 /** True/False question type */
-define("LESSON_PAGE_TRUEFALSE",     "2");
+define("CUSTOMLESSON_PAGE_TRUEFALSE",     "2");
 
 class customlesson_page_type_truefalse extends customlesson_page {
 
     protected $type = customlesson_page::TYPE_QUESTION;
     protected $typeidstring = 'truefalse';
-    protected $typeid = LESSON_PAGE_TRUEFALSE;
+    protected $typeid = CUSTOMLESSON_PAGE_TRUEFALSE;
     protected $string = null;
 
     public function get_typeid() {
@@ -330,13 +330,13 @@ class customlesson_add_page_form_truefalse extends customlesson_add_page_form_ba
         $this->_form->addElement('header', 'answertitle0', get_string('correctresponse', 'customlesson'));
         $this->add_answer(0, NULL, true);
         $this->add_response(0);
-        $this->add_jumpto(0, get_string('correctanswerjump', 'customlesson'), LESSON_NEXTPAGE);
+        $this->add_jumpto(0, get_string('correctanswerjump', 'customlesson'), CUSTOMLESSON_NEXTPAGE);
         $this->add_score(0, get_string('correctanswerscore', 'customlesson'), 1);
 
         $this->_form->addElement('header', 'answertitle1', get_string('wrongresponse', 'customlesson'));
         $this->add_answer(1, NULL, true);
         $this->add_response(1);
-        $this->add_jumpto(1, get_string('wronganswerjump', 'customlesson'), LESSON_THISPAGE);
+        $this->add_jumpto(1, get_string('wronganswerjump', 'customlesson'), CUSTOMLESSON_THISPAGE);
         $this->add_score(1, get_string('wronganswerscore', 'customlesson'), 0);
     }
 }

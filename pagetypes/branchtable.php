@@ -27,12 +27,12 @@
 defined('MOODLE_INTERNAL') || die();
 
  /** Branch Table page */
-define("LESSON_PAGE_BRANCHTABLE",   "20");
+define("CUSTOMLESSON_PAGE_BRANCHTABLE",   "20");
 
 class customlesson_page_type_branchtable extends customlesson_page {
 
     protected $type = customlesson_page::TYPE_STRUCTURE;
-    protected $typeid = LESSON_PAGE_BRANCHTABLE;
+    protected $typeid = CUSTOMLESSON_PAGE_BRANCHTABLE;
     protected $typeidstring = 'branchtable';
     protected $string = null;
     protected $jumpto = null;
@@ -76,12 +76,12 @@ class customlesson_page_type_branchtable extends customlesson_page {
         global $DB, $PAGE;
         $jump = array();
         $jump[0] = get_string("thispage", "customlesson");
-        $jump[LESSON_NEXTPAGE] = get_string("nextpage", "customlesson");
-        $jump[LESSON_PREVIOUSPAGE] = get_string("previouspage", "customlesson");
-        $jump[LESSON_EOL] = get_string("endoflesson", "customlesson");
-        $jump[LESSON_UNSEENBRANCHPAGE] = get_string("unseenpageinbranch", "customlesson");
-        $jump[LESSON_RANDOMPAGE] = get_string("randompageinbranch", "customlesson");
-        $jump[LESSON_RANDOMBRANCH] = get_string("randombranch", "customlesson");
+        $jump[CUSTOMLESSON_NEXTPAGE] = get_string("nextpage", "customlesson");
+        $jump[CUSTOMLESSON_PREVIOUSPAGE] = get_string("previouspage", "customlesson");
+        $jump[CUSTOMLESSON_EOL] = get_string("endoflesson", "customlesson");
+        $jump[CUSTOMLESSON_UNSEENBRANCHPAGE] = get_string("unseenpageinbranch", "customlesson");
+        $jump[CUSTOMLESSON_RANDOMPAGE] = get_string("randompageinbranch", "customlesson");
+        $jump[CUSTOMLESSON_RANDOMBRANCH] = get_string("randombranch", "customlesson");
 
         if (!$firstpage) {
             if (!$apageid = $DB->get_field("customlesson_pages", "id", array("lessonid" => $lesson->id, "prevpageid" => 0))) {
@@ -155,7 +155,7 @@ class customlesson_page_type_branchtable extends customlesson_page {
         require_sesskey();
         $newpageid = optional_param('jumpto', NULL, PARAM_INT);
         // going to insert into lesson_branch
-        if ($newpageid == LESSON_RANDOMBRANCH) {
+        if ($newpageid == CUSTOMLESSON_RANDOMBRANCH) {
             $branchflag = 1;
         } else {
             $branchflag = 0;
@@ -177,9 +177,9 @@ class customlesson_page_type_branchtable extends customlesson_page {
 
         //  this is called when jumping to random from a branch table
         $context = context_module::instance($PAGE->cm->id);
-        if($newpageid == LESSON_UNSEENBRANCHPAGE) {
+        if($newpageid == CUSTOMLESSON_UNSEENBRANCHPAGE) {
             if (has_capability('mod/customlesson:manage', $context)) {
-                 $newpageid = LESSON_NEXTPAGE;
+                 $newpageid = CUSTOMLESSON_NEXTPAGE;
             } else {
                  $newpageid = customlesson_unseen_question_jump($this->lesson, $USER->id, $this->properties->id);  // this may return 0
             }
@@ -187,16 +187,16 @@ class customlesson_page_type_branchtable extends customlesson_page {
         // convert jumpto page into a proper page id
         if ($newpageid == 0) {
             $newpageid = $this->properties->id;
-        } elseif ($newpageid == LESSON_NEXTPAGE) {
+        } elseif ($newpageid == CUSTOMLESSON_NEXTPAGE) {
             if (!$newpageid = $this->nextpageid) {
                 // no nextpage go to end of lesson
-                $newpageid = LESSON_EOL;
+                $newpageid = CUSTOMLESSON_EOL;
             }
-        } elseif ($newpageid == LESSON_PREVIOUSPAGE) {
+        } elseif ($newpageid == CUSTOMLESSON_PREVIOUSPAGE) {
             $newpageid = $this->prevpageid;
-        } elseif ($newpageid == LESSON_RANDOMPAGE) {
+        } elseif ($newpageid == CUSTOMLESSON_RANDOMPAGE) {
             $newpageid = customlesson_random_question_jump($this->lesson, $this->properties->id);
-        } elseif ($newpageid == LESSON_RANDOMBRANCH) {
+        } elseif ($newpageid == CUSTOMLESSON_RANDOMBRANCH) {
             $newpageid = customlesson_unseen_branch_jump($this->lesson, $USER->id);
         }
         // no need to record anything in lesson_attempts
@@ -258,8 +258,8 @@ class customlesson_page_type_branchtable extends customlesson_page {
     }
     public function add_page_link($previd) {
         global $PAGE, $CFG;
-        $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'qtype'=>LESSON_PAGE_BRANCHTABLE));
-        return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_BRANCHTABLE, 'name'=>get_string('addabranchtable', 'customlesson'));
+        $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'qtype'=>CUSTOMLESSON_PAGE_BRANCHTABLE));
+        return array('addurl'=>$addurl, 'type'=>CUSTOMLESSON_PAGE_BRANCHTABLE, 'name'=>get_string('addabranchtable', 'customlesson'));
     }
     protected function get_displayinmenublock() {
         return true;
@@ -268,7 +268,7 @@ class customlesson_page_type_branchtable extends customlesson_page {
         global $USER, $DB;
         if (is_array($param)) {
             $seenpages = $param;
-            $branchpages = $this->lesson->get_sub_pages_of($this->properties->id, array(LESSON_PAGE_BRANCHTABLE, LESSON_PAGE_ENDOFBRANCH));
+            $branchpages = $this->lesson->get_sub_pages_of($this->properties->id, array(CUSTOMLESSON_PAGE_BRANCHTABLE, CUSTOMLESSON_PAGE_ENDOFBRANCH));
             foreach ($branchpages as $branchpage) {
                 if (array_key_exists($branchpage->id, $seenpages)) {  // check if any of the pages have been viewed
                     return false;
@@ -287,7 +287,7 @@ class customlesson_page_type_branchtable extends customlesson_page {
 
 class customlesson_add_page_form_branchtable extends customlesson_add_page_form_base {
 
-    public $qtype = LESSON_PAGE_BRANCHTABLE;
+    public $qtype = CUSTOMLESSON_PAGE_BRANCHTABLE;
     public $qtypestring = 'branchtable';
     protected $standard = false;
 
@@ -332,7 +332,7 @@ class customlesson_add_page_form_branchtable extends customlesson_add_page_form_
             if ($i === 0) {
                 $mform->setDefault('jumpto['.$i.']', 0);
             } else {
-                $mform->setDefault('jumpto['.$i.']', LESSON_NEXTPAGE);
+                $mform->setDefault('jumpto['.$i.']', CUSTOMLESSON_NEXTPAGE);
             }
         }
     }

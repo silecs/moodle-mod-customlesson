@@ -157,7 +157,7 @@ if (!$canmanage) {
 }
 
     // this is called if a student leaves during a lesson
-if ($pageid == LESSON_UNSEENBRANCHPAGE) {
+if ($pageid == CUSTOMLESSON_UNSEENBRANCHPAGE) {
     $pageid = customlesson_unseen_question_jump($lesson, $USER->id, $pageid);
 }
 
@@ -199,10 +199,10 @@ if (empty($pageid)) {
         // convert the jumpto to a proper page id
         if ($jumpto == 0) { // unlikely value!
             $lastpageseen = $attempt->pageid;
-        } elseif ($jumpto == LESSON_NEXTPAGE) {
+        } elseif ($jumpto == CUSTOMLESSON_NEXTPAGE) {
             if (!$lastpageseen = $DB->get_field('customlesson_pages', 'nextpageid', array('id' => $attempt->pageid))) {
                 // no nextpage go to end of lesson
-                $lastpageseen = LESSON_EOL;
+                $lastpageseen = CUSTOMLESSON_EOL;
             }
         } else {
             $lastpageseen = $jumpto;
@@ -266,7 +266,7 @@ $extraeditbuttons = false;
 $lessonpageid = null;
 $timer = null;
 
-if ($pageid != LESSON_EOL) {
+if ($pageid != CUSTOMLESSON_EOL) {
     /// This is the code updates the lessontime for a timed test
     $startlastseen = optional_param('startlastseen', '', PARAM_ALPHA);
     if ($startlastseen == 'no') {
@@ -301,7 +301,7 @@ if ($pageid != LESSON_EOL) {
             if ($timeleft <= 0) {
                 // Out of time
                 $lesson->add_message(get_string('eolstudentoutoftime', 'customlesson'));
-                redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id,'pageid'=>LESSON_EOL, 'outoftime'=>'normal')));
+                redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id,'pageid'=>CUSTOMLESSON_EOL, 'outoftime'=>'normal')));
                 die; // Shouldn't be reached, but make sure
             } else if ($timeleft < 60) {
                 // One minute warning
@@ -309,7 +309,7 @@ if ($pageid != LESSON_EOL) {
             }
         }
 
-        if ($page->qtype == LESSON_PAGE_BRANCHTABLE && $lesson->minquestions) {
+        if ($page->qtype == CUSTOMLESSON_PAGE_BRANCHTABLE && $lesson->minquestions) {
             // tell student how many questions they have seen, how many are required and their grade
             $ntries = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));
             $gradeinfo = customlesson_grade($lesson, $ntries);

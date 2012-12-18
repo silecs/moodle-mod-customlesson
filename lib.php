@@ -612,7 +612,7 @@ function customlesson_process_post_save(&$lesson) {
 
     $event->timeduration = ($lesson->deadline - $lesson->available);
 
-    if ($lesson->deadline and $lesson->available and $event->timeduration <= LESSON_MAX_EVENT_LENGTH) {
+    if ($lesson->deadline and $lesson->available and $event->timeduration <= CUSTOMLESSON_MAX_EVENT_LENGTH) {
         // Single event for the whole lesson.
         $event->name = $lesson->name;
         calendar_event::create(clone($event));

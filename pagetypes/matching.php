@@ -27,12 +27,12 @@
 defined('MOODLE_INTERNAL') || die();
 
 /** Matching question type */
-define("LESSON_PAGE_MATCHING",      "5");
+define("CUSTOMLESSON_PAGE_MATCHING",      "5");
 
 class customlesson_page_type_matching extends customlesson_page {
 
     protected $type = customlesson_page::TYPE_QUESTION;
-    protected $typeid = LESSON_PAGE_MATCHING;
+    protected $typeid = CUSTOMLESSON_PAGE_MATCHING;
     protected $typeidstring = 'matching';
     protected $string = null;
 
@@ -462,12 +462,12 @@ class customlesson_add_page_form_matching extends customlesson_add_page_form_bas
 
         $this->_form->addElement('header', 'correctresponse', get_string('correctresponse', 'customlesson'));
         $this->_form->addElement('editor', 'answer_editor[0]', get_string('correctresponse', 'customlesson'), array('rows'=>'4', 'columns'=>'80'), array('noclean'=>true));
-        $this->add_jumpto(0, get_string('correctanswerjump', 'customlesson'), LESSON_NEXTPAGE);
+        $this->add_jumpto(0, get_string('correctanswerjump', 'customlesson'), CUSTOMLESSON_NEXTPAGE);
         $this->add_score(0, get_string("correctanswerscore", "customlesson"), 1);
 
         $this->_form->addElement('header', 'wrongresponse', get_string('wrongresponse', 'customlesson'));
         $this->_form->addElement('editor', 'answer_editor[1]', get_string('wrongresponse', 'customlesson'), array('rows'=>'4', 'columns'=>'80'), array('noclean'=>true));
-        $this->add_jumpto(1, get_string('wronganswerjump', 'customlesson'), LESSON_THISPAGE);
+        $this->add_jumpto(1, get_string('wronganswerjump', 'customlesson'), CUSTOMLESSON_THISPAGE);
         $this->add_score(1, get_string("wronganswerscore", "customlesson"), 0);
 
         for ($i = 2; $i < $this->_customdata['lesson']->maxanswers+2; $i++) {

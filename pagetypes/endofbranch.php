@@ -27,13 +27,13 @@
 defined('MOODLE_INTERNAL') || die();
 
  /** End of Branch page */
-define("LESSON_PAGE_ENDOFBRANCH",   "21");
+define("CUSTOMLESSON_PAGE_ENDOFBRANCH",   "21");
 
 class customlesson_page_type_endofbranch extends customlesson_page {
 
     protected $type = customlesson_page::TYPE_STRUCTURE;
     protected $typeidstring = 'endofbranch';
-    protected $typeid = LESSON_PAGE_ENDOFBRANCH;
+    protected $typeid = CUSTOMLESSON_PAGE_ENDOFBRANCH;
     protected $string = null;
     protected $jumpto = null;
 
@@ -61,26 +61,26 @@ class customlesson_page_type_endofbranch extends customlesson_page {
         global $USER, $PAGE;
         $answer = array_shift($this->get_answers());
         $jumpto = $answer->jumpto;
-        if ($jumpto == LESSON_RANDOMBRANCH) {
+        if ($jumpto == CUSTOMLESSON_RANDOMBRANCH) {
 
             $jumpto = customlesson_unseen_branch_jump($this->lesson, $USER->id);
 
-        } elseif ($jumpto == LESSON_CLUSTERJUMP) {
+        } elseif ($jumpto == CUSTOMLESSON_CLUSTERJUMP) {
 
             if (!$canmanage) {
                 $jumpto = $this->lesson->cluster_jump($this->properties->id);
             } else {
                 if ($this->properties->nextpageid == 0) {
-                    $jumpto = LESSON_EOL;
+                    $jumpto = CUSTOMLESSON_EOL;
                 } else {
                     $jumpto = $this->properties->nextpageid;
                 }
             }
 
-        } else if ($answer->jumpto == LESSON_NEXTPAGE) {
+        } else if ($answer->jumpto == CUSTOMLESSON_NEXTPAGE) {
 
             if ($this->properties->nextpageid == 0) {
-                $jumpto = LESSON_EOL;
+                $jumpto = CUSTOMLESSON_EOL;
             } else {
                 $jumpto = $this->properties->nextpageid;
             }
@@ -89,7 +89,7 @@ class customlesson_page_type_endofbranch extends customlesson_page {
 
             $jumpto = $this->properties->id;
 
-        } else if ($jumpto == LESSON_PREVIOUSPAGE) {
+        } else if ($jumpto == CUSTOMLESSON_PREVIOUSPAGE) {
 
             $jumpto = $this->properties->prevpageid;
 
@@ -139,8 +139,8 @@ class customlesson_page_type_endofbranch extends customlesson_page {
     public function add_page_link($previd) {
         global $PAGE, $CFG;
         if ($previd != 0) {
-            $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>LESSON_PAGE_ENDOFBRANCH));
-            return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_ENDOFBRANCH, 'name'=>get_string('addanendofbranch', 'customlesson'));
+            $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>CUSTOMLESSON_PAGE_ENDOFBRANCH));
+            return array('addurl'=>$addurl, 'type'=>CUSTOMLESSON_PAGE_ENDOFBRANCH, 'name'=>get_string('addanendofbranch', 'customlesson'));
         }
         return false;
     }
@@ -151,7 +151,7 @@ class customlesson_page_type_endofbranch extends customlesson_page {
 
 class customlesson_add_page_form_endofbranch extends customlesson_add_page_form_base {
 
-    public $qtype = LESSON_PAGE_ENDOFBRANCH;
+    public $qtype = CUSTOMLESSON_PAGE_ENDOFBRANCH;
     public $qtypestring = 'endofbranch';
     protected $standard = false;
 
@@ -193,14 +193,14 @@ class customlesson_add_page_form_endofbranch extends customlesson_add_page_form_
         // chain back up to find the (nearest branch table)
         $btpage = clone($page);
         $btpageid = $btpage->id;
-        while (($btpage->qtype != LESSON_PAGE_BRANCHTABLE) && ($btpage->prevpageid > 0)) {
+        while (($btpage->qtype != CUSTOMLESSON_PAGE_BRANCHTABLE) && ($btpage->prevpageid > 0)) {
             $btpageid = $btpage->prevpageid;
             if (!$btpage = $DB->get_record("customlesson_pages", array("id" => $btpageid))) {
                 print_error('cannotfindpagerecord', 'customlesson');
             }
         }
 
-        if ($btpage->qtype == LESSON_PAGE_BRANCHTABLE) {
+        if ($btpage->qtype == CUSTOMLESSON_PAGE_BRANCHTABLE) {
             $newpage = new stdClass;
             $newpage->lessonid = $lesson->id;
             $newpage->prevpageid = $pageid;

@@ -59,7 +59,7 @@ function customlesson_save_question_options($question, $lesson) {
     $timenow = time();
     $result = new stdClass();
     switch ($question->qtype) {
-        case LESSON_PAGE_SHORTANSWER:
+        case CUSTOMLESSON_PAGE_SHORTANSWER:
 
             $answers = array();
             $maxfraction = -1;
@@ -71,7 +71,7 @@ function customlesson_save_question_options($question, $lesson) {
                     $answer->lessonid   = $question->lessonid;
                     $answer->pageid   = $question->id;
                     if ($question->fraction[$key] >=0.5) {
-                        $answer->jumpto = LESSON_NEXTPAGE;
+                        $answer->jumpto = CUSTOMLESSON_NEXTPAGE;
                     }
                     $answer->timecreated   = $timenow;
                     $answer->grade = $question->fraction[$key] * 100;
@@ -95,7 +95,7 @@ function customlesson_save_question_options($question, $lesson) {
             }
             break;
 
-        case LESSON_PAGE_NUMERICAL:   // Note similarities to shortanswer.
+        case CUSTOMLESSON_PAGE_NUMERICAL:   // Note similarities to shortanswer.
 
             $answers = array();
             $maxfraction = -1;
@@ -107,7 +107,7 @@ function customlesson_save_question_options($question, $lesson) {
                     $answer = new stdClass;
                     $answer->lessonid   = $question->lessonid;
                     $answer->pageid   = $question->id;
-                    $answer->jumpto = LESSON_NEXTPAGE;
+                    $answer->jumpto = CUSTOMLESSON_NEXTPAGE;
                     $answer->timecreated   = $timenow;
                     $answer->grade = $question->fraction[$key] * 100;
                     $min = $question->answer[$key] - $question->tolerance[$key];
@@ -134,7 +134,7 @@ function customlesson_save_question_options($question, $lesson) {
         break;
 
 
-        case LESSON_PAGE_TRUEFALSE:
+        case CUSTOMLESSON_PAGE_TRUEFALSE:
 
             // the truth
             $answer = new stdClass();
@@ -144,7 +144,7 @@ function customlesson_save_question_options($question, $lesson) {
             $answer->answer = get_string("true", "quiz");
             $answer->grade = $question->correctanswer * 100;
             if ($answer->grade > 50 ) {
-                $answer->jumpto = LESSON_NEXTPAGE;
+                $answer->jumpto = CUSTOMLESSON_NEXTPAGE;
             }
             if (isset($question->feedbacktrue)) {
                 $answer->response = $question->feedbacktrue['text'];
@@ -160,7 +160,7 @@ function customlesson_save_question_options($question, $lesson) {
             $answer->answer = get_string("false", "quiz");
             $answer->grade = (1 - (int)$question->correctanswer) * 100;
             if ($answer->grade > 50 ) {
-                $answer->jumpto = LESSON_NEXTPAGE;
+                $answer->jumpto = CUSTOMLESSON_NEXTPAGE;
             }
             if (isset($question->feedbackfalse)) {
                 $answer->response = $question->feedbackfalse['text'];
@@ -170,7 +170,7 @@ function customlesson_save_question_options($question, $lesson) {
 
           break;
 
-        case LESSON_PAGE_MULTICHOICE:
+        case CUSTOMLESSON_PAGE_MULTICHOICE:
 
             $totalfraction = 0;
             $maxfraction = -1;
@@ -188,11 +188,11 @@ function customlesson_save_question_options($question, $lesson) {
                     // changed some defaults
                     /* Original Code
                     if ($answer->grade > 50 ) {
-                        $answer->jumpto = LESSON_NEXTPAGE;
+                        $answer->jumpto = CUSTOMLESSON_NEXTPAGE;
                     }
                     Replaced with:                    */
                     if ($answer->grade > 50 ) {
-                        $answer->jumpto = LESSON_NEXTPAGE;
+                        $answer->jumpto = CUSTOMLESSON_NEXTPAGE;
                         $answer->score = 1;
                     }
                     // end Replace
@@ -228,7 +228,7 @@ function customlesson_save_question_options($question, $lesson) {
             }
         break;
 
-        case LESSON_PAGE_MATCHING:
+        case CUSTOMLESSON_PAGE_MATCHING:
 
             $subquestions = array();
 
@@ -241,7 +241,7 @@ function customlesson_save_question_options($question, $lesson) {
             // The first answer should always be the correct answer
             $correctanswer = clone($defaultanswer);
             $correctanswer->answer = get_string('thatsthecorrectanswer', 'customlesson');
-            $correctanswer->jumpto = LESSON_NEXTPAGE;
+            $correctanswer->jumpto = CUSTOMLESSON_NEXTPAGE;
             $DB->insert_record("customlesson_answers", $correctanswer);
 
             // The second answer should always be the wrong answer
@@ -260,7 +260,7 @@ function customlesson_save_question_options($question, $lesson) {
                     $answer->response   = $answertext;
                     if ($i == 0) {
                         // first answer contains the correct answer jump
-                        $answer->jumpto = LESSON_NEXTPAGE;
+                        $answer->jumpto = CUSTOMLESSON_NEXTPAGE;
                     }
                     $subquestions[] = $DB->insert_record("customlesson_answers", $answer);
                     $i++;
@@ -285,11 +285,11 @@ class qformat_default {
     var $displayerrors = true;
     var $category = NULL;
     var $questionids = array();
-    var $qtypeconvert = array('numerical'   => LESSON_PAGE_NUMERICAL,
-                               'multichoice' => LESSON_PAGE_MULTICHOICE,
-                               'truefalse'   => LESSON_PAGE_TRUEFALSE,
-                               'shortanswer' => LESSON_PAGE_SHORTANSWER,
-                               'match'       => LESSON_PAGE_MATCHING
+    var $qtypeconvert = array('numerical'   => CUSTOMLESSON_PAGE_NUMERICAL,
+                               'multichoice' => CUSTOMLESSON_PAGE_MULTICHOICE,
+                               'truefalse'   => CUSTOMLESSON_PAGE_TRUEFALSE,
+                               'shortanswer' => CUSTOMLESSON_PAGE_SHORTANSWER,
+                               'match'       => CUSTOMLESSON_PAGE_MATCHING
                               );
 
     // Importing functions

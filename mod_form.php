@@ -184,8 +184,8 @@ class mod_customlesson_mod_form extends moodleform_mod {
 
         $defaultnextpages = array();
         $defaultnextpages[0] = get_string('normal', 'customlesson');
-        $defaultnextpages[LESSON_UNSEENPAGE] = get_string('showanunseenpage', 'customlesson');
-        $defaultnextpages[LESSON_UNANSWEREDPAGE] = get_string('showanunansweredpage', 'customlesson');
+        $defaultnextpages[CUSTOMLESSON_UNSEENPAGE] = get_string('showanunseenpage', 'customlesson');
+        $defaultnextpages[CUSTOMLESSON_UNANSWEREDPAGE] = get_string('showanunansweredpage', 'customlesson');
         $mform->addElement('select', 'nextpagedefault', get_string('actionaftercorrectanswer', 'customlesson'), $defaultnextpages);
         $mform->addHelpButton('nextpagedefault', 'actionaftercorrectanswer', 'customlesson');
         $mform->setDefault('nextpagedefault', $CFG->lesson_defaultnextpage);

@@ -27,13 +27,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 /** Essay question type */
-define("LESSON_PAGE_ESSAY", "10");
+define("CUSTOMLESSON_PAGE_ESSAY", "10");
 
 class customlesson_page_type_essay extends customlesson_page {
 
     protected $type = customlesson_page::TYPE_QUESTION;
     protected $typeidstring = 'essay';
-    protected $typeid = LESSON_PAGE_ESSAY;
+    protected $typeid = CUSTOMLESSON_PAGE_ESSAY;
     protected $string = null;
 
     public function get_typeid() {

@@ -27,13 +27,13 @@
 defined('MOODLE_INTERNAL') || die();
 
  /** Short answer question type */
-define("LESSON_PAGE_SHORTANSWER",   "1");
+define("CUSTOMLESSON_PAGE_SHORTANSWER",   "1");
 
 class customlesson_page_type_shortanswer extends customlesson_page {
 
     protected $type = customlesson_page::TYPE_QUESTION;
     protected $typeidstring = 'shortanswer';
-    protected $typeid = LESSON_PAGE_SHORTANSWER;
+    protected $typeid = CUSTOMLESSON_PAGE_SHORTANSWER;
     protected $string = null;
 
     public function get_typeid() {
@@ -319,7 +319,7 @@ class customlesson_add_page_form_shortanswer extends customlesson_add_page_form_
             $this->_form->addElement('header', 'answertitle'.$i, get_string('answer').' '.($i+1));
             $this->add_answer($i);
             $this->add_response($i);
-            $this->add_jumpto($i, NULL, ($i == 0 ? LESSON_NEXTPAGE : LESSON_THISPAGE));
+            $this->add_jumpto($i, NULL, ($i == 0 ? CUSTOMLESSON_NEXTPAGE : CUSTOMLESSON_THISPAGE));
             $this->add_score($i, null, ($i===0)?1:0);
         }
     }

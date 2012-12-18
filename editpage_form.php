@@ -49,7 +49,7 @@ class customlesson_add_page_form_selection extends customlesson_add_page_form_ba
         $types = $this->manager->get_page_type_strings(customlesson_page::TYPE_QUESTION);
         asort($types);
         $mform->addElement('select', 'qtype', get_string('selectaqtype', 'customlesson'), $types);
-        $mform->setDefault('qtype', LESSON_PAGE_MULTICHOICE); // preselect the most common type
+        $mform->setDefault('qtype', CUSTOMLESSON_PAGE_MULTICHOICE); // preselect the most common type
     }
 }
 

@@ -34,30 +34,30 @@ require_once($CFG->dirroot . '/mod/customlesson/lib.php');
 require_once($CFG->libdir . '/filelib.php');
 
 /** This page */
-define('LESSON_THISPAGE', 0);
+define('CUSTOMLESSON_THISPAGE', 0);
 /** Next page -> any page not seen before */
-define("LESSON_UNSEENPAGE", 1);
+define("CUSTOMLESSON_UNSEENPAGE", 1);
 /** Next page -> any page not answered correctly */
-define("LESSON_UNANSWEREDPAGE", 2);
+define("CUSTOMLESSON_UNANSWEREDPAGE", 2);
 /** Jump to Next Page */
-define("LESSON_NEXTPAGE", -1);
+define("CUSTOMLESSON_NEXTPAGE", -1);
 /** End of Lesson */
-define("LESSON_EOL", -9);
+define("CUSTOMLESSON_EOL", -9);
 /** Jump to an unseen page within a branch and end of branch or end of lesson */
-define("LESSON_UNSEENBRANCHPAGE", -50);
+define("CUSTOMLESSON_UNSEENBRANCHPAGE", -50);
 /** Jump to Previous Page */
-define("LESSON_PREVIOUSPAGE", -40);
+define("CUSTOMLESSON_PREVIOUSPAGE", -40);
 /** Jump to a random page within a branch and end of branch or end of lesson */
-define("LESSON_RANDOMPAGE", -60);
+define("CUSTOMLESSON_RANDOMPAGE", -60);
 /** Jump to a random Branch */
-define("LESSON_RANDOMBRANCH", -70);
+define("CUSTOMLESSON_RANDOMBRANCH", -70);
 /** Cluster Jump */
-define("LESSON_CLUSTERJUMP", -80);
+define("CUSTOMLESSON_CLUSTERJUMP", -80);
 /** Undefined */
-define("LESSON_UNDEFINED", -99);
+define("CUSTOMLESSON_UNDEFINED", -99);
 
-/** LESSON_MAX_EVENT_LENGTH = 432000 ; 5 days maximum */
-define("LESSON_MAX_EVENT_LENGTH", "432000");
+/** CUSTOMLESSON_MAX_EVENT_LENGTH = 432000 ; 5 days maximum */
+define("CUSTOMLESSON_MAX_EVENT_LENGTH", "432000");
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -65,8 +65,8 @@ define("LESSON_MAX_EVENT_LENGTH", "432000");
 /// starts with lesson_
 
 /**
- * Checks to see if a LESSON_CLUSTERJUMP or
- * a LESSON_UNSEENBRANCHPAGE is used in a lesson.
+ * Checks to see if a CUSTOMLESSON_CLUSTERJUMP or
+ * a CUSTOMLESSON_UNSEENBRANCHPAGE is used in a lesson.
  *
  * This function is only executed when a teacher is
  * checking the navigation for a lesson.
@@ -85,7 +85,7 @@ function customlesson_display_teacher_warning($lesson) {
     }
     // just check for the first one that fulfills the requirements
     foreach ($lessonanswers as $lessonanswer) {
-        if ($lessonanswer->jumpto == LESSON_CLUSTERJUMP || $lessonanswer->jumpto == LESSON_UNSEENBRANCHPAGE) {
+        if ($lessonanswer->jumpto == CUSTOMLESSON_CLUSTERJUMP || $lessonanswer->jumpto == CUSTOMLESSON_UNSEENBRANCHPAGE) {
             return true;
         }
     }
@@ -95,7 +95,7 @@ function customlesson_display_teacher_warning($lesson) {
 }
 
 /**
- * Interprets the LESSON_UNSEENBRANCHPAGE jump.
+ * Interprets the CUSTOMLESSON_UNSEENBRANCHPAGE jump.
  *
  * will return the pageid of a random unseen page that is within a branch
  *
@@ -124,19 +124,19 @@ function customlesson_unseen_question_jump($lesson, $user, $pageid) {
     // get the lesson pages
     $lessonpages = $lesson->load_all_pages();
 
-    if ($pageid == LESSON_UNSEENBRANCHPAGE) {  // this only happens when a student leaves in the middle of an unseen question within a branch series
+    if ($pageid == CUSTOMLESSON_UNSEENBRANCHPAGE) {  // this only happens when a student leaves in the middle of an unseen question within a branch series
         $pageid = $seenpages[0];  // just change the pageid to the last page viewed inside the branch table
     }
 
     // go up the pages till branch table
     while ($pageid != 0) { // this condition should never be satisfied... only happens if there are no branch tables above this page
-        if ($lessonpages[$pageid]->qtype == LESSON_PAGE_BRANCHTABLE) {
+        if ($lessonpages[$pageid]->qtype == CUSTOMLESSON_PAGE_BRANCHTABLE) {
             break;
         }
         $pageid = $lessonpages[$pageid]->prevpageid;
     }
 
-    $pagesinbranch = $lesson->get_sub_pages_of($pageid, array(LESSON_PAGE_BRANCHTABLE, LESSON_PAGE_ENDOFBRANCH));
+    $pagesinbranch = $lesson->get_sub_pages_of($pageid, array(CUSTOMLESSON_PAGE_BRANCHTABLE, CUSTOMLESSON_PAGE_ENDOFBRANCH));
 
     // this foreach loop stores all the pages that are within the branch table but are not in the $seenpages array
     $unseen = array();
@@ -155,7 +155,7 @@ function customlesson_unseen_question_jump($lesson, $user, $pageid) {
             $nextpage = $lessonpages[$pageid]->nextpageid;
         }
         if ($nextpage == 0) {
-            return LESSON_EOL;
+            return CUSTOMLESSON_EOL;
         } else {
             return $nextpage;
         }
@@ -203,7 +203,7 @@ function customlesson_unseen_branch_jump($lesson, $userid) {
     $pageid = $lessonpages[$start]->nextpageid; // move down from the flagged branch table
     $branchtables = array();
     while ($pageid != 0) {  // grab all of the branch table till eol
-        if ($lessonpages[$pageid]->qtype == LESSON_PAGE_BRANCHTABLE) {
+        if ($lessonpages[$pageid]->qtype == CUSTOMLESSON_PAGE_BRANCHTABLE) {
             $branchtables[] = $lessonpages[$pageid]->id;
         }
         $pageid = $lessonpages[$pageid]->nextpageid;
@@ -218,12 +218,12 @@ function customlesson_unseen_branch_jump($lesson, $userid) {
     if (count($unseen) > 0) {
         return $unseen[rand(0, count($unseen)-1)];  // returns a random page id for the next page
     } else {
-        return LESSON_EOL;  // has viewed all of the branch tables
+        return CUSTOMLESSON_EOL;  // has viewed all of the branch tables
     }
 }
 
 /**
- * Handles the random jump between a branch table and end of branch or end of lesson (LESSON_RANDOMPAGE).
+ * Handles the random jump between a branch table and end of branch or end of lesson (CUSTOMLESSON_RANDOMPAGE).
  *
  * @param lesson $lesson
  * @param int $pageid The id of the page that we are jumping from (?)
@@ -241,14 +241,14 @@ function customlesson_random_question_jump($lesson, $pageid) {
     // go up the pages till branch table
     while ($pageid != 0) { // this condition should never be satisfied... only happens if there are no branch tables above this page
 
-        if ($lessonpages[$pageid]->qtype == LESSON_PAGE_BRANCHTABLE) {
+        if ($lessonpages[$pageid]->qtype == CUSTOMLESSON_PAGE_BRANCHTABLE) {
             break;
         }
         $pageid = $lessonpages[$pageid]->prevpageid;
     }
 
     // get the pages within the branch
-    $pagesinbranch = $lesson->get_sub_pages_of($pageid, array(LESSON_PAGE_BRANCHTABLE, LESSON_PAGE_ENDOFBRANCH));
+    $pagesinbranch = $lesson->get_sub_pages_of($pageid, array(CUSTOMLESSON_PAGE_BRANCHTABLE, CUSTOMLESSON_PAGE_ENDOFBRANCH));
 
     if(count($pagesinbranch) == 0) {
         // there are no pages inside the branch, so return the next page
@@ -574,7 +574,7 @@ function customlesson_add_header_buttons($cm, $context, $extraeditbuttons=false,
         if ($lessonpageid === null) {
             print_error('invalidpageid', 'customlesson');
         }
-        if (!empty($lessonpageid) && $lessonpageid != LESSON_EOL) {
+        if (!empty($lessonpageid) && $lessonpageid != CUSTOMLESSON_EOL) {
             $url = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$cm->id, 'pageid'=>$lessonpageid, 'edit'=>1));
             $PAGE->set_button($OUTPUT->single_button($url, get_string('editpagecontent', 'customlesson')));
         }
@@ -648,7 +648,7 @@ abstract class customlesson_add_page_form_base extends moodleform {
 
     /**
      * This is the classic define that is used to identify this pagetype.
-     * Will be one of LESSON_*
+     * Will be one of CUSTOMLESSON_*
      * @var int
      */
     public $qtype;
@@ -737,7 +737,7 @@ abstract class customlesson_add_page_form_base extends moodleform {
      * @param string|null $label
      * @param int $selected The page to select by default
      */
-    protected final function add_jumpto($name, $label=null, $selected=LESSON_NEXTPAGE) {
+    protected final function add_jumpto($name, $label=null, $selected=CUSTOMLESSON_NEXTPAGE) {
         $title = get_string("jump", "customlesson");
         if ($label === null) {
             $label = $title;
@@ -1114,14 +1114,14 @@ class customlesson extends customlesson_base {
             $nretakes = $DB->count_records("customlesson_grades", array("lessonid" => $this->properties->id, "userid" => $USER->id));
             shuffle($allpages);
             $found = false;
-            if ($this->properties->nextpagedefault == LESSON_UNSEENPAGE) {
+            if ($this->properties->nextpagedefault == CUSTOMLESSON_UNSEENPAGE) {
                 foreach ($allpages as $nextpage) {
                     if (!$DB->count_records("customlesson_attempts", array("pageid" => $nextpage->id, "userid" => $USER->id, "retry" => $nretakes))) {
                         $found = true;
                         break;
                     }
                 }
-            } elseif ($this->properties->nextpagedefault == LESSON_UNANSWEREDPAGE) {
+            } elseif ($this->properties->nextpagedefault == CUSTOMLESSON_UNANSWEREDPAGE) {
                 foreach ($allpages as $nextpage) {
                     if (!$DB->count_records("customlesson_attempts", array('pageid' => $nextpage->id, 'userid' => $USER->id, 'correct' => 1, 'retry' => $nretakes))) {
                         $found = true;
@@ -1133,7 +1133,7 @@ class customlesson extends customlesson_base {
                 if ($this->properties->maxpages) {
                     // check number of pages viewed (in the lesson)
                     if ($DB->count_records("customlesson_attempts", array("lessonid" => $this->properties->id, "userid" => $USER->id, "retry" => $nretakes)) >= $this->properties->maxpages) {
-                        return LESSON_EOL;
+                        return CUSTOMLESSON_EOL;
                     }
                 }
                 return $nextpage->id;
@@ -1145,7 +1145,7 @@ class customlesson extends customlesson_base {
                 return $nextpage->id;
             }
         }
-        return LESSON_EOL;
+        return CUSTOMLESSON_EOL;
     }
 
     /**
@@ -1323,15 +1323,15 @@ class customlesson extends customlesson_base {
         if (!$jumpto) {
             // same page
             return false;
-        } elseif ($jumpto == LESSON_NEXTPAGE) {
+        } elseif ($jumpto == CUSTOMLESSON_NEXTPAGE) {
             return true;
-        } elseif ($jumpto == LESSON_UNSEENBRANCHPAGE) {
+        } elseif ($jumpto == CUSTOMLESSON_UNSEENBRANCHPAGE) {
             return true;
-        } elseif ($jumpto == LESSON_RANDOMPAGE) {
+        } elseif ($jumpto == CUSTOMLESSON_RANDOMPAGE) {
             return true;
-        } elseif ($jumpto == LESSON_CLUSTERJUMP) {
+        } elseif ($jumpto == CUSTOMLESSON_CLUSTERJUMP) {
             return true;
-        } elseif ($jumpto == LESSON_EOL) {
+        } elseif ($jumpto == CUSTOMLESSON_EOL) {
             return true;
         }
 
@@ -1373,7 +1373,7 @@ class customlesson extends customlesson_base {
     }
 
     /**
-     * Interprets LESSON_CLUSTERJUMP jumpto value.
+     * Interprets CUSTOMLESSON_CLUSTERJUMP jumpto value.
      *
      * This will select a page randomly
      * and the page selected will be inbetween a cluster page and end of clutter or end of lesson
@@ -1408,14 +1408,14 @@ class customlesson extends customlesson_base {
         $lessonpages = $this->load_all_pages();
         // find the start of the cluster
         while ($pageid != 0) { // this condition should not be satisfied... should be a cluster page
-            if ($lessonpages[$pageid]->qtype == LESSON_PAGE_CLUSTER) {
+            if ($lessonpages[$pageid]->qtype == CUSTOMLESSON_PAGE_CLUSTER) {
                 break;
             }
             $pageid = $lessonpages[$pageid]->prevpageid;
         }
 
         $clusterpages = array();
-        $clusterpages = $this->get_sub_pages_of($pageid, array(LESSON_PAGE_ENDOFCLUSTER));
+        $clusterpages = $this->get_sub_pages_of($pageid, array(CUSTOMLESSON_PAGE_ENDOFCLUSTER));
         $unseen = array();
         foreach ($clusterpages as $key=>$cluster) {
             if ($cluster->type !== lesson_page::TYPE_QUESTION) {
@@ -1428,9 +1428,9 @@ class customlesson extends customlesson_base {
         if (count($unseen) > 0) {
             // it does not contain elements, then use exitjump, otherwise find out next page/branch
             $nextpage = $unseen[rand(0, count($unseen)-1)];
-            if ($nextpage->qtype == LESSON_PAGE_BRANCHTABLE) {
+            if ($nextpage->qtype == CUSTOMLESSON_PAGE_BRANCHTABLE) {
                 // if branch table, then pick a random page inside of it
-                $branchpages = $this->get_sub_pages_of($nextpage->id, array(LESSON_PAGE_BRANCHTABLE, LESSON_PAGE_ENDOFBRANCH));
+                $branchpages = $this->get_sub_pages_of($nextpage->id, array(CUSTOMLESSON_PAGE_BRANCHTABLE, CUSTOMLESSON_PAGE_ENDOFBRANCH));
                 return $branchpages[rand(0, count($branchpages)-1)]->id;
             } else { // otherwise, return the page's id
                 return $nextpage->id;
@@ -1438,22 +1438,22 @@ class customlesson extends customlesson_base {
         } else {
             // seen all there is to see, leave the cluster
             if (end($clusterpages)->nextpageid == 0) {
-                return LESSON_EOL;
+                return CUSTOMLESSON_EOL;
             } else {
                 $clusterendid = $pageid;
                 while ($clusterendid != 0) { // this condition should not be satisfied... should be a cluster page
-                    if ($lessonpages[$clusterendid]->qtype == LESSON_PAGE_CLUSTER) {
+                    if ($lessonpages[$clusterendid]->qtype == CUSTOMLESSON_PAGE_CLUSTER) {
                         break;
                     }
                     $clusterendid = $lessonpages[$clusterendid]->prevpageid;
                 }
                 $exitjump = $DB->get_field("customlesson_answers", "jumpto", array("pageid" => $clusterendid, "lessonid" => $this->properties->id));
-                if ($exitjump == LESSON_NEXTPAGE) {
+                if ($exitjump == CUSTOMLESSON_NEXTPAGE) {
                     $exitjump = $lessonpages[$pageid]->nextpageid;
                 }
                 if ($exitjump == 0) {
-                    return LESSON_EOL;
-                } else if (in_array($exitjump, array(LESSON_EOL, LESSON_PREVIOUSPAGE))) {
+                    return CUSTOMLESSON_EOL;
+                } else if (in_array($exitjump, array(CUSTOMLESSON_EOL, CUSTOMLESSON_PREVIOUSPAGE))) {
                     return $exitjump;
                 } else {
                     if (!array_key_exists($exitjump, $lessonpages)) {
@@ -1461,14 +1461,14 @@ class customlesson extends customlesson_base {
                         foreach ($lessonpages as $page) {
                             if ($page->id === $clusterendid) {
                                 $found = true;
-                            } else if ($page->qtype == LESSON_PAGE_ENDOFCLUSTER) {
+                            } else if ($page->qtype == CUSTOMLESSON_PAGE_ENDOFCLUSTER) {
                                 $exitjump = $DB->get_field("customlesson_answers", "jumpto", array("pageid" => $page->id, "lessonid" => $this->properties->id));
                                 break;
                             }
                         }
                     }
                     if (!array_key_exists($exitjump, $lessonpages)) {
-                        return LESSON_EOL;
+                        return CUSTOMLESSON_EOL;
                     }
                     return $exitjump;
                 }
@@ -1481,7 +1481,7 @@ class customlesson extends customlesson_base {
      * an end point specified within $ends is encountered or no more pages exist
      *
      * @param int $pageid
-     * @param array $ends An array of LESSON_PAGE_* types that signify an end of
+     * @param array $ends An array of CUSTOMLESSON_PAGE_* types that signify an end of
      *               the subtype
      * @return array An array of specialised lesson_page objects
      */
@@ -1962,7 +1962,7 @@ abstract class customlesson_page extends customlesson_base {
                         if ($this->lesson->maxattempts > 1) { // don't bother with message if only one attempt
                             $result->maxattemptsreached = true;
                         }
-                        $result->newpageid = LESSON_NEXTPAGE;
+                        $result->newpageid = CUSTOMLESSON_NEXTPAGE;
                     } else if ($this->lesson->maxattempts > 1) { // don't bother with message if only one attempt
                         $result->attemptsremaining = $this->lesson->maxattempts - $nattempts;
                     }
@@ -1971,7 +1971,7 @@ abstract class customlesson_page extends customlesson_base {
             // TODO: merge this code with the jump code below.  Convert jumpto page into a proper page id
             if ($result->newpageid == 0) {
                 $result->newpageid = $this->properties->id;
-            } elseif ($result->newpageid == LESSON_NEXTPAGE) {
+            } elseif ($result->newpageid == CUSTOMLESSON_NEXTPAGE) {
                 $result->newpageid = $this->lesson->get_next_page($this->properties->nextpageid);
             }
 
@@ -2037,21 +2037,21 @@ abstract class customlesson_page extends customlesson_base {
         static $jumpnames = array();
 
         if (!array_key_exists($jumpto, $jumpnames)) {
-            if ($jumpto == LESSON_THISPAGE) {
+            if ($jumpto == CUSTOMLESSON_THISPAGE) {
                 $jumptitle = get_string('thispage', 'customlesson');
-            } elseif ($jumpto == LESSON_NEXTPAGE) {
+            } elseif ($jumpto == CUSTOMLESSON_NEXTPAGE) {
                 $jumptitle = get_string('nextpage', 'customlesson');
-            } elseif ($jumpto == LESSON_EOL) {
+            } elseif ($jumpto == CUSTOMLESSON_EOL) {
                 $jumptitle = get_string('endoflesson', 'customlesson');
-            } elseif ($jumpto == LESSON_UNSEENBRANCHPAGE) {
+            } elseif ($jumpto == CUSTOMLESSON_UNSEENBRANCHPAGE) {
                 $jumptitle = get_string('unseenpageinbranch', 'customlesson');
-            } elseif ($jumpto == LESSON_PREVIOUSPAGE) {
+            } elseif ($jumpto == CUSTOMLESSON_PREVIOUSPAGE) {
                 $jumptitle = get_string('previouspage', 'customlesson');
-            } elseif ($jumpto == LESSON_RANDOMPAGE) {
+            } elseif ($jumpto == CUSTOMLESSON_RANDOMPAGE) {
                 $jumptitle = get_string('randompageinbranch', 'customlesson');
-            } elseif ($jumpto == LESSON_RANDOMBRANCH) {
+            } elseif ($jumpto == CUSTOMLESSON_RANDOMBRANCH) {
                 $jumptitle = get_string('randombranch', 'customlesson');
-            } elseif ($jumpto == LESSON_CLUSTERJUMP) {
+            } elseif ($jumpto == CUSTOMLESSON_CLUSTERJUMP) {
                 $jumptitle = get_string('clusterjump', 'customlesson');
             } else {
                 if (!$jumptitle = $DB->get_field('customlesson_pages', 'title', array('id' => $jumpto))) {
@@ -2331,21 +2331,21 @@ abstract class customlesson_page extends customlesson_base {
         global $DB;
         $jump = array();
         $jump[0] = get_string("thispage", "customlesson");
-        $jump[LESSON_NEXTPAGE] = get_string("nextpage", "customlesson");
-        $jump[LESSON_PREVIOUSPAGE] = get_string("previouspage", "customlesson");
-        $jump[LESSON_EOL] = get_string("endoflesson", "customlesson");
+        $jump[CUSTOMLESSON_NEXTPAGE] = get_string("nextpage", "customlesson");
+        $jump[CUSTOMLESSON_PREVIOUSPAGE] = get_string("previouspage", "customlesson");
+        $jump[CUSTOMLESSON_EOL] = get_string("endoflesson", "customlesson");
 
         if ($pageid == 0) {
             return $jump;
         }
 
         $pages = $lesson->load_all_pages();
-        if ($pages[$pageid]->qtype == LESSON_PAGE_BRANCHTABLE || $lesson->is_sub_page_of_type($pageid, array(LESSON_PAGE_BRANCHTABLE), array(LESSON_PAGE_ENDOFBRANCH, LESSON_PAGE_CLUSTER))) {
-            $jump[LESSON_UNSEENBRANCHPAGE] = get_string("unseenpageinbranch", "customlesson");
-            $jump[LESSON_RANDOMPAGE] = get_string("randompageinbranch", "customlesson");
+        if ($pages[$pageid]->qtype == CUSTOMLESSON_PAGE_BRANCHTABLE || $lesson->is_sub_page_of_type($pageid, array(CUSTOMLESSON_PAGE_BRANCHTABLE), array(CUSTOMLESSON_PAGE_ENDOFBRANCH, CUSTOMLESSON_PAGE_CLUSTER))) {
+            $jump[CUSTOMLESSON_UNSEENBRANCHPAGE] = get_string("unseenpageinbranch", "customlesson");
+            $jump[CUSTOMLESSON_RANDOMPAGE] = get_string("randompageinbranch", "customlesson");
         }
-        if($pages[$pageid]->qtype == LESSON_PAGE_CLUSTER || $lesson->is_sub_page_of_type($pageid, array(LESSON_PAGE_CLUSTER), array(LESSON_PAGE_ENDOFCLUSTER))) {
-            $jump[LESSON_CLUSTERJUMP] = get_string("clusterjump", "customlesson");
+        if($pages[$pageid]->qtype == CUSTOMLESSON_PAGE_CLUSTER || $lesson->is_sub_page_of_type($pageid, array(CUSTOMLESSON_PAGE_CLUSTER), array(CUSTOMLESSON_PAGE_ENDOFCLUSTER))) {
+            $jump[CUSTOMLESSON_CLUSTERJUMP] = get_string("clusterjump", "customlesson");
         }
         if (!optional_param('firstpage', 0, PARAM_INT)) {
             $apageid = $DB->get_field("customlesson_pages", "id", array("lessonid" => $lesson->id, "prevpageid" => 0));

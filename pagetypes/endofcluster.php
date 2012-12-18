@@ -27,13 +27,13 @@
 defined('MOODLE_INTERNAL') || die();
 
  /** End of Cluster page */
-define("LESSON_PAGE_ENDOFCLUSTER",   "31");
+define("CUSTOMLESSON_PAGE_ENDOFCLUSTER",   "31");
 
 class customlesson_page_type_endofcluster extends customlesson_page {
 
     protected $type = customlesson_page::TYPE_STRUCTURE;
     protected $typeidstring = 'endofcluster';
-    protected $typeid = LESSON_PAGE_ENDOFCLUSTER;
+    protected $typeid = CUSTOMLESSON_PAGE_ENDOFCLUSTER;
     protected $string = null;
     protected $jumpto = null;
 
@@ -59,7 +59,7 @@ class customlesson_page_type_endofcluster extends customlesson_page {
     public function redirect_to_next_page() {
         global $PAGE;
         if ($this->properties->nextpageid == 0) {
-            $nextpageid = LESSON_EOL;
+            $nextpageid = CUSTOMLESSON_EOL;
         } else {
             $nextpageid = $this->properties->nextpageid;
         }
@@ -108,9 +108,9 @@ class customlesson_page_type_endofcluster extends customlesson_page {
     public function override_next_page() {
         global $DB;
         $jump = $DB->get_field("customlesson_answers", "jumpto", array("pageid" => $this->properties->id, "lessonid" => $this->lesson->id));
-        if ($jump == LESSON_NEXTPAGE) {
+        if ($jump == CUSTOMLESSON_NEXTPAGE) {
             if ($this->properties->nextpageid == 0) {
-                return LESSON_EOL;
+                return CUSTOMLESSON_EOL;
             } else {
                 return $this->properties->nextpageid;
             }
@@ -121,8 +121,8 @@ class customlesson_page_type_endofcluster extends customlesson_page {
     public function add_page_link($previd) {
         global $PAGE, $CFG;
         if ($previd != 0) {
-            $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>LESSON_PAGE_ENDOFCLUSTER));
-            return array('addurl'=>$addurl, 'type'=>LESSON_PAGE_ENDOFCLUSTER, 'name'=>get_string('addendofcluster', 'customlesson'));
+            $addurl = new moodle_url('/mod/customlesson/editpage.php', array('id'=>$PAGE->cm->id, 'pageid'=>$previd, 'sesskey'=>sesskey(), 'qtype'=>CUSTOMLESSON_PAGE_ENDOFCLUSTER));
+            return array('addurl'=>$addurl, 'type'=>CUSTOMLESSON_PAGE_ENDOFCLUSTER, 'name'=>get_string('addendofcluster', 'customlesson'));
         }
         return false;
     }
@@ -133,7 +133,7 @@ class customlesson_page_type_endofcluster extends customlesson_page {
 
 class customlesson_add_page_form_endofcluster extends customlesson_add_page_form_base {
 
-    public $qtype = LESSON_PAGE_ENDOFCLUSTER;
+    public $qtype = CUSTOMLESSON_PAGE_ENDOFCLUSTER;
     public $qtypestring = 'endofcluster';
     protected $standard = false;
 
@@ -193,7 +193,7 @@ class customlesson_add_page_form_endofcluster extends customlesson_add_page_form
         $newanswer->lessonid = $lesson->id;
         $newanswer->pageid = $newpageid;
         $newanswer->timecreated = $timenow;
-        $newanswer->jumpto = LESSON_NEXTPAGE;
+        $newanswer->jumpto = CUSTOMLESSON_NEXTPAGE;
         $newanswerid = $DB->insert_record("customlesson_answers", $newanswer);
         $lesson->add_message(get_string('addedendofcluster', 'customlesson'), 'notifysuccess');
         redirect($CFG->wwwroot.'/mod/customlesson/edit.php?id='.$PAGE->cm->id);

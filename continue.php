@@ -55,7 +55,7 @@ if (!$canmanage) {
         if ($timeleft <= 0) {
             // Out of time
             $lesson->add_message(get_string('eolstudentoutoftime', 'customlesson'));
-            redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id,'pageid'=>LESSON_EOL, 'outoftime'=>'normal')));
+            redirect(new moodle_url('/mod/customlesson/view.php', array('id'=>$cm->id,'pageid'=>CUSTOMLESSON_EOL, 'outoftime'=>'normal')));
         } else if ($timeleft < 60) {
             // One minute warning
             $lesson->add_message(get_string("studentoneminwarning", "customlesson"));
@@ -88,7 +88,7 @@ if (count($page->answers) > 0) {
 if (isset($USER->modattempts[$lesson->id])) {
     // make sure if the student is reviewing, that he/she sees the same pages/page path that he/she saw the first time
     if ($USER->modattempts[$lesson->id]->pageid == $page->id && $page->nextpageid == 0) {  // remember, this session variable holds the pageid of the last page that the user saw
-        $result->newpageid = LESSON_EOL;
+        $result->newpageid = CUSTOMLESSON_EOL;
     } else {
         $nretakes = $DB->count_records("customlesson_grades", array("lessonid"=>$lesson->id, "userid"=>$USER->id));
         $nretakes--; // make sure we are looking at the right try.
@@ -106,31 +106,31 @@ if (isset($USER->modattempts[$lesson->id])) {
             }
         }
     }
-} elseif ($result->newpageid != LESSON_CLUSTERJUMP && $page->id != 0 && $result->newpageid > 0) {
+} elseif ($result->newpageid != CUSTOMLESSON_CLUSTERJUMP && $page->id != 0 && $result->newpageid > 0) {
     // going to check to see if the page that the user is going to view next, is a cluster page.
     // If so, dont display, go into the cluster.  The $result->newpageid > 0 is used to filter out all of the negative code jumps.
     $newpage = $lesson->load_page($result->newpageid);
     if ($newpageid = $newpage->override_next_page($result->newpageid)) {
         $result->newpageid = $newpageid;
     }
-} elseif ($result->newpageid == LESSON_UNSEENBRANCHPAGE) {
+} elseif ($result->newpageid == CUSTOMLESSON_UNSEENBRANCHPAGE) {
     if ($canmanage) {
         if ($page->nextpageid == 0) {
-            $result->newpageid = LESSON_EOL;
+            $result->newpageid = CUSTOMLESSON_EOL;
         } else {
             $result->newpageid = $page->nextpageid;
         }
     } else {
         $result->newpageid = customlesson_unseen_question_jump($lesson, $USER->id, $page->id);
     }
-} elseif ($result->newpageid == LESSON_PREVIOUSPAGE) {
+} elseif ($result->newpageid == CUSTOMLESSON_PREVIOUSPAGE) {
     $result->newpageid = $page->prevpageid;
-} elseif ($result->newpageid == LESSON_RANDOMPAGE) {
+} elseif ($result->newpageid == CUSTOMLESSON_RANDOMPAGE) {
     $result->newpageid = customlesson_random_question_jump($lesson, $page->id);
-} elseif ($result->newpageid == LESSON_CLUSTERJUMP) {
+} elseif ($result->newpageid == CUSTOMLESSON_CLUSTERJUMP) {
     if ($canmanage) {
         if ($page->nextpageid == 0) {  // if teacher, go to next page
-            $result->newpageid = LESSON_EOL;
+            $result->newpageid = CUSTOMLESSON_EOL;
         } else {
             $result->newpageid = $page->nextpageid;
         }
@@ -191,7 +191,7 @@ if (isset($USER->modattempts[$lesson->id])) {
     $content .= $OUTPUT->box(get_string("or", "customlesson"), 'center');
     $content .= $OUTPUT->box(get_string("continuetonextpage", "customlesson"), 'center');
     $content .= html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'id', 'value'=>$cm->id));
-    $content .= html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'pageid', 'value'=>LESSON_EOL));
+    $content .= html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'pageid', 'value'=>CUSTOMLESSON_EOL));
     $content .= html_writer::empty_tag('input', array('type'=>'submit', 'name'=>'submit', 'value'=>get_string('finish', 'customlesson')));
     echo html_writer::tag('form', "<div>$content</div>", array('method'=>'post', 'action'=>$url));
 }

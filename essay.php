@@ -170,7 +170,7 @@ switch ($mode) {
 
         $pages = $lesson->load_all_pages();
         foreach ($pages as $key=>$page) {
-            if ($page->qtype !== LESSON_PAGE_ESSAY) {
+            if ($page->qtype !== CUSTOMLESSON_PAGE_ESSAY) {
                 unset($pages[$key]);
             }
         }
@@ -255,12 +255,12 @@ switch ($mode) {
         // Get lesson pages that are essay
         $pages = $lesson->load_all_pages();
         foreach ($pages as $key=>$page) {
-            if ($page->qtype !== LESSON_PAGE_ESSAY) {
+            if ($page->qtype !== CUSTOMLESSON_PAGE_ESSAY) {
                 unset($pages[$key]);
             }
         }
         if (count($pages) > 0) {
-            $params = array ("lessonid" => $lesson->id, "qtype" => LESSON_PAGE_ESSAY);
+            $params = array ("lessonid" => $lesson->id, "qtype" => CUSTOMLESSON_PAGE_ESSAY);
             // Get only the attempts that are in response to essay questions
             list($usql, $parameters) = $DB->get_in_or_equal(array_keys($pages));
             if ($essayattempts = $DB->get_records_select('customlesson_attempts', 'pageid '.$usql, $parameters)) {
