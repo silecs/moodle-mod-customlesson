@@ -1531,13 +1531,16 @@ class customlesson extends customlesson_base {
      * Returns the text where the user parameters have been replaced.
      * @global moodle_database $DB
      * @param string $text
-     * @param integer $userid
+     * @param integer $userid (opt)
      * @return string
      */
-    public function customizeOutput($text, $userid) {
-        global $DB;
+    public function customizeOutput($text, $userid=null) {
+        global $DB, $USER;
         static $lastuserid;
         static $vars;
+        if ($userid === null) {
+            $userid = $USER->id;
+        }
         if ($vars === null || $userid !== $lastuserid) {
             $lastuserid = $userid;
             $concat = $DB->sql_concat("'['", "substkey", "']'");
@@ -1694,7 +1697,7 @@ abstract class customlesson_page extends customlesson_base {
 
     /**
      * A reference to the lesson this page belongs to
-     * @var lesson
+     * @var customlesson
      */
     protected $lesson = null;
     /**
@@ -1908,6 +1911,8 @@ abstract class customlesson_page extends customlesson_base {
                 return array();
             }
             foreach ($answers as $answer) {
+                $answer->answer = $this->lesson->customizeOutput($answer->answer);
+                $answer->response = $this->lesson->customizeOutput($answer->response);
                 $this->answers[count($this->answers)] = new customlesson_page_answer($answer);
             }
         }
@@ -2403,6 +2408,7 @@ abstract class customlesson_page extends customlesson_base {
             }
             $context = context_module::instance($PAGE->cm->id);
             $contents = file_rewrite_pluginfile_urls($this->properties->contents, 'pluginfile.php', $context->id, 'mod_customlesson', 'page_contents', $this->properties->id); // must do this BEFORE format_text()!!!!!!
+            $contents = $this->lesson->customizeOutput($contents);
             return format_text($contents, $this->properties->contentsformat, array('context'=>$context, 'noclean'=>true)); // page edit is marked with XSS, we want all content here
         } else {
             return '';
