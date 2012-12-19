@@ -53,7 +53,10 @@ if ($data) {
     $import->setCsvFile($importfile, $data->separator);
     if (!$import->checkColumns() || !$import->importContent()) {
         print_error('processerror', 'customlesson');
+        //! @todo Better error formatting with getErrors($formatted=false)
         print_box(join('<br />', $import->getErrors()));
+    } else {
+        //! @todo Output a success message (with warnings)
     }
 
     echo $OUTPUT->continue_button('view.php?id='.$id);

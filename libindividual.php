@@ -48,16 +48,21 @@ class import_individual {
         $this->key_columns = array();
         $fh = fopen($this->csvfile, "r");
         if ($fh === false) {
-            $this->errors[] = get_string('cannotopencsv');
+            $this->errors[] = get_string('cannotopencsv', 'error');
             return false;
         }
         $header = fgetcsv($fh, 1000, $this->separator);
+        if (!$header) {
+            $this->errors[] = get_string('csvemptyfile', 'error');
+            return false;
+        }
         foreach ($header as $pos => $col) {
             if (strcasecmp(trim($col), "userid") === 0) {
                 $this->reserved_columns['userid'] = $pos;
             } else if (strcasecmp(trim($col), "username") === 0) {
                 $this->reserved_columns['username'] = $pos;
             } else {
+                //! @todo check that the key is used in this lesson
                 $this->key_columns[$col] = $pos;
             }
         }
