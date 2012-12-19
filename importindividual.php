@@ -26,7 +26,7 @@ require_login($course, false, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/customlesson:edit', $context);
 
-$strimportindividualdata = get_string("importimportindividualdata", "customlesson");
+$strimportindividualdata = get_string("importindividualdata", "customlesson");
 
 $PAGE->navbar->add($strimportindividualdata);
 $PAGE->set_title($strimportindividualdata);

@@ -265,7 +265,7 @@ class mod_customlesson_renderer extends plugin_renderer_base {
         if ($canedit) {
             $content = $this->add_page_links($lesson, $prevpageid);
             $importindividualurl = new moodle_url('/mod/customlesson/importindividual.php',array('id'=>$this->page->cm->id));
-            $link = html_writer::link($importindividualurl, get_string('importindividual', 'customlesson'));
+            $link = html_writer::link($importindividualurl, get_string('importindividualdata', 'customlesson'));
             $content .= ' '.$this->output->box($link, 'individuallink');
         }
 

@@ -17,9 +17,9 @@ class customlesson_importindividual_form extends moodleform {
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
 
-        $mform->addElement('filepicker', 'csvfile', get_string('importcsv'));
+        $mform->addElement('filepicker', 'csvfile', get_string('individualfile', 'customlesson'));
 
-        $mform->addElement('text', 'separator', get_string('separator'));
+        $mform->addElement('text', 'separator', get_string('separator', 'customlesson'));
         $mform->setDefault('separator', ';');
 
         $submit_string = get_string('submit');

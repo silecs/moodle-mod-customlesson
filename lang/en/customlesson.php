@@ -434,3 +434,7 @@ $string['youranswer'] = 'Your answer';
 $string['yourcurrentgradeis'] = 'Your current grade is {$a}';
 $string['yourcurrentgradeisoutof'] = 'Your current grade is {$a->grade} out of {$a->total}';
 $string['youshouldview'] = 'You should answer at least: {$a}';
+
+$string['importindividualdata'] = 'Import individual data';
+$string['individualfile'] = 'CSV file';
+$string['separator'] = 'Separator';
