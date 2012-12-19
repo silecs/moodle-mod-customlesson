@@ -63,6 +63,8 @@ class import_individual {
     public function importContent() {
         global $DB;
 
+        $this->resetKeys();
+
         $fh = fopen($this->csvfile, "r");
         if ($fh === false) {
             $this->errors[] = get_string('cannotopencsv');
@@ -95,6 +97,11 @@ class import_individual {
         }
         fclose($fh);
         return true;
+    }
+
+    public function resetKeys() {
+        global $DB;
+        $DB->delete_records('customlesson_keys', array('lessonid' => $this->lessonid));
     }
 
     public function getErrors() {
