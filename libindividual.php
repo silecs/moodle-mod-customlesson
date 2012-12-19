@@ -20,16 +20,29 @@ class import_individual {
 
     protected $errors = array();
 
+    /**
+     * Constructor.
+     * @param integer $lessonid
+     */
     public function __construct($lessonid) {
         $this->lessonid = (int) $lessonid;
     }
 
+    /**
+     * Sets the source file.
+     * @param string $file
+     * @param string $separator
+     */
     public function setCsvFile($file, $separator=';') {
         $this->csvfile = $file;
         $this->separator = $separator;
         $this->errors = array();
     }
 
+    /**
+     * Checks the headers on the first line of the CSV file.
+     * @return boolean
+     */
     public function checkColumns() {
         $this->reserved_columns = array();
         $this->key_columns = array();
@@ -56,12 +69,16 @@ class import_individual {
     }
 
     /**
-     *
+     * Adds the user data from the CSV file to the DB.
      * @global moodle_database $DB
      * @return boolean
      */
     public function importContent() {
         global $DB;
+
+        if (!$this->reserved_columns) {
+            return false;
+        }
 
         $this->resetKeys();
 
@@ -99,11 +116,22 @@ class import_individual {
         return true;
     }
 
+    /**
+     * Delete user keys for the current lesson.
+     * @global moodle_database $DB
+     */
     public function resetKeys() {
         global $DB;
+        if (!$this->lessonid) {
+            throw new Exception('No lesson set');
+        }
         $DB->delete_records('customlesson_keys', array('lessonid' => $this->lessonid));
     }
 
+    /**
+     * Returns the list of the import errors.
+     * @return array
+     */
     public function getErrors() {
         return $this->errors;
     }
