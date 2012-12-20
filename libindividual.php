@@ -124,7 +124,7 @@ class import_individual {
             $record['lessonid'] = $this->lessonid;
             $record['username'] = '';
             if (isset($this->reserved_columns['username'])) {
-                $record['username'] = (int) $data[$this->reserved_columns['username']];
+                $record['username'] = $data[$this->reserved_columns['username']];
             }
             if (isset($this->reserved_columns['userid'])) {
                 $record['userid'] = (int) $data[$this->reserved_columns['userid']];
