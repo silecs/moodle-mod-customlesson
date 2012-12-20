@@ -55,9 +55,11 @@ if ($data) {
         print_error('processerror', 'customlesson');
         echo $OUTPUT->box($import->getErrors(true), 'errorbox');
     } else {
-        echo $OUTPUT->box(get_string('success'));
         if ($import->getErrors()) {
-            echo $OUTPUT->box(get_string('warning') . ' ' . $import->getErrors(true), 'errorbox');
+            echo $OUTPUT->box(get_string('warning'));
+            echo $OUTPUT->box($import->getErrors(true), 'errorbox');
+        } else {
+            echo $OUTPUT->box(get_string('success'));
         }
     }
 
