@@ -568,4 +568,5 @@ $string['individualfile'] = 'Fichier CSV';
 $string['separator'] = 'Séparateur';
 $string['csvneedsuser'] = 'Le fichier CSV doit contenir une colonne intitulée "userid" ou "username".';
 $string['csvneedskeys'] = 'Le fichier CSV doit contenir des colonnes pour les expressions à substituer.';
+$string['csvcolsnumber'] = 'Le fichier CSV a un nombre de colonnes incohérent avec l\'entête.';
 $string['keynotfound'] = 'L\'expression "{$a}" ne figure pas dans les textes de la leçon.';

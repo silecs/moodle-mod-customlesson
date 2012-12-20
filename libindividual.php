@@ -65,15 +65,27 @@ class import_individual {
                 $this->key_columns[$col] = $pos;
             }
         }
-        fclose($fh);
+		$colsnumber = count($header);
         if (!$this->reserved_columns) {
             $this->errors[] = get_string('csvneedsuser', 'customlesson');
+			fclose($fh);
             return false;
         }
         if (!$this->key_columns) {
             $this->errors[] = get_string('csvneedskeys', 'customlesson');
+			fclose($fh);
             return false;
         }
+		$lnumber = 0;
+		while ($curline = fgetcsv($fh, 1000, $this->separator)) {
+			$lnumber++;
+			if (count($curline) != $colsnumber) {
+				$this->errors[] = "l. $lnumber : " . get_string('csvcolsnumber', 'custom_lesson');
+				fclose($fh);
+				return false;
+			}
+		}
+		fclose($fh);
         $this->checkUnusedKeys();
         return true;
     }
