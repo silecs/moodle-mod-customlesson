@@ -62,15 +62,40 @@ class import_individual {
             } else if (strcasecmp(trim($col), "username") === 0) {
                 $this->reserved_columns['username'] = $pos;
             } else {
-                //! @todo check that the key is used in this lesson
                 $this->key_columns[$col] = $pos;
             }
         }
+        fclose($fh);
         if (!$this->reserved_columns) {
+            $this->errors[] = get_string('csvneedsuser', 'customlesson');
             return false;
         }
-        fclose($fh);
+        if (!$this->key_columns) {
+            $this->errors[] = get_string('csvneedskeys', 'customlesson');
+            return false;
+        }
+        $this->checkUnusedKeys();
         return true;
+    }
+
+    /**
+     * If some keys aren(t used, add messages to $this->errors.
+     * @global moodle_database $DB
+     */
+    protected function checkUnusedKeys() {
+        global $DB;
+        foreach (array_keys($this->key_columns) as $colname) {
+            $pattern = '%[' . $DB->sql_like_escape($colname) . ']%';
+            $found = $DB->record_exists_select('customlesson_pages', $DB->sql_like("contents", "?"), array($pattern));
+            $found = $found || $DB->record_exists_select(
+                    'customlesson_answers',
+                    $DB->sql_like("answer", "?") . " OR " . $DB->sql_like("response", "?"),
+                    array($pattern, $pattern)
+            );
+            if (!$found) {
+                $this->errors[] = get_string('keynotfound', 'customlesson', $colname);
+            }
+        }
     }
 
     /**

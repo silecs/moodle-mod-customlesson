@@ -438,3 +438,6 @@ $string['youshouldview'] = 'You should answer at least: {$a}';
 $string['importindividualdata'] = 'Import individual data';
 $string['individualfile'] = 'CSV file';
 $string['separator'] = 'Separator';
+$string['csvneedsuser'] = 'The CSV file must contain a column named "userid" or "username".';
+$string['csvneedskeys'] = 'The CSV file must contain columns for keys to sustitute.';
+$string['keynotfound'] = 'The key "{$a}" was not found in the lesson texts.';

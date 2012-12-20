@@ -565,3 +565,6 @@ $string['youshouldview'] = 'Vous devriez répondre au moins à {$a}';
 $string['importindividualdata'] = 'Importer les données individuelles';
 $string['individualfile'] = 'Fichier CSV';
 $string['separator'] = 'Séparateur';
+$string['csvneedsuser'] = 'Le fichier CSV doit contenir une colonne intitulée "userid" ou "username".';
+$string['csvneedskeys'] = 'Le fichier CSV doit contenir des colonnes pour les expressions à substituer.';
+$string['keynotfound'] = 'L'expression "{$a}" ne figure pas dans les textes de la leçon.';
