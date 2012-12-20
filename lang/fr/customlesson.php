@@ -18,8 +18,9 @@
 /**
  * Strings for component 'lesson', language 'fr', branch 'MOODLE_24_STABLE'
  *
- * @package   lesson
- * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @package    mod
+ * @subpackage customlesson
+ * @copyright  2012 Silecs et Institut Telecom
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -567,4 +568,4 @@ $string['individualfile'] = 'Fichier CSV';
 $string['separator'] = 'Séparateur';
 $string['csvneedsuser'] = 'Le fichier CSV doit contenir une colonne intitulée "userid" ou "username".';
 $string['csvneedskeys'] = 'Le fichier CSV doit contenir des colonnes pour les expressions à substituer.';
-$string['keynotfound'] = 'L'expression "{$a}" ne figure pas dans les textes de la leçon.';
+$string['keynotfound'] = 'L\'expression "{$a}" ne figure pas dans les textes de la leçon.';
