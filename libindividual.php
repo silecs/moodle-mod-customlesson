@@ -135,9 +135,14 @@ class import_individual {
 
     /**
      * Returns the list of the import errors.
+     * @param boolean $formatted (opt) Defaults to false.
      * @return array
      */
-    public function getErrors() {
-        return $this->errors;
+    public function getErrors($formatted=false) {
+        if ($formatted) {
+            return '<ul><li>' . join("</li>\n<li>", $this->errors) . "</li>\n</ul>\n";
+        } else {
+            return $this->errors;
+        }
     }
 }
