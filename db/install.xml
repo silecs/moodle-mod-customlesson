@@ -72,7 +72,7 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="lessonid"/>
-        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="lesson" REFFIELDS="id" PREVIOUS="primary"/>
+        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="customlesson" REFFIELDS="id" PREVIOUS="primary"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="customlesson_answers" COMMENT="Defines customlesson_answers" PREVIOUS="customlesson_pages" NEXT="customlesson_attempts">
@@ -93,8 +93,8 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="lessonid"/>
-        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="lesson" REFFIELDS="id" PREVIOUS="primary" NEXT="pageid"/>
-        <KEY NAME="pageid" TYPE="foreign" FIELDS="pageid" REFTABLE="lesson_pages" REFFIELDS="id" PREVIOUS="lessonid"/>
+        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="customlesson" REFFIELDS="id" PREVIOUS="primary" NEXT="pageid"/>
+        <KEY NAME="pageid" TYPE="foreign" FIELDS="pageid" REFTABLE="customlesson_pages" REFFIELDS="id" PREVIOUS="lessonid"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="customlesson_attempts" COMMENT="Defines customlesson_attempts" PREVIOUS="customlesson_answers" NEXT="customlesson_grades">
@@ -111,9 +111,9 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="lessonid"/>
-        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="lesson" REFFIELDS="id" PREVIOUS="primary" NEXT="pageid"/>
-        <KEY NAME="pageid" TYPE="foreign" FIELDS="pageid" REFTABLE="lesson_pages" REFFIELDS="id" PREVIOUS="lessonid" NEXT="answerid"/>
-        <KEY NAME="answerid" TYPE="foreign" FIELDS="answerid" REFTABLE="lesson_answers" REFFIELDS="id" PREVIOUS="pageid"/>
+        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="customlesson" REFFIELDS="id" PREVIOUS="primary" NEXT="pageid"/>
+        <KEY NAME="pageid" TYPE="foreign" FIELDS="pageid" REFTABLE="customlesson_pages" REFFIELDS="id" PREVIOUS="lessonid" NEXT="answerid"/>
+        <KEY NAME="answerid" TYPE="foreign" FIELDS="answerid" REFTABLE="customlesson_answers" REFFIELDS="id" PREVIOUS="pageid"/>
       </KEYS>
       <INDEXES>
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
@@ -130,7 +130,7 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="lessonid"/>
-        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="lesson" REFFIELDS="id" PREVIOUS="primary"/>
+        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="customlesson" REFFIELDS="id" PREVIOUS="primary"/>
       </KEYS>
       <INDEXES>
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
@@ -146,7 +146,7 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="lessonid"/>
-        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="lesson" REFFIELDS="id" PREVIOUS="primary"/>
+        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="customlesson" REFFIELDS="id" PREVIOUS="primary"/>
       </KEYS>
       <INDEXES>
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
@@ -164,8 +164,8 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="lessonid"/>
-        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="lesson" REFFIELDS="id" PREVIOUS="primary" NEXT="pageid"/>
-        <KEY NAME="pageid" TYPE="foreign" FIELDS="pageid" REFTABLE="lesson_pages" REFFIELDS="id" PREVIOUS="lessonid"/>
+        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="customlesson" REFFIELDS="id" PREVIOUS="primary" NEXT="pageid"/>
+        <KEY NAME="pageid" TYPE="foreign" FIELDS="pageid" REFTABLE="customlesson_pages" REFFIELDS="id" PREVIOUS="lessonid"/>
       </KEYS>
       <INDEXES>
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
@@ -181,7 +181,7 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="lessonid"/>
-        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="lesson" REFFIELDS="id" PREVIOUS="primary"/>
+        <KEY NAME="lessonid" TYPE="foreign" FIELDS="lessonid" REFTABLE="customlesson" REFFIELDS="id" PREVIOUS="primary"/>
       </KEYS>
       <INDEXES>
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
