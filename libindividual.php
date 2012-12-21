@@ -80,7 +80,7 @@ class import_individual {
         while ($curline = fgetcsv($fh, 1000, $this->separator)) {
             $lnumber++;
             if (count($curline) != $colsnumber) {
-                $this->errors[] = "l. $lnumber : " . get_string('csvcolsnumber', 'custom_lesson');
+                $this->errors[] = "l. $lnumber : " . get_string('csvcolsnumber', 'customlesson');
                 fclose($fh);
                 return false;
             }
