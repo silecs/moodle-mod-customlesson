@@ -94,6 +94,10 @@ class import_individual {
         $lnumber = 0;
         while ($curline = fgetcsv($fh, 1000, $this->separator)) {
             $lnumber++;
+            if (count($curline) === 1 && $curline[0] === null) {
+                // blank line
+                continue;
+            }
             if (count($curline) != $colsnumber) {
                 $this->errors[] = "l. $lnumber : " . get_string('csvcolsnumber', 'customlesson');
                 return false;
