@@ -65,7 +65,6 @@ class import_individual {
                 $this->key_columns[$col] = $pos;
             }
         }
-        $colsnumber = count($header);
         if (!$this->reserved_columns) {
             $this->errors[] = get_string('csvneedsuser', 'customlesson');
             fclose($fh);
@@ -76,17 +75,30 @@ class import_individual {
             fclose($fh);
             return false;
         }
+        if (!$this->checkColumnsCount($fh, count($header))) {
+            fclose($fh);
+            return false;
+        }
+        fclose($fh);
+        $this->checkUnusedKeys();
+        return true;
+    }
+
+    /**
+     * Checks if each line has the same number of columns.
+     * @param resource $fh
+     * @param integer $colsnumber
+     * @return boolean
+     */
+    protected function checkColumnsCount($fh, $colsnumber) {
         $lnumber = 0;
         while ($curline = fgetcsv($fh, 1000, $this->separator)) {
             $lnumber++;
             if (count($curline) != $colsnumber) {
                 $this->errors[] = "l. $lnumber : " . get_string('csvcolsnumber', 'customlesson');
-                fclose($fh);
                 return false;
             }
         }
-        fclose($fh);
-        $this->checkUnusedKeys();
         return true;
     }
 
