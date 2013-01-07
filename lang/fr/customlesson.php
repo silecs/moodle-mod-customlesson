@@ -341,8 +341,10 @@ $string['modattempts_help'] = '<!-- $Id$ -->
 
 <p>Ce réglage permet aux étudiants de revenir sur une leçon passée pour modifier leurs réponses.</p>';
 $string['modattemptsnoteacher'] = 'La critique par les étudiants ne fonctionne que pour les étudiants.';
-$string['modulename'] = 'Leçon';
-$string['modulename_help'] = 'Le module d\'activité leçon permet à l\'enseignant de proposer des contenus et/ou des activités d\'exercice d\'une façon intéressante et flexible.
+$string['modulename'] = 'Leçon personnalisée';
+$string['modulename_help'] = 'Le module d\'activité Leçon personnalisée est une variante du module Leçon traditionnel, permettant de personnaliser les leçons, les questions et les réponses en fonction de l\'étudiant.
+    
+Le module Leçon (traditionnel) permet à l\'enseignant de proposer des contenus et/ou des activités d\'exercice d\'une façon intéressante et flexible.
 
 Une leçon est créée par l\'enseignant et se compose de plusieurs pages qui chacune se termine normalement par une question et un choix de réponses. Les types de questions comprennent les questions à choix multiples, de correspondance et à réponse courte. Selon la réponse du participant, la leçon peut se poursuivre par la page suivante ou par une autre page.
 
