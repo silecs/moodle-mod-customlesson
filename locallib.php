@@ -1824,6 +1824,8 @@ abstract class customlesson_page extends customlesson_base {
                 print_error('cannotfindpages', 'customlesson');
             }
         }
+        $page->title = $lesson->customizeOutput($page->title);
+        $page->contents = $lesson->customizeOutput($page->contents);
         $manager = customlesson_page_type_manager::get($lesson);
 
         $class = 'customlesson_page_type_'.$manager->get_page_type_idstring($page->qtype);
