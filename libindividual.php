@@ -1,5 +1,6 @@
 <?php
 
+define('CSV_LINE_MAXSIZE', 8192);
 /**
  * Imports individual data into lessons
  *
@@ -51,7 +52,7 @@ class import_individual {
             $this->errors[] = get_string('cannotopencsv', 'error');
             return false;
         }
-        $header = fgetcsv($fh, 1000, $this->separator);
+        $header = fgetcsv($fh, CSV_LINE_MAXSIZE, $this->separator);
         if (!$header) {
             $this->errors[] = get_string('csvemptyfile', 'error');
             return false;
@@ -92,7 +93,7 @@ class import_individual {
      */
     protected function checkColumnsCount($fh, $colsnumber) {
         $lnumber = 0;
-        while ($curline = fgetcsv($fh, 1000, $this->separator)) {
+        while ($curline = fgetcsv($fh, CSV_LINE_MAXSIZE, $this->separator)) {
             $lnumber++;
             if (count($curline) === 1 && $curline[0] === null) {
                 // blank line
@@ -145,9 +146,9 @@ class import_individual {
             $this->errors[] = get_string('cannotopencsv');
             return false;
         }
-        $header = fgetcsv($fh, 1000, $this->separator);
+        $header = fgetcsv($fh, CSV_LINE_MAXSIZE, $this->separator);
         $line = 1;
-        while (($data = fgetcsv($fh, 1000, $this->separator)) !== FALSE) {
+        while (($data = fgetcsv($fh, CSV_LINE_MAXSIZE, $this->separator)) !== FALSE) {
             $record = array();
             $record['lessonid'] = $this->lessonid;
             $record['username'] = '';
