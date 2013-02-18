@@ -341,8 +341,8 @@ $string['modattempts_help'] = '<!-- $Id$ -->
 
 <p>Ce réglage permet aux étudiants de revenir sur une leçon passée pour modifier leurs réponses.</p>';
 $string['modattemptsnoteacher'] = 'La critique par les étudiants ne fonctionne que pour les étudiants.';
-$string['modulename'] = 'Leçon';
-$string['modulename_help'] = 'Le module d\'activité leçon permet à l\'enseignant de proposer des contenus et/ou des activités d\'exercice d\'une façon intéressante et flexible.
+$string['modulename'] = 'Leçon personnalisée';
+$string['modulename_help'] = 'Le module d\'activité leçon personnalisée permet à l\'enseignant de proposer des contenus et/ou des activités d\'exercice d\'une façon intéressante et flexible.
 
 Une leçon est créée par l\'enseignant et se compose de plusieurs pages qui chacune se termine normalement par une question et un choix de réponses. Les types de questions comprennent les questions à choix multiples, de correspondance et à réponse courte. Selon la réponse du participant, la leçon peut se poursuivre par la page suivante ou par une autre page.
 
@@ -354,7 +354,7 @@ Les leçons peuvent être utilisées :
 * pour des simulations ou des jeux de rôles exerçant la prise de décision
 * comme un moyen de profiter des différents styles d\'apprentissage, en offrant au participant une page vidéo, une page podcast ou une page de texte suivant sa préférence
 * pour des supports de révision différenciés, avec plusieurs jeux de questions de révision suivant les réponses précédemment données';
-$string['modulenameplural'] = 'Leçons';
+$string['modulenameplural'] = 'Leçons personnalisées';
 $string['move'] = 'Déplacer la page';
 $string['movedpage'] = 'Page déplacée';
 $string['movepagehere'] = 'Déplacer la page ici';
@@ -442,8 +442,8 @@ $string['pleasecheckoneanswer'] = 'Valider la réponse choisie';
 $string['pleasecheckoneormoreanswers'] = 'Valider la ou les réponses choisies';
 $string['pleaseenteryouranswerinthebox'] = 'Veuillez saisir votre réponse dans le champ';
 $string['pleasematchtheabovepairs'] = 'Valider les appariements choisis';
-$string['pluginadministration'] = 'Administration de la leçon';
-$string['pluginname'] = 'Leçon';
+$string['pluginadministration'] = 'Administration de la leçon personnalisée';
+$string['pluginname'] = 'Leçon personnalisée';
 $string['pointsearned'] = 'Points reçus';
 $string['postprocesserror'] = 'Erreur lors du post-traitement !';
 $string['postsuccess'] = 'Message envoyé avec succès';
