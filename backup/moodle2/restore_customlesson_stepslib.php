@@ -23,13 +23,13 @@
  */
 
 /**
- * Define all the restore steps that will be used by the restore_lesson_activity_task
+ * Define all the restore steps that will be used by the restore_customlesson_activity_task
  */
 
 /**
  * Structure step to restore one lesson activity
  */
-class restore_lesson_activity_structure_step extends restore_activity_structure_step {
+class restore_customlesson_activity_structure_step extends restore_activity_structure_step {
     // Store the answers as they're received but only process them at the
     // end of the lesson
     protected $answers = array();
@@ -39,22 +39,22 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $paths = array();
         $userinfo = $this->get_setting_value('userinfo');
 
-        $paths[] = new restore_path_element('lesson', '/activity/lesson');
-        $paths[] = new restore_path_element('lesson_page', '/activity/lesson/pages/page');
-        $paths[] = new restore_path_element('lesson_answer', '/activity/lesson/pages/page/answers/answer');
+        $paths[] = new restore_path_element('customlesson', '/activity/customlesson');
+        $paths[] = new restore_path_element('customlesson_page', '/activity/customlesson/pages/page');
+        $paths[] = new restore_path_element('customlesson_answer', '/activity/customlesson/pages/page/answers/answer');
         if ($userinfo) {
-            $paths[] = new restore_path_element('lesson_attempt', '/activity/lesson/pages/page/answers/answer/attempts/attempt');
-            $paths[] = new restore_path_element('lesson_grade', '/activity/lesson/grades/grade');
-            $paths[] = new restore_path_element('lesson_branch', '/activity/lesson/pages/page/branches/branch');
-            $paths[] = new restore_path_element('lesson_highscore', '/activity/lesson/highscores/highscore');
-            $paths[] = new restore_path_element('lesson_timer', '/activity/lesson/timers/timer');
+            $paths[] = new restore_path_element('customlesson_attempt', '/activity/customlesson/pages/page/answers/answer/attempts/attempt');
+            $paths[] = new restore_path_element('customlesson_grade', '/activity/customlesson/grades/grade');
+            $paths[] = new restore_path_element('customlesson_branch', '/activity/customlesson/pages/page/branches/branch');
+            $paths[] = new restore_path_element('customlesson_highscore', '/activity/customlesson/highscores/highscore');
+            $paths[] = new restore_path_element('customlesson_timer', '/activity/customlesson/timers/timer');
         }
 
         // Return the paths wrapped into standard activity structure
         return $this->prepare_activity_structure($paths);
     }
 
-    protected function process_lesson($data) {
+    protected function process_customlesson($data) {
         global $DB;
 
         $data = (object)$data;
@@ -72,106 +72,106 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
             unset($data->showhighscores);
         }
 
-        // insert the lesson record
+        // insert the customlesson record
         $newitemid = $DB->insert_record('customlesson', $data);
         // immediately after inserting "activity" record, call this
         $this->apply_activity_instance($newitemid);
     }
 
-    protected function process_lesson_page($data) {
+    protected function process_customlesson_page($data) {
         global $DB;
 
         $data = (object)$data;
         $oldid = $data->id;
-        $data->lessonid = $this->get_new_parentid('lesson');
+        $data->lessonid = $this->get_new_parentid('customlesson');
 
         // We'll remap all the prevpageid and nextpageid at the end, once all pages have been created
         $data->timemodified = $this->apply_date_offset($data->timemodified);
         $data->timecreated = $this->apply_date_offset($data->timecreated);
 
         $newitemid = $DB->insert_record('customlesson_pages', $data);
-        $this->set_mapping('lesson_page', $oldid, $newitemid, true); // Has related fileareas
+        $this->set_mapping('customlesson_page', $oldid, $newitemid, true); // Has related fileareas
     }
 
-    protected function process_lesson_answer($data) {
+    protected function process_customlesson_answer($data) {
         global $DB;
 
         $data = (object)$data;
-        $data->lessonid = $this->get_new_parentid('lesson');
-        $data->pageid = $this->get_new_parentid('lesson_page');
+        $data->lessonid = $this->get_new_parentid('customlesson');
+        $data->pageid = $this->get_new_parentid('customlesson_page');
         $data->answer = $data->answer_text;
         $data->timemodified = $this->apply_date_offset($data->timemodified);
         $data->timecreated = $this->apply_date_offset($data->timecreated);
 
         // Set a dummy mapping to get the old ID so that it can be used by get_old_parentid when
         // processing attempts. It will be corrected in after_execute
-        $this->set_mapping('lesson_answer', $data->id, 0);
+        $this->set_mapping('customlesson_answer', $data->id, 0);
 
         // Answers need to be processed in order, so we store them in an
         // instance variable and insert them in the after_execute stage
         $this->answers[$data->id] = $data;
     }
 
-    protected function process_lesson_attempt($data) {
+    protected function process_customlesson_attempt($data) {
         global $DB;
 
         $data = (object)$data;
         $oldid = $data->id;
-        $data->lessonid = $this->get_new_parentid('lesson');
-        $data->pageid = $this->get_new_parentid('lesson_page');
+        $data->lessonid = $this->get_new_parentid('customlesson');
+        $data->pageid = $this->get_new_parentid('customlesson_page');
 
         // We use the old answerid here as the answer isn't created until after_execute
-        $data->answerid = $this->get_old_parentid('lesson_answer');
+        $data->answerid = $this->get_old_parentid('customlesson_answer');
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->timeseen = $this->apply_date_offset($data->timeseen);
 
         $newitemid = $DB->insert_record('customlesson_attempts', $data);
     }
 
-    protected function process_lesson_grade($data) {
+    protected function process_customlesson_grade($data) {
         global $DB;
 
         $data = (object)$data;
         $oldid = $data->id;
-        $data->lessonid = $this->get_new_parentid('lesson');
+        $data->lessonid = $this->get_new_parentid('customlesson');
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->completed = $this->apply_date_offset($data->completed);
 
         $newitemid = $DB->insert_record('customlesson_grades', $data);
-        $this->set_mapping('lesson_grade', $oldid, $newitemid);
+        $this->set_mapping('customlesson_grade', $oldid, $newitemid);
     }
 
-    protected function process_lesson_branch($data) {
+    protected function process_customlesson_branch($data) {
         global $DB;
 
         $data = (object)$data;
         $oldid = $data->id;
-        $data->lessonid = $this->get_new_parentid('lesson');
-        $data->pageid = $this->get_new_parentid('lesson_page');
+        $data->lessonid = $this->get_new_parentid('customlesson');
+        $data->pageid = $this->get_new_parentid('customlesson_page');
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->timeseen = $this->apply_date_offset($data->timeseen);
 
         $newitemid = $DB->insert_record('customlesson_branch', $data);
     }
 
-    protected function process_lesson_highscore($data) {
+    protected function process_customlesson_highscore($data) {
         global $DB;
 
         $data = (object)$data;
         $oldid = $data->id;
-        $data->lessonid = $this->get_new_parentid('lesson');
+        $data->lessonid = $this->get_new_parentid('customlesson');
         $data->userid = $this->get_mappingid('user', $data->userid);
-        $data->gradeid = $this->get_mappingid('lesson_grade', $data->gradeid);
+        $data->gradeid = $this->get_mappingid('customlesson_grade', $data->gradeid);
 
         $newitemid = $DB->insert_record('customlesson_high_scores', $data);
     }
 
-    protected function process_lesson_timer($data) {
+    protected function process_customlesson_timer($data) {
         global $DB;
 
         $data = (object)$data;
         $oldid = $data->id;
-        $data->lessonid = $this->get_new_parentid('lesson');
+        $data->lessonid = $this->get_new_parentid('customlesson');
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->starttime = $this->apply_date_offset($data->starttime);
         $data->lessontime = $this->apply_date_offset($data->lessontime);
@@ -186,26 +186,26 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         ksort($this->answers);
         foreach ($this->answers as $answer) {
             $newitemid = $DB->insert_record('customlesson_answers', $answer);
-            $this->set_mapping('lesson_answer', $answer->id, $newitemid);
+            $this->set_mapping('customlesson_answer', $answer->id, $newitemid);
 
-            // Update the lesson attempts to use the newly created answerid
+            // Update the customlesson attempts to use the newly created answerid
             $DB->set_field('customlesson_attempts', 'answerid', $newitemid, array(
                     'lessonid' => $answer->lessonid,
                     'pageid' => $answer->pageid,
                     'answerid' => $answer->id));
         }
 
-        // Add lesson mediafile, no need to match by itemname (just internally handled context)
+        // Add customlesson mediafile, no need to match by itemname (just internally handled context)
         $this->add_related_files('mod_customlesson', 'mediafile', null);
-        // Add lesson page files, by lesson_page itemname
-        $this->add_related_files('mod_customlesson', 'page_contents', 'lesson_page');
+        // Add customlesson page files, by customlesson_page itemname
+        $this->add_related_files('mod_customlesson', 'page_contents', 'customlesson_page');
 
         // Remap all the restored prevpageid and nextpageid now that we have all the pages and their mappings
         $rs = $DB->get_recordset('customlesson_pages', array('lessonid' => $this->task->get_activityid()),
                                  '', 'id, prevpageid, nextpageid');
         foreach ($rs as $page) {
-            $page->prevpageid = (empty($page->prevpageid)) ? 0 : $this->get_mappingid('lesson_page', $page->prevpageid);
-            $page->nextpageid = (empty($page->nextpageid)) ? 0 : $this->get_mappingid('lesson_page', $page->nextpageid);
+            $page->prevpageid = (empty($page->prevpageid)) ? 0 : $this->get_mappingid('customlesson_page', $page->prevpageid);
+            $page->nextpageid = (empty($page->nextpageid)) ? 0 : $this->get_mappingid('customlesson_page', $page->nextpageid);
             $DB->update_record('customlesson_pages', $page);
         }
         $rs->close();
@@ -215,7 +215,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
                                  '', 'id, jumpto');
         foreach ($rs as $answer) {
             if ($answer->jumpto > 0) {
-                $answer->jumpto = $this->get_mappingid('lesson_page', $answer->jumpto);
+                $answer->jumpto = $this->get_mappingid('customlesson_page', $answer->jumpto);
                 $DB->update_record('customlesson_answers', $answer);
             }
         }
@@ -230,7 +230,7 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
         $updaterequired = false;
         if (!empty($lesson->dependency)) {
             $updaterequired = true;
-            $lesson->dependency = $this->get_mappingid('lesson', $lesson->dependency, $lesson->dependency);
+            $lesson->dependency = $this->get_mappingid('customlesson', $lesson->dependency, $lesson->dependency);
             if (!$DB->record_exists('customlesson', array('id' => $lesson->dependency, 'course' => $lesson->course))) {
                 $lesson->dependency = 0;
             }

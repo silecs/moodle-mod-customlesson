@@ -61,15 +61,15 @@
  * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class backup_lesson_activity_structure_step extends backup_activity_structure_step {
+class backup_customlesson_activity_structure_step extends backup_activity_structure_step {
 
     protected function define_structure() {
 
-        // The lesson table
-        // This table contains all of the goodness for the lesson module, quite
+        // The customlesson table
+        // This table contains all of the goodness for the customlesson module, quite
         // alot goes into it but nothing relational other than course when will
         // need to be corrected upon restore
-        $lesson = new backup_nested_element('lesson', array('id'), array(
+        $customlesson = new backup_nested_element('customlesson', array('id'), array(
             'course','name','practice','modattempts','usepassword','password',
             'dependency','conditions','grade','custom','ongoing','usemaxgrade',
             'maxanswers','maxattempts','review','nextpagedefault','feedback',
@@ -78,11 +78,11 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
             'width','height','bgcolor','displayleft','displayleftif','progressbar',
             'showhighscores','maxhighscores','available','deadline','timemodified'
         ));
-        // Tell the lesson element about the showhighscores elements mapping to the highscores
+        // Tell the customlesson element about the showhighscores elements mapping to the highscores
         // database field.
-        $lesson->set_source_alias('highscores', 'showhighscores');
+        $customlesson->set_source_alias('highscores', 'showhighscores');
 
-        // The lesson_pages table
+        // The customlesson_pages table
         // Grouped within a `pages` element, important to note that page is relational
         // to the lesson, and also to the previous/next page in the series.
         // Upon restore prevpageid and nextpageid will need to be corrected.
@@ -93,7 +93,7 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
             'contentsformat'
         ));
 
-        // The lesson_answers table
+        // The customlesson_answers table
         // Grouped within an answers `element`, the lesson_answers table relates
         // to the page and lesson with `pageid` and `lessonid` that will both need
         // to be corrected during restore.
@@ -106,7 +106,7 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
         // database field.
         $answer->set_source_alias('answer', 'answer_text');
 
-        // The lesson_attempts table
+        // The customlesson_attempts table
         // Grouped by an `attempts` element this is relational to the page, lesson,
         // and user.
         $attempts = new backup_nested_element('attempts');
@@ -114,7 +114,7 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
             'userid','retry','correct','useranswer','timeseen'
         ));
 
-        // The lesson_branch table
+        // The customlesson_branch table
         // Grouped by a `branch` element this is relational to the page, lesson,
         // and user.
         $branches = new backup_nested_element('branches');
@@ -122,14 +122,14 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
             'userid','retry','flag','timeseen'
         ));
 
-        // The lesson_grades table
+        // The customlesson_grades table
         // Grouped by a grades element this is relational to the lesson and user.
         $grades = new backup_nested_element('grades');
         $grade = new backup_nested_element('grade', array('id'), array(
             'userid','grade','late','completed'
         ));
 
-        // The lesson_high_scores table
+        // The customlesson_high_scores table
         // Grouped by a highscores element this is relational to the lesson, user,
         // and possibly a grade.
         $highscores = new backup_nested_element('highscores');
@@ -137,7 +137,7 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
             'gradeid','userid','nickname'
         ));
 
-        // The lesson_timer table
+        // The customlesson_timer table
         // Grouped by a `timers` element this is relational to the lesson and user.
         $timers = new backup_nested_element('timers');
         $timer = new backup_nested_element('timer', array('id'), array(
@@ -146,7 +146,7 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
 
         // Now that we have all of the elements created we've got to put them
         // together correctly.
-        $lesson->add_child($pages);
+        $customlesson->add_child($pages);
         $pages->add_child($page);
         $page->add_child($answers);
         $answers->add_child($answer);
@@ -154,16 +154,16 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
         $attempts->add_child($attempt);
         $page->add_child($branches);
         $branches->add_child($branch);
-        $lesson->add_child($grades);
+        $customlesson->add_child($grades);
         $grades->add_child($grade);
-        $lesson->add_child($highscores);
+        $customlesson->add_child($highscores);
         $highscores->add_child($highscore);
-        $lesson->add_child($timers);
+        $customlesson->add_child($timers);
         $timers->add_child($timer);
 
         // Set the source table for the elements that aren't reliant on the user
-        // at this point (lesson, lesson_pages, lesson_answers)
-        $lesson->set_source_table('lesson', array('id' => backup::VAR_ACTIVITYID));
+        // at this point (customlesson, customlesson_pages, customlesson_answers)
+        $customlesson->set_source_table('customlesson', array('id' => backup::VAR_ACTIVITYID));
         //we use SQL here as it must be ordered by prevpageid so that restore gets the pages in the right order.
         $page->set_source_sql("
                 SELECT *
@@ -182,7 +182,7 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
         // Check if we are also backing up user information
         if ($this->get_setting_value('userinfo')) {
             // Set the source table for elements that are reliant on the user
-            // lesson_attempts, lesson_branch, lesson_grades, lesson_high_scores, lesson_timer
+            // customlesson_attempts, customlesson_branch, customlesson_grades, customlesson_high_scores, customlesson_timer
             $attempt->set_source_table('customlesson_attempts', array('answerid' => backup::VAR_PARENTID));
             $branch->set_source_table('customlesson_branch', array('pageid' => backup::VAR_PARENTID));
             $grade->set_source_table('customlesson_grades', array('lessonid'=>backup::VAR_PARENTID));
@@ -197,11 +197,11 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
         $highscore->annotate_ids('user', 'userid');
         $timer->annotate_ids('user', 'userid');
 
-        // Annotate the file areas in user by the lesson module.
-        $lesson->annotate_files('mod_customlesson', 'mediafile', null);
+        // Annotate the file areas in user by the customlesson module.
+        $customlesson->annotate_files('mod_customlesson', 'mediafile', null);
         $page->annotate_files('mod_customlesson', 'page_contents', 'id');
 
-        // Prepare and return the structure we have just created for the lesson module.
-        return $this->prepare_activity_structure($lesson);
+        // Prepare and return the structure we have just created for the customlesson module.
+        return $this->prepare_activity_structure($customlesson);
     }
 }
