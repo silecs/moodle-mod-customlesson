@@ -43,10 +43,10 @@ class backup_customlesson_activity_task extends backup_activity_task {
     }
 
     /**
-     * Defines a backup step to store the instance data in the lesson.xml file
+     * Defines a backup step to store the instance data in the customlesson.xml file
      */
     protected function define_my_steps() {
-        $this->add_step(new backup_customlesson_activity_structure_step('lesson structure', 'lesson.xml'));
+        $this->add_step(new backup_customlesson_activity_structure_step('customlesson structure', 'customlesson.xml'));
     }
 
     /**
