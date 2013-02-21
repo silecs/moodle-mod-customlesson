@@ -129,6 +129,13 @@ class backup_customlesson_activity_structure_step extends backup_activity_struct
             'userid','grade','late','completed'
         ));
 
+        // The customlesson_keys table (derived from customlesson_grades)
+        // Grouped by a keys element this is relational to the lesson and user.
+        $keys = new backup_nested_element('keys');
+        $key = new backup_nested_element('key', array('id'), array(
+             'lessonid', 'userid', 'username', 'substkey', 'value'
+        ));
+
         // The customlesson_high_scores table
         // Grouped by a highscores element this is relational to the lesson, user,
         // and possibly a grade.
@@ -156,6 +163,8 @@ class backup_customlesson_activity_structure_step extends backup_activity_struct
         $branches->add_child($branch);
         $customlesson->add_child($grades);
         $grades->add_child($grade);
+        $customlesson->add_child($keys);
+        $keys->add_child($key);
         $customlesson->add_child($highscores);
         $highscores->add_child($highscore);
         $customlesson->add_child($timers);
@@ -182,10 +191,12 @@ class backup_customlesson_activity_structure_step extends backup_activity_struct
         // Check if we are also backing up user information
         if ($this->get_setting_value('userinfo')) {
             // Set the source table for elements that are reliant on the user
-            // customlesson_attempts, customlesson_branch, customlesson_grades, customlesson_high_scores, customlesson_timer
+            // customlesson_attempts, customlesson_branch, customlesson_grades, customlesson_keys,
+            // customlesson_high_scores, customlesson_timer
             $attempt->set_source_table('customlesson_attempts', array('answerid' => backup::VAR_PARENTID));
             $branch->set_source_table('customlesson_branch', array('pageid' => backup::VAR_PARENTID));
             $grade->set_source_table('customlesson_grades', array('lessonid'=>backup::VAR_PARENTID));
+            $key->set_source_table('customlesson_keys', array('lessonid'=>backup::VAR_PARENTID));
             $highscore->set_source_table('customlesson_high_scores', array('lessonid' => backup::VAR_PARENTID));
             $timer->set_source_table('customlesson_timer', array('lessonid' => backup::VAR_PARENTID));
         }
@@ -194,6 +205,7 @@ class backup_customlesson_activity_structure_step extends backup_activity_struct
         $attempt->annotate_ids('user', 'userid');
         $branch->annotate_ids('user', 'userid');
         $grade->annotate_ids('user', 'userid');
+        $key->annotate_ids('user', 'userid');
         $highscore->annotate_ids('user', 'userid');
         $timer->annotate_ids('user', 'userid');
 

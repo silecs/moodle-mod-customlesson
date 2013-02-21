@@ -45,6 +45,7 @@ class restore_customlesson_activity_structure_step extends restore_activity_stru
         if ($userinfo) {
             $paths[] = new restore_path_element('customlesson_attempt', '/activity/customlesson/pages/page/answers/answer/attempts/attempt');
             $paths[] = new restore_path_element('customlesson_grade', '/activity/customlesson/grades/grade');
+            $paths[] = new restore_path_element('customlesson_key', '/activity/customlesson/keys/key');
             $paths[] = new restore_path_element('customlesson_branch', '/activity/customlesson/pages/page/branches/branch');
             $paths[] = new restore_path_element('customlesson_highscore', '/activity/customlesson/highscores/highscore');
             $paths[] = new restore_path_element('customlesson_timer', '/activity/customlesson/timers/timer');
@@ -139,6 +140,18 @@ class restore_customlesson_activity_structure_step extends restore_activity_stru
 
         $newitemid = $DB->insert_record('customlesson_grades', $data);
         $this->set_mapping('customlesson_grade', $oldid, $newitemid);
+    }
+
+    protected function process_customlesson_key($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->lessonid = $this->get_new_parentid('customlesson');
+        $data->userid = $this->get_mappingid('user', $data->userid);
+
+        $newitemid = $DB->insert_record('customlesson_keys', $data);
+        $this->set_mapping('customlesson_key', $oldid, $newitemid);
     }
 
     protected function process_customlesson_branch($data) {
