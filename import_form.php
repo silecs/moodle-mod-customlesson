@@ -20,7 +20,7 @@
  *
  * @package    mod
  * @subpackage customlesson
- * @copyright  2012 Silecs et Institut Telecom
+ * @copyright  2012 Silecs et Institut Mines-Télécom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Form used to select a file and file format for the import
- * @copyright  2012 Silecs et Institut Telecom
+ * @copyright  2012 Silecs et Institut Mines-Télécom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class customlesson_import_form extends moodleform {
