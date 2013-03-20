@@ -20,7 +20,7 @@
  * For naming conventions, see lib/db/access.php.
  *
  * @package    mod_customlesson
- * @copyright  2012 Silecs et Institut Telecom
+ * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
  */
 

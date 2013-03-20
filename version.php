@@ -19,13 +19,16 @@
  *
  * @package    mod
  * @subpackage customlesson
- * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @copyright  2012 Silecs et Institut Mines-Télécom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @notice     customlesson is heavily based on the official lesson module and large portions of code are copied from there.
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version   = 2013022100;       // The current module version (Date: YYYYMMDDXX)
+$module->version   = 2013032000;       // The current module version (Date: YYYYMMDDXX)
 $module->requires  = 2012112900;    // Requires this Moodle version
 $module->component = 'mod_customlesson'; // Full name of the plugin (used for diagnostics)
 $module->cron      = 0;
+$module->maturity = MATURITY_STABLE;
+$module->release = '1.0 (Build: 2013032000)';
