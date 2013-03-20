@@ -333,7 +333,6 @@ $string['pleasecheckoneanswer'] = 'Please check one answer';
 $string['pleasecheckoneormoreanswers'] = 'Please check one or more answers';
 $string['pleasematchtheabovepairs'] = 'Please match the above pairs';
 $string['pluginadministration'] = 'Custom lesson administration';
-$string['pluginname'] = 'Custom lesson';
 $string['pointsearned'] = 'Points earned';
 $string['postprocesserror'] = 'Error occurred during post-processing!';
 $string['postsuccess'] = 'Post successful';

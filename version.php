@@ -26,9 +26,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version   = 2013032000;       // The current module version (Date: YYYYMMDDXX)
+$module->version   = 2013032001;       // The current module version (Date: YYYYMMDDXX)
 $module->requires  = 2012112900;    // Requires this Moodle version
 $module->component = 'mod_customlesson'; // Full name of the plugin (used for diagnostics)
 $module->cron      = 0;
 $module->maturity = MATURITY_STABLE;
-$module->release = '1.0 (Build: 2013032000)';
+$module->release = '1.0 (Build: 2013032001)';
+$module->dependencies = array();

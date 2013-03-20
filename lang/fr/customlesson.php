@@ -443,7 +443,6 @@ $string['pleasecheckoneormoreanswers'] = 'Valider la ou les réponses choisies';
 $string['pleaseenteryouranswerinthebox'] = 'Veuillez saisir votre réponse dans le champ';
 $string['pleasematchtheabovepairs'] = 'Valider les appariements choisis';
 $string['pluginadministration'] = 'Administration de la leçon personnalisée';
-$string['pluginname'] = 'Leçon personnalisée';
 $string['pointsearned'] = 'Points reçus';
 $string['postprocesserror'] = 'Erreur lors du post-traitement !';
 $string['postsuccess'] = 'Message envoyé avec succès';
