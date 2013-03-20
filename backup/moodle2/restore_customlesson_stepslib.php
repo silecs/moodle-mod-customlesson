@@ -18,7 +18,7 @@
 /**
  * @package moodlecore
  * @subpackage backup-moodle2
- * @copyright  2012 Silecs et Institut Mines-Télécom
+ * @copyright  2012 Silecs et Institut Telecom
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

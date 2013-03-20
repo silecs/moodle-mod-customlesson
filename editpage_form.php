@@ -20,7 +20,7 @@
  *
  * @package    mod
  * @subpackage customlesson
- * @copyright  2012 Silecs et Institut Mines-Télécom
+ * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Question selection form
  *
- * @copyright  2012 Silecs et Institut Mines-Télécom
+ * @copyright  2012 Silecs et Institut Telecom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 class customlesson_add_page_form_selection extends customlesson_add_page_form_base {
