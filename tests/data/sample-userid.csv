@@ -1,0 +1,3 @@
+userid;e:exclasse;q:ipnetwork;a:cidrnet
+4;Classe B;172.16.0.0;16
+5;Classe C;192.168.1.0;24
