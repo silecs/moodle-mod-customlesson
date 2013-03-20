@@ -20,7 +20,7 @@
  *
  * @package    mod
  * @subpackage customlesson
- * @copyright  2012 Silecs et Institut Telecom
+ * @copyright  2009 Sam Hemelryk
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
  **/
 
