@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>userguide_fr.md</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" media="all" href="/home/zamansky/.emacs.d/data/markdown.css"  />
+
+</head>
+
+<body>
+
+<h1 id="le+ons_personnalis+es_guide_de_lutilisateur">Leçons personnalisées, guide de l'utilisateur</h1>
+<h2 id="fonctionnement_g+n+ral">Fonctionnement général</h2>
+<p>L'activité est une version étendue du module "Lesson" livré dans Moodle.
+Toutes ses fonctionnalités ont été conservées.</p>
+<h2 id="personnaliser_les_lessons">Personnaliser les lessons</h2>
+<p>La personnalisation se réalise en 2 phases :</p>
+<ul>
+<li>création du canevas de contenu,</li>
+<li>importation des données individuelles.</li>
+</ul>
+<h3 id="cr+ation_du_canevas_de_contenu">Création du canevas de contenu</h3>
+<p>Il s'agit de créer une leçon dans laquelle certains éléments seront
+ensuite remplacés par des données individuelles.
+Les éléments remplacés peuvent se trouver dans tous les composants des questions,
+à savoir :</p>
+<ul>
+<li>le champ <strong>Contenu de la page</strong>,</li>
+<li>les champs <strong>Réponse</strong>,</li>
+<li>les champs <strong>Feedback</strong>.</li>
+</ul>
+<p>La syntaxe des éléments à remplacer est <code>[nom_du_paramètre]</code>.
+Il est recommandé d'utiliser des préfixes pour clarifier les paramètres.
+Par exemple, le contenu d'une question pourrait être :</p>
+<div class="codehilite"><pre><span class="n">Quelle</span> <span class="n">est</span> <span class="n">la</span> <span class="n">complexit</span>é <span class="n">de</span> <span class="n">l</span><span class="o">&#39;</span><span class="n">algorithme</span> <span class="p">[</span><span class="n">q</span><span class="p">:</span><span class="n">algo</span><span class="p">]</span> ?
+</pre></div>
+
+
+<h3 id="importation_des_donn+es_individuelles">Importation des données individuelles</h3>
+<p>Sur la page de modification d'une leçon, un nouveau lien a été ajouté :
+"Importer les données individuelles".</p>
+<p><img alt="Import" src="images/import-arrow.png" /></p>
+<p>Ce lien amène à une page de dépôt du fichier CSV.
+Une fois le formulaire soumis, une page d'information affiche le résultat de l'opération.
+L'opération n'est effective que si le fichier est valide.</p>
+<h3 id="format_du_fichier_csv">Format du fichier CSV</h3>
+<ul>
+<li>La première ligne est formée des entêtes de colonnes.</li>
+<li>L'entête doit contenir au moins une des colonnes <strong>userid</strong> ou <strong>username</strong>.</li>
+<li>Les autres entêtes sont des noms de paramètres à substituer.</li>
+<li>L'ordre des colonnes d'entête est sans importance.</li>
+<li>Le contenu d'une cellule peut être entouré de guillemets "".</li>
+</ul>
+<p>Par exemple, pour remplacer les expressions <code>[q:algo]</code> et <code>[r:complexity]</code>
+pour deux utilisateurs de logins "jean" et "louise" :</p>
+<div class="codehilite"><pre><span class="n">username</span><span class="p">;</span><span class="n">q</span><span class="p">:</span><span class="n">algo</span><span class="p">;</span><span class="n">r</span><span class="p">:</span><span class="n">complexity</span>
+<span class="n">jean</span><span class="p">;</span><span class="n">quicksort</span><span class="p">;</span><span class="n">n</span>^2
+<span class="n">louise</span><span class="p">;</span><span class="n">tri</span> <span class="n">fusion</span><span class="p">;</span><span class="n">n</span> <span class="nb">log</span> <span class="n">n</span>
+</pre></div>
+
+
+<p>Les autres utilisateurs garderont l'affichage des paramètres non-substitués.</p>
+</body>
+</html>
