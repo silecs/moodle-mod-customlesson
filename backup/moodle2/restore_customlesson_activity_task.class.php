@@ -20,6 +20,7 @@
  * @subpackage customlesson
  * @category   backup
  * @copyright  2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
+ * @copyright  2012 Silecs et Institut Mines-Télécom
  * @notice     customlesson is heavily based on the official lesson module and large portions of code are copied from there.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
