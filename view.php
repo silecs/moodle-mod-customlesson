@@ -21,6 +21,7 @@
  * @package    mod
  * @subpackage customlesson
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @notice     customlesson is heavily based on the official lesson module and large portions of code are copied from there.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
  **/
 

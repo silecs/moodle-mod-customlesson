@@ -20,6 +20,7 @@
  *
  * @package mod-lesson
  * @copyright 2010 Andrew Davis
+ * @notice     customlesson is heavily based on the official lesson module and large portions of code are copied from there.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
