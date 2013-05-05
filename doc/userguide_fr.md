@@ -2,10 +2,10 @@
 
 ## Fonctionnement général
 
-L'activité est une version étendue du module "Lesson" livré dans Moodle.
+L'activité est une version étendue du module "Leçon" livré dans Moodle.
 Toutes ses fonctionnalités ont été conservées.
 
-## Personnaliser les lessons
+## Personnaliser les leçons
 
 La personnalisation se réalise en 2 phases :
 
@@ -51,8 +51,8 @@ L'opération n'est effective que si le fichier est valide.
 Par exemple, pour remplacer les expressions `[q:algo]` et `[r:complexity]`
 pour deux utilisateurs de logins "jean" et "louise" :
 
-    username;q:algo;r:complexity
-    jean;quicksort;n^2
-    louise;tri fusion;n log n
+    "username";"q:algo";"r:complexity"
+    "jean";"tri à bulles";"n^2"
+    "louise";"tri fusion";"n log n"
 
 Les autres utilisateurs garderont l'affichage des paramètres non-substitués.

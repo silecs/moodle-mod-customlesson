@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="custom-lessons-user-guide">Custom Lessons, user guide</h1>
+<h2 id="overview">Overview</h2>
+<p>This activity is an enhanced version of the standard Lesson module. Each original feature is also present in Custom Lesson.</p>
+<h2 id="customize-the-lessons">Customize the lessons</h2>
+<p>The customization process has 2 steps:</p>
+<ul>
+<li>create the content template,</li>
+<li>import the individual data.</li>
+</ul>
+<h3 id="create-the-content-template">Create the content template</h3>
+<p>Here, we have to create a lesson in which some items will be replaced by individual data. The replaced elements can be located in all the questions items:</p>
+<ul>
+<li>the <strong>Page contents</strong> field,</li>
+<li>the <strong>Answer</strong> fields,</li>
+<li>the <strong>Feedback</strong> fields.</li>
+</ul>
+<p>The elements to be replaced must follow the syntax <code>[parameter_name]</code>. It's recommended to use prefixes to categorize the parameters. For example, the content of a question could be:</p>
+<pre><code>Which is the complexity for the algorithm [q:algo] ?</code></pre>
+<h3 id="importat-individual-data">Importat individual data</h3>
+<p>On the lesson modification page, a new link is available: &quot;Import individual data&quot;.</p>
+<div class="figure">
+<img src="images/import-arrow.png" alt="Import" /><p class="caption">Import</p>
+</div>
+<p>This link leads to an upload form, to provide a CSV file. After the upload, a diagnostic page displays the import results. The import is effective only if the file is validated.</p>
+<h3 id="csv-file-format">CSV file format</h3>
+<ul>
+<li>The first row contains the column headers</li>
+<li>One of the header cells (generally the first one) must be <strong>userid</strong> or <strong>username</strong></li>
+<li>The other headers are the names of the parameters to substitute</li>
+<li>The order has no significance</li>
+<li>The cell content must be surrounded by quotes &quot;&quot;.</li>
+</ul>
+<p>For example, to replace the strings <code>[q:algo]</code> and <code>[r:complexity]</code> for two students, with the usernames &quot;john&quot; and &quot;jean&quot;:</p>
+<pre><code>&quot;username&quot;;&quot;q:algo&quot;;&quot;r:complexity&quot;
+&quot;john&quot;;&quot;bubble sort&quot;;&quot;n^2&quot;
+&quot;jean&quot;;&quot;merge sort&quot;;&quot;n log n&quot;</code></pre>
+<p>The other users will see the original parameters, without any substitution.</p>
+</body>
+</html>
