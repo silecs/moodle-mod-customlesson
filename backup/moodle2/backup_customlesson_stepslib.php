@@ -53,7 +53,7 @@
  * @subpackage customlesson
  * @category   backup
  * @copyright  2010 Sam Hemelryk
- * @copyright  2012 Silecs et Institut Mines-Télécom
+ * @copyright  2012-2013 Silecs et Institut Mines-Télécom
  * @notice     customlesson is heavily based on the official lesson module and large portions of code are copied from there.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

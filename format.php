@@ -24,7 +24,7 @@
  * @package    mod
  * @subpackage customlesson
  * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
- * @copyright  2012 Silecs et Institut Mines-Télécom
+ * @copyright  2012-2013 Silecs et Institut Mines-Télécom
  * @notice     customlesson is heavily based on the official lesson module and large portions of code are copied from there.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/

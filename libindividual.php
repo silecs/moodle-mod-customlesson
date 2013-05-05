@@ -6,7 +6,7 @@ define('CSV_LINE_MAXSIZE', 8192);
  *
  * @package    mod
  * @subpackage customlesson
- * @copyright  2012 Silecs et Institut Mines-Télécom
+ * @copyright  2012-2013 Silecs et Institut Mines-Télécom
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
